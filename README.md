@@ -22,7 +22,7 @@ working.
 ## Projects
 
 - Rust (via #rust)
-- WIP: Rust Nightly (via #rust-nightly)
+- Rust Nightly (via #rust-nightly)
 - WIP: Rust Embedded (via #rust-embedded)
 - WIP: Rust Telegram Bot (via #rust-telegram)
 

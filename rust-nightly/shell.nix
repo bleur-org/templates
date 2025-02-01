@@ -17,7 +17,7 @@
   };
 in
   pkgs.stdenv.mkDerivation {
-    name = "template-dev";
+    name = "template-nightly-dev";
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [

@@ -1,6 +1,6 @@
 # Nightly Rust Nix Template
 
-This is a starter pack for Nix friendly Rust project ecosystem provided to you by Xinux Community members.
+This is a starter pack for Nix friendly Nightly Rust project ecosystem provided to you by Xinux Community members.
 
 > Please, after bootstrapping, rename / change all `example` or `template` keywords in template files.
 
@@ -39,5 +39,5 @@ In your project root:
 nix build
 
 # Execute compiled binary
-./result/bin/template
+./result/bin/template-nightly
 ```
