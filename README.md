@@ -35,7 +35,7 @@ In order to bootstrap your own project using our tempaltes, you need to `cd` som
 nix flake init --template github:xinux-org/templates#example
 ```
 
-or you can indicate location where it should be boostrapped:
+the command above bootstrap project in current directory, or you can indicate location where it should be boostrapped:
 
 ```shell
 nix flake new --template github:xinux-org/templates#example ./my-cool-project

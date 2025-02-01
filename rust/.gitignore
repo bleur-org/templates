@@ -1,5 +1,5 @@
 # Nix builds
-result/
+/result
 
 # Cargo builds
-target/
+/target
