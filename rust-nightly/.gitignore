@@ -1,0 +1,5 @@
+# Nix builds
+/result
+
+# Cargo builds
+/target
