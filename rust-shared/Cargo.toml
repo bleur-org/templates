@@ -1,0 +1,25 @@
+[package]
+name = "templib"
+version = "0.1.0"
+edition = "2021"
+homepage = "https://github.com/xinux-org/templates"
+repository = "https://github.com/xinux-org/templates"
+description = "Just a Rust template via nix flakes"
+
+[lib]
+name = "templib"
+crate-type = ["rlib", "cdylib"]
+
+# Dependencies that will included with final binary
+[dependencies]
+libc = "0.2.169"
+
+# Development dependencies which aren't used in release binary
+[dev-dependencies]
+
+# Optimize release binary as much as possible
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1

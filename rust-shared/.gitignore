@@ -1,0 +1,9 @@
+# Nix builds
+/result
+
+# Cargo builds
+/target
+
+# Outputs
+tests/try*
+!tests/try.c
