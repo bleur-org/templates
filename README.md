@@ -23,6 +23,7 @@ working.
 
 - Rust (via #rust)
 - Rust Nightly (via #rust-nightly)
+- Rust C static/shared library (via #rust-shared)
 - WIP: Rust Embedded (via #rust-embedded)
 - WIP: Rust Telegram Bot (via #rust-telegram)
 
