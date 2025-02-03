@@ -65,5 +65,5 @@ WIP: This one is huge, will take some time to write.
 
 There are bunch of telegram bots that are using this template and are deployed & working:
 
-- [Xinux Assistant](https://t.me/xinuxmgrbot) - [GitHub](https://github.com/xinux-org/telegram)
-- [Rust Uzbekistan Assistant](https://t.me/rustaceanbot) - [GitHub](https://github.com/rust-lang-uz/telegram)
+- [Xinux Assistant](https://t.me/xinuxmgrbot) - [GitHub](https://github.com/xinux-org/telegram) / [Deployed at](https://github.com/kolyma-labs/instances/blob/main/nixos/kolyma-2/services/xinux.nix)
+- [Rust Uzbekistan Assistant](https://t.me/rustaceanbot) - [GitHub](https://github.com/rust-lang-uz/telegram) / [Deployed at](https://github.com/kolyma-labs/instances/blob/main/nixos/kolyma-2/services/rustina.nix)
