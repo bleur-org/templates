@@ -24,8 +24,8 @@ working.
 - Rust (via #rust)
 - Rust Nightly (via #rust-nightly)
 - Rust C static/shared library (via #rust-shared)
+- Rust Telegram Bot (via #rust-telegram)
 - WIP: Rust Actix (via #rust-embedded)
-- WIP: Rust Telegram Bot (via #rust-telegram)
 - WIP: Rust Embedded (via #rust-embedded)
 
 ## Bootstrapping
@@ -47,6 +47,7 @@ nix flake new --template github:xinux-org/templates#example ./my-cool-project
 
 - [Official Nix Temapltes](https://github.com/NixOS/templates) - For showing how to create personal template collections.
 - [Personal Hatsune Miku Playlist](https://www.youtube.com/watch?v=UavAXELySiY&list=PL8ICxEebtazfwaK8jTnyyXqVqfT5vWsj0&pp=gAQB) - For cheering me up while I was writing all these.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](license) file for details.

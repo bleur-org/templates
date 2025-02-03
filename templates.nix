@@ -59,4 +59,25 @@
       - [Fenix for Nix](https://github.com/nix-community/fenix)
     '';
   };
+
+  # Static C library on Rust template
+  rust-telegram = {
+    path = ./rust-telegram;
+    description = "Telegram bot on Rust with NixOS modules template";
+    welcomeText = ''
+      # Telegram bot on Rust with NixOS modules template by Xinux community
+      ## Intended usage
+      The intended usage of this flake is to write a Telegram bot on Rust and deploy it on NixOS server
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [Rust language](https://rust-lang.org)
+      - [Teloxide](https://github.com/teloxide/teloxide/)
+      - [Ruby in the NixOS manual](https://nixos.org/manual/nixpkgs/stable/#rust)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
+      - [Fenix for Nix](https://github.com/nix-community/fenix)
+    '';
+  };
 }
