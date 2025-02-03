@@ -1,0 +1,11 @@
+# Nix builds
+/result
+
+# Cargo builds
+/target
+
+# Environmental values
+.env
+
+# Running daemon PID
+.daemon
