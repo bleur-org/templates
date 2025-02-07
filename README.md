@@ -25,7 +25,7 @@ working.
 - Rust Nightly (via #rust-nightly)
 - Rust C static/shared library (via #rust-shared)
 - Rust Telegram Bot (via #rust-telegram)
-- WIP: Rust Actix (via #rust-embedded)
+- Rust Actix (via #rust-actix)
 - WIP: Rust Embedded (via #rust-embedded)
 
 ## Bootstrapping
@@ -40,6 +40,7 @@ nix flake init --template github:xinux-org/templates#example
 the command above bootstrap project in current directory, or you can indicate location where it should be boostrapped:
 
 ```shell
+# instead of examples, any chosen project's via #...
 nix flake new --template github:xinux-org/templates#example ./my-cool-project
 ```
 

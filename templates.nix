@@ -12,10 +12,9 @@
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
       ## More info
-      - [Rust language](https://rust-lang.org)
-      - [Ruby in the NixOS manual](https://nixos.org/manual/nixpkgs/stable/#rust)
-      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
       - [Fenix for Nix](https://github.com/nix-community/fenix)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
 
@@ -32,10 +31,9 @@
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
       ## More info
-      - [Rust language](https://rust-lang.org)
-      - [Ruby in the NixOS manual](https://nixos.org/manual/nixpkgs/stable/#rust)
-      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
       - [Fenix for Nix](https://github.com/nix-community/fenix)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
 
@@ -52,11 +50,10 @@
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
       ## More info
-      - [Rust language](https://rust-lang.org)
       - [Libc-rs](https://docs.rs/libc/latest/libc/)
-      - [Ruby in the NixOS manual](https://nixos.org/manual/nixpkgs/stable/#rust)
-      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
       - [Fenix for Nix](https://github.com/nix-community/fenix)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
 
@@ -73,11 +70,31 @@
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
       ## More info
-      - [Rust language](https://rust-lang.org)
       - [Teloxide](https://github.com/teloxide/teloxide/)
-      - [Ruby in the NixOS manual](https://nixos.org/manual/nixpkgs/stable/#rust)
-      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
       - [Fenix for Nix](https://github.com/nix-community/fenix)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
+    '';
+  };
+
+  # Actix & Postgresql server on Rust template
+  rust-actix = {
+    path = ./rust-actix;
+    description = "Actix & Postgresql server on Rust template";
+    welcomeText = ''
+      # Actix & Postgresql server on Rust template with NixOS modules by Xinux community
+      ## Intended usage
+      The intended usage of this flake is to write a backend server application on Rust/Actix and deploy it on NixOS server
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [Actix.rs](https://actix.rs)
+      - [Diesel.rs](https://diesel.rs)
+      - [Fenix for Nix](https://github.com/nix-community/fenix)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
 }
