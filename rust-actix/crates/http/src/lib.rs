@@ -20,6 +20,18 @@ pub async fn server<T>(address: T) -> std::io::Result<()>
 where
     T: ToSocketAddrs,
 {
+    match address.to_socket_addrs() {
+        Ok(sock) => {
+            println!(
+                "Server is getting started at: http://{}",
+                sock.map(|p| p.to_string()).collect::<String>()
+            );
+        }
+        Err(_) => {
+            println!("I can feel as if something not good is about to happen...");
+        }
+    }
+
     HttpServer::new(|| {
         App::new()
             .service(hello)

@@ -22,7 +22,7 @@ impl Display for Error {
             Error::Write(e) => write!(f, "Error while writing config: {}", e),
             Error::NonExistent(e) => write!(f, "File is probably non existent: {}", e),
             Error::EnvLoad(e) => write!(f, "Error while reading .env variables: {}", e),
-            Error::EnvRead(e) => write!(f, "Error while fetching a variable: {}", e),
+            Error::EnvRead(e) => write!(f, "Error while getting a variable: {}", e),
             Error::Serialization(e) => {
                 write!(
                     f,

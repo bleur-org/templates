@@ -18,21 +18,27 @@ async fn main() -> std::io::Result<()> {
         Commands::Server(srv) => {
             // bin server ...
             match srv.command {
-                ServerCommands::Env => match config.env() {
-                    Ok(_) => println!("Necessary keys and variables has been loaded from environmental variables!"),
-                    Err(e) => {
-                        println!("Couldn't load environmental variables due to: {}", e);
+                ServerCommands::Env => {
+                    match config.env() {
+                      Ok(_) => println!("Necessary keys and variables has been loaded from environmental variables!"),
+                      Err(e) => {
+                        println!("{}", e);
                         exit(1);
-                    }
-                },
+                      }
+                    };
+
+                    http::server((config.url, config.port.parse::<u16>().unwrap_or(8000))).await;
+                }
                 ServerCommands::Config { path } => {
-                  match config.import(path) {
-                    Ok(_)=> println!("Configration has been loaded successfully!"),
-                    Err(e) => {
-                      println!("Oops, failed loading configurations: {}", e);
-                      exit(1);
-                    }
-                  }
+                    match config.import(path) {
+                        Ok(_) => println!("Configration has been loaded successfully!"),
+                        Err(e) => {
+                            println!("Oops, failed loading configurations: {}", e);
+                            exit(1);
+                        }
+                    };
+
+                    http::server((config.url, config.port.parse::<u16>().unwrap_or(8000))).await;
                 }
             };
         }
