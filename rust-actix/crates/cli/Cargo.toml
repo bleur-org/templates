@@ -1,0 +1,24 @@
+[package]
+name = "cli"
+authors.workspace = true
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
+
+[dependencies]
+# Relative Dependencies
+http = { path = "../http" }
+
+# Third party dependencies
+clap = { version = "4.5.28", features = ["derive"] }
+actix-web = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true }
+dotenvy = "0.15.7"
+toml = { version = "0.8.20", features = ["display"] }

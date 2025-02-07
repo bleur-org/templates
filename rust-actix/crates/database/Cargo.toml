@@ -1,0 +1,12 @@
+[package]
+name = "database"
+authors.workspace = true
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[dependencies]
+diesel = { version = "2.2.0", features = ["postgres"] }
+dotenvy = "0.15"
