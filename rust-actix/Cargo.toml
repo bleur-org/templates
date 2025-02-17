@@ -1,21 +1,24 @@
 [workspace]
 resolver = "2"
-members = ["crates/cli", "crates/database", "crates/http", "crates/templates"]
+default-members = ["crates/cli"]
+members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
 
 [workspace.package]
-authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]
-edition = "2021"
 version = "0.1.0"
+edition = "2021"
 license = "MIT"
 description = "Just a Rust template via nix flakes"
 homepage = "https://github.com/xinux-org/templates"
 repository = "https://github.com/xinux-org/templates"
+authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]
 
 # Shared dependencies across crates
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.38.0", features = ["macros", "rt-multi-thread"] }
 actix-web = "4"
+dotenvy = "0.15.7"
+toml = { version = "0.8.20", features = ["display"] }
 
 # Optimize release binary as much as possible
 [profile.release]

@@ -3,10 +3,8 @@
 use std::process::exit;
 
 use clap::Parser;
-use cli::{
-    config::{Config, Field},
-    Cli, Commands, ConfigCommands, ServerCommands,
-};
+use cli::{Cli, Commands, ConfigCommands, ServerCommands};
+use utils::config::{Config, Field};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -18,18 +16,7 @@ async fn main() -> std::io::Result<()> {
         Commands::Server(srv) => {
             // bin server ...
             match srv.command {
-                ServerCommands::Env => {
-                    match config.env() {
-                      Ok(_) => println!("Necessary keys and variables has been loaded from environmental variables!"),
-                      Err(e) => {
-                        println!("{}", e);
-                        exit(1);
-                      }
-                    };
-
-                    http::server((config.url, config.port.parse::<u16>().unwrap_or(8000))).await;
-                }
-                ServerCommands::Config { path } => {
+                ServerCommands::Run { path } => {
                     match config.import(path) {
                         Ok(_) => println!("Configration has been loaded successfully!"),
                         Err(e) => {
@@ -38,7 +25,7 @@ async fn main() -> std::io::Result<()> {
                         }
                     };
 
-                    http::server((config.url, config.port.parse::<u16>().unwrap_or(8000))).await;
+                    http::server(config).await;
                 }
             };
         }
@@ -47,9 +34,15 @@ async fn main() -> std::io::Result<()> {
                 path,
                 port,
                 url,
+                threads,
                 database,
             } => {
-                for set in [("url", url), ("port", port), ("database", database)] {
+                for set in [
+                    ("url", url),
+                    ("port", port),
+                    ("database", database),
+                    ("threads", threads),
+                ] {
                     if let Some(val) = set.1 {
                         match set.0 {
                             "url" => {
@@ -60,6 +53,9 @@ async fn main() -> std::io::Result<()> {
                             }
                             "database" => {
                                 config.set(Field::Database, val).ok();
+                            }
+                            "threads" => {
+                                config.set(Field::Threads, val).ok();
                             }
                             _ => {
                                 println!("Whoops, unimplemented value type!");
@@ -72,7 +68,7 @@ async fn main() -> std::io::Result<()> {
                 config.export(path).ok();
             }
             ConfigCommands::Check { path } => {
-                match cli::config::Config::validate(path) {
+                match utils::config::Config::validate(path) {
                     Ok(_) => println!("Configuration seems to be fine!"),
                     Err(e) => println!("There's something wrong with it:\n{}", e),
                 };

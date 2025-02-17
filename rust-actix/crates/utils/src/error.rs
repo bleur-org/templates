@@ -9,7 +9,9 @@ pub enum Error {
     Write(std::io::Error),
     Read(std::io::Error),
     EnvLoad(dotenvy::Error),
+    SocketParse(std::io::Error),
     EnvRead(std::env::VarError),
+    NumberConversion(std::num::ParseIntError),
     Serialization(toml::ser::Error),
     Deserialization(toml::de::Error),
 }
@@ -22,6 +24,7 @@ impl Display for Error {
             Error::Write(e) => write!(f, "Error while writing config: {}", e),
             Error::NonExistent(e) => write!(f, "File is probably non existent: {}", e),
             Error::EnvLoad(e) => write!(f, "Error while reading .env variables: {}", e),
+            Error::SocketParse(e) => write!(f, "Error while parsing address to SocketAddr: {}", e),
             Error::EnvRead(e) => write!(f, "Error while getting a variable: {}", e),
             Error::Serialization(e) => {
                 write!(
@@ -29,6 +32,9 @@ impl Display for Error {
                     "Error while deserializing configuration to a file: {}",
                     e
                 )
+            }
+            Error::NumberConversion(e) => {
+                write!(f, "Error while parsing numbers from string, are you sure you typed normal number in configs?: {}", e)
             }
             Error::Deserialization(e) => {
                 write!(

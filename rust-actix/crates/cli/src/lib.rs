@@ -1,10 +1,7 @@
-pub mod config;
-pub mod error;
-
 use clap::{Args, Parser, Subcommand};
 use std::path::PathBuf;
 
-pub use error::{Error, Result};
+pub use utils::error::{Error, Result};
 
 /// CLI interface for server infrastructure
 #[derive(Debug, Parser)]
@@ -34,10 +31,7 @@ pub struct ServerArgs {
 #[derive(Debug, Subcommand)]
 pub enum ServerCommands {
     /// Starting server with reading a config file
-    Config { path: PathBuf },
-
-    /// Starting server using environmental variables
-    Env,
+    Run { path: PathBuf },
 }
 
 #[derive(Debug, Args)]
@@ -57,6 +51,7 @@ pub enum ConfigCommands {
         path: PathBuf,
         port: Option<String>,
         url: Option<String>,
+        threads: Option<String>,
         database: Option<String>,
     },
 }

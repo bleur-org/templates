@@ -1,3 +1,7 @@
+/// Use this binary as a playground for playing with
+/// your schemes, database and functions that you will
+/// be calling from http crate!
+///
 use database::establish_connection;
 use database::posts::*;
 use diesel::prelude::*;
