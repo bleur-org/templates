@@ -12,3 +12,6 @@ config.toml
 
 # Shell temporary files
 .nix-shell
+
+# Postgresql logfiles
+logfile
