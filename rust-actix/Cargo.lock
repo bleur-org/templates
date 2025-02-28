@@ -535,6 +535,7 @@ dependencies = [
  "diesel",
  "dotenvy",
  "r2d2",
+ "serde",
  "uuid",
 ]
 
@@ -823,6 +824,7 @@ name = "http"
 version = "0.1.0"
 dependencies = [
  "actix-web",
+ "database",
  "env_logger",
  "utils",
 ]
