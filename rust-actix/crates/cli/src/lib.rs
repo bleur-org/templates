@@ -5,7 +5,7 @@ pub use utils::error::{Error, Result};
 
 /// CLI interface for server infrastructure
 #[derive(Debug, Parser)]
-#[command(name = "server")]
+#[command(name = "server", version)]
 #[command(about = "CLI interface for server infrastructure", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]

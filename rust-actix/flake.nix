@@ -39,5 +39,9 @@
 
       # Output package
       packages.default = pkgs.callPackage ./. {inherit pkgs fenix name;};
-    });
+    })
+    // {
+      # NixOS module (deployment)
+      nixosModules.xinux.bot = import ./module.nix self;
+    };
 }

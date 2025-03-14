@@ -53,3 +53,7 @@ nix build
 # Execute compiled binary
 ./result/bin/template
 ```
+
+## Migration
+
+If you add new migrations, please, at least dump minor version higher to let deployed nix module know whether should it run migrations. It detects changes based on server binary cli's version.

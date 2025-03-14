@@ -4,6 +4,7 @@ default-members = ["crates/cli"]
 members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
 
 [workspace.package]
+name = "tempserver"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"

@@ -64,10 +64,11 @@ in
 
     # Compiler LD variables
     # > Make sure packages have /lib or /include path'es
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
+    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)} -L${getLibFolder pkgs.postgresql}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
       pkgs.gcc
       pkgs.libiconv
+      pkgs.postgresql
       pkgs.llvmPackages.llvm
     ];
 

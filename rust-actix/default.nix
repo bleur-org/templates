@@ -55,7 +55,7 @@ in
       toolchain
 
       # Other compile time dependencies
-      # here
+      postgresql
     ];
 
     # Runtime dependencies which will be shipped
@@ -65,14 +65,20 @@ in
       # libressl
     ];
 
+    fixupPhase = ''
+      mkdir -p $out/mgrs
+      cp -R ./crates/database/* $out/mgrs
+    '';
+
     # Set Environment Variables
     RUST_BACKTRACE = 1;
 
     # Compiler LD variables
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
+    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}  ";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
       pkgs.gcc
       pkgs.libiconv
+      pkgs.postgresql
       pkgs.llvmPackages.llvm
     ];
 
@@ -81,7 +87,7 @@ in
       description = manifest.description;
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-
+      mainProgram = "server";
       maintainers = [
         {
           name = "Example";
