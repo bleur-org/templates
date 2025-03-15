@@ -109,7 +109,7 @@ flake: {
             set -o errexit -o pipefail -o nounset
             shopt -s dotglob nullglob inherit_errexit
 
-            chown --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'/*
+            chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
@@ -177,7 +177,7 @@ flake: {
             set -o errexit -o pipefail -o nounset
             shopt -s dotglob nullglob inherit_errexit
 
-            chown --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'/*
+            chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
