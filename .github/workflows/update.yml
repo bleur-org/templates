@@ -39,7 +39,7 @@ jobs:
       - name: Cleanup everything
         run: |
           shopt -s extglob dotglob
-          rm -rf !(\\.git)
+          rm -rf !(.git)
 
       - name: List all files
         run: ls -la .
