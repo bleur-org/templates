@@ -73,7 +73,7 @@ flake: {
     };
 
     ## Postgresql service (turn on if it's not already on)
-    services.postgresql = lib.optionalAttrs (local-database && cfg.database.createDatabase) {
+    services.postgresql = lib.optionalAttrs (local-database) {
       enable = lib.mkDefault true;
 
       ensureDatabases = [cfg.database.name];
