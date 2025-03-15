@@ -37,7 +37,9 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Cleanup everything
-        run: shopt -s extglob dotglob && rm -rf !(\\.git)
+        run: |
+          shopt -s extglob dotglob
+          rm -rf !(\\.git)
 
       - name: New template
         run: nix flake init --template github:xinux-org/templates#${{ matrix.repo.template }} --tarball-ttl 0
