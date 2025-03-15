@@ -41,6 +41,9 @@ jobs:
           shopt -s extglob dotglob
           rm -rf !(\\.git)
 
+      - name: List all files
+        run: ls -la .
+
       - name: New template
         run: nix flake init --template github:xinux-org/templates#${{ matrix.repo.template }} --tarball-ttl 0
 
