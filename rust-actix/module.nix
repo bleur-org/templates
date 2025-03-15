@@ -22,12 +22,19 @@ flake: {
   local-database = cfg.database.host == "127.0.0.1";
 
   # The digesting configuration of server
-  toml-config = toml.generate "config.toml" {
-    threads = 1;
-    port = 8000;
-    url = "127.0.0.1";
-    database_url = "#databaseUrl#";
-  };
+  toml-config = toml.generate "config.toml" ({
+      threads = 1;
+      port = 8000;
+      url = "127.0.0.1";
+    }
+    // lib.optionalAttrs (local-database && cfg.database.socketAuth) {
+      database_url = "postgres://${cfg.database.user}@${cfg.database.socket}/${cfg.database.name}";
+    }
+    // lib.optionalAttrs (
+      ((!local-database) && (!cfg.database.socketAuth)) || (local-database && (!cfg.database.socketAuth))
+    ) {
+      database_url = "#databaseUrl#";
+    });
 
   # Caddy proxy reversing
   caddy = mkIf (cfg.enable && cfg.proxy-reverse.enable && cfg.proxy == "caddy") {
@@ -73,7 +80,7 @@ flake: {
     };
 
     ## Postgresql service (turn on if it's not already on)
-    services.postgresql = lib.optionalAttrs (local-database) {
+    services.postgresql = lib.optionalAttrs local-database {
       enable = lib.mkDefault true;
 
       ensureDatabases = [cfg.database.name];
@@ -126,30 +133,14 @@ flake: {
             # Write configuration file for server
             cp -f ${toml-config} ${cfg.dataDir}/config.toml
 
-            # Write .env file for diesel migration
-            echo DATABASE_URL=postgres://${cfg.database.user}:#databaseUrl#@${cfg.database.host}:${toString cfg.database.port}/${cfg.database.name} > ${cfg.dataDir}/.env
-
-            # Replace #databaseUrl# with content from cfg.database.passwordFile
-            ${optionalString (cfg.database.passwordFile != null) ''
-              db_password="$(<'${cfg.database.passwordFile}')"
-              export db_password
-
-              if [[ -z "$db_password" ]]; then
-                >&2 echo "Database password was an empty string!"
-                exit 1
-              fi
-
+            if [[ ${lib.boolToString cfg.database.socketAuth} == true ]]; then
+              echo "DATABASE_URL=postgres://${cfg.database.user}@${cfg.database.socket}/${cfg.database.name}" > ${cfg.dataDir}/.env
+              sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@${cfg.database.socket}/${cfg.database.name}|g" "${cfg.dataDir}/config.toml"
+            else
               replace-secret '#databaseUrl#' '${cfg.database.passwordFile}' '${cfg.dataDir}/.env'
-
               source ${cfg.dataDir}/.env
               sed -i "s|#databaseUrl#|$DATABASE_URL|g" "${cfg.dataDir}/config.toml"
-            ''}
-
-            # No password file, so remove #databaseUrl#
-            ${optionalString (cfg.database.passwordFile == null) ''
-              sed -i "s|#databaseUrl#||g" "${cfg.dataDir}/.env"
-              sed -i "s|#databaseUrl#||g" "${cfg.dataDir}/config.toml"
-            ''}
+            fi
           '';
       };
     };
@@ -360,6 +351,21 @@ in {
           type = types.str;
           default = "127.0.0.1";
           description = "Database host address. Leave \"127.0.0.1\" if you want local database";
+        };
+
+        socketAuth = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Use Unix socket authentication for PostgreSQL instead of password authentication.";
+        };
+
+        socket = mkOption {
+          type = types.nullOr types.path;
+          default =
+            if local-database
+            then "/run/postgresql"
+            else null;
+          description = "Path to the PostgreSQL Unix socket.";
         };
 
         port = mkOption {
