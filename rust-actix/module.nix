@@ -109,7 +109,7 @@ flake: {
             set -o errexit -o pipefail -o nounset
             shopt -s dotglob nullglob inherit_errexit
 
-            chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
+            chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'nix
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
@@ -188,6 +188,7 @@ flake: {
           umask u=rwx,g=rx,o=
 
           # Paths
+          migrations_rep="${cfg.package}/mgrs"
           migrations_dir="${cfg.package}/mgrs/migrations"
           migrations_file="${cfg.dataDir}/MIGRATIONS"
 
@@ -206,7 +207,7 @@ flake: {
               echo "New migrations detected. Running migrations..."
 
               # Copy the migrations folder to ${cfg.dataDir}
-              cp -r "$migrations_dir" "${cfg.dataDir}/migrations"
+              cp -r "$migrations_rep" "${cfg.dataDir}/migrations"
 
               # Copy .env into the migrations directory
               cp "${cfg.dataDir}/.env" "${cfg.dataDir}/migrations/"
