@@ -43,7 +43,8 @@ in
       cargo-watch
 
       # Other compile time dependencies
-      # here
+      openssl
+      # libressl
     ];
 
     # Runtime dependencies which will be shipped

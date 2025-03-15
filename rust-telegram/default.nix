@@ -54,13 +54,14 @@ in
       toolchain
 
       # Other compile time dependencies
-      # here
+      openssl
+      # libressl
     ];
 
     # Runtime dependencies which will be shipped
     # with nix package
     buildInputs = with pkgs; [
-      # openssl
+      openssl
       # libressl
     ];
 
