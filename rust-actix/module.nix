@@ -81,9 +81,6 @@ flake: {
         {
           name = cfg.database.user;
           ensureDBOwnership = true;
-          ensurePermissions = {
-            "DATABASE ${cfg.database.name}" = "ALL PRIVILEGES";
-          };
         }
       ];
     };
