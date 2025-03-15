@@ -126,7 +126,7 @@ flake: {
             cp -f ${toml-config} ${cfg.dataDir}/config.toml
 
             # Write .env file for diesel migration
-            echo DATABASE_URL=postgres://${cfg.database.user}:#databaseUrl#@${cfg.database.host}:${cfg.database.port}/${cfg.database.name} > ${cfg.dataDir}/.env
+            echo DATABASE_URL=postgres://${cfg.database.user}:#databaseUrl#@${cfg.database.host}:${toString cfg.database.port}/${cfg.database.name} > ${cfg.dataDir}/.env
 
             # Replace #databaseUrl# with content from cfg.database.passwordFile
             ${optionalString (cfg.database.passwordFile != null) ''
