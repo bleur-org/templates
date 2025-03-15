@@ -110,6 +110,7 @@ flake: {
             shopt -s dotglob nullglob inherit_errexit
 
             chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
+            chmod -R u+rwX,g+rX,o-rwx '${cfg.dataDir}'
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
@@ -178,6 +179,7 @@ flake: {
             shopt -s dotglob nullglob inherit_errexit
 
             chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
+            chmod -R u+rwX,g+rX,o-rwx '${cfg.dataDir}'
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
@@ -228,7 +230,6 @@ flake: {
 
             # Cleanup (if desired)
             cd "${cfg.dataDir}"
-            chmod -R u+rwX "$target_dir"
             rm -rf "$target_dir"
 
             # Save the new migrations list
