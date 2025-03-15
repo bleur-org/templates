@@ -4,7 +4,7 @@ flake: {
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption mkIf mkMerge optionalAttrs types;
+  inherit (lib) mkEnableOption mkOption mkIf mkMerge types;
 
   # Manifest via Cargo.toml
   manifest = (pkgs.lib.importTOML ./Cargo.toml).workspace.package;
@@ -30,7 +30,7 @@ flake: {
   };
 
   # Caddy proxy reversing
-  caddy = lib.mkIf (cfg.enable && cfg.proxy == "caddy") {
+  caddy = mkIf (cfg.enable && cfg.proxy == "caddy") {
     services.caddy.virtualHosts = lib.debug.traceIf (builtins.isNull cfg.proxy-reverse.domain) "domain can't be null, please specicy it properly!" {
       "${cfg.proxy-reverse.domain}" = {
         extraConfig = ''
@@ -41,7 +41,7 @@ flake: {
   };
 
   # Nginx proxy reversing
-  nginx = lib.mkIf (cfg.enable && cfg.proxy == "nginx") {
+  nginx = mkIf (cfg.enable && cfg.proxy == "nginx") {
     services.nginx.virtualHosts = lib.debug.traceIf (builtins.isNull cfg.proxy-reverse.domain) "domain can't be null, please specicy it properly!" {
       "${cfg.proxy-reverse.domain}" = {
         addSSL = true;
@@ -55,7 +55,7 @@ flake: {
   };
 
   # Systemd services
-  service = lib.mkIf cfg.enable {
+  service = mkIf cfg.enable {
     ## User for our services
     users.users = lib.mkIf (cfg.user == manifest.name) {
       ${manifest.name} = {
@@ -68,7 +68,7 @@ flake: {
     };
 
     ## Group to join our user
-    users.groups = lib.mkIf (cfg.group == manifest.name) {
+    users.groups = mkIf (cfg.group == manifest.name) {
       ${manifest.name} = {};
     };
 
@@ -184,56 +184,54 @@ flake: {
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
-        ExecStart = let
-          inherit (lib) optionalString;
-        in
-          pkgs.writeShellScript "${manifest.name}-config" ''
-            set -o errexit -o pipefail -o nounset
-            shopt -s inherit_errexit
+        ExecStart = pkgs.writeShellScript "${manifest.name}-migration" ''
+          set -o errexit -o pipefail -o nounset
+          shopt -s inherit_errexit
 
-            umask u=rwx,g=rx,o=
+          umask u=rwx,g=rx,o=
 
-            # Get the current version of the program
-            curr_version="$(${lib.getExe cfg.package} -V)"
+          # Paths
+          migrations_dir="${cfg.package}/mgrs/migrations"
+          migrations_file="${cfg.dataDir}/MIGRATIONS"
 
-            # Path to the VERSION file
-            version_file="${cfg.dataDir}/VERSION"
+          # Get the list of available migrations (sorted for consistency)
+          new_migrations=$(ls -1 "$migrations_dir" | sort | tr '\n' ' ')
 
-            # Read the saved version if the file exists, otherwise set to an empty string
-            if [[ -f "$version_file" ]]; then
-                saved_version="$(<"$version_file")"
-            else
-                saved_version=""
-            fi
+          # Read the saved migrations list if the file exists, otherwise set to empty
+          if [[ -f "$migrations_file" ]]; then
+              saved_migrations=$(<"$migrations_file")
+          else
+              saved_migrations=""
+          fi
 
-            # If versions are different, run migrations
-            if [[ "$curr_version" != "$saved_version" ]]; then
-                echo "Version changed (or first-time setup). Running migrations..."
+          # If migrations are different, apply new migrations
+          if [[ "$new_migrations" != "$saved_migrations" ]]; then
+              echo "New migrations detected. Running migrations..."
 
-                # Copy the database folder to ${cfg.dataDir} as "migrations"
-                cp -r "${cfg.package}/mgrs" "${cfg.dataDir}/migrations"
+              # Copy the migrations folder to ${cfg.dataDir}
+              cp -r "$migrations_dir" "${cfg.dataDir}/migrations"
 
-                # Copy the .env file into the migrations directory
-                cp "${cfg.dataDir}/.env" "${cfg.dataDir}/migrations/"
+              # Copy .env into the migrations directory
+              cp "${cfg.dataDir}/.env" "${cfg.dataDir}/migrations/"
 
-                # Change directory to migrations folder
-                cd "${cfg.dataDir}/migrations"
+              # Change to the migrations directory
+              cd "${cfg.dataDir}/migrations"
 
-                # Run migrations
-                diesel migration run
+              # Run Diesel migrations
+              diesel migration run
 
-                # Return to the previous directory
-                cd -
+              # Return to the original directory
+              cd -
 
-                # Remove the migrations folder after the migration is complete
-                rm -rf "${cfg.dataDir}/migrations"
+              # Remove the temporary migrations directory
+              rm -rf "${cfg.dataDir}/migrations"
 
-                # Save the new version to the VERSION file
-                echo "$curr_version" > "$version_file"
-            else
-                echo "Version is up-to-date. No migrations needed."
-            fi
-          '';
+              # Save the new migrations list
+              echo "$new_migrations" > "$migrations_file"
+          else
+              echo "Migrations are up to date. No action needed."
+          fi
+        '';
       };
     };
 
@@ -419,5 +417,5 @@ in {
     };
   };
 
-  config = lib.mkMerge [asserts service caddy nginx];
+  config = mkMerge [asserts service caddy nginx];
 }
