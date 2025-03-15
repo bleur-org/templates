@@ -109,7 +109,7 @@ flake: {
             set -o errexit -o pipefail -o nounset
             shopt -s dotglob nullglob inherit_errexit
 
-            chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'nix
+            chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
