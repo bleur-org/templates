@@ -187,8 +187,11 @@ flake: {
 
           umask u=rwx,g=rx,o=
 
-          # Paths
+          # Migration duplication
           migrations_rep="${cfg.package}/mgrs"
+          target_dir="${cfg.dataDir}/migrations"
+
+          # Migration checking
           migrations_dir="${cfg.package}/mgrs/migrations"
           migrations_file="${cfg.dataDir}/MIGRATIONS"
 
@@ -204,28 +207,30 @@ flake: {
 
           # If migrations are different, apply new migrations
           if [[ "$new_migrations" != "$saved_migrations" ]]; then
-              echo "New migrations detected. Running migrations..."
+            echo "New migrations detected. Running migrations..."
 
-              # Copy the migrations folder to ${cfg.dataDir}
-              cp -r "$migrations_rep" "${cfg.dataDir}/migrations"
+            # Remove old migration directory if it exists
+            rm -rf "$target_dir"
 
-              # Copy .env into the migrations directory
-              cp "${cfg.dataDir}/.env" "${cfg.dataDir}/migrations/"
+            # Copy entire mgrs as migrations
+            cp -r "$migrations_rep" "$target_dir"
 
-              # Change to the migrations directory
-              cd "${cfg.dataDir}/migrations"
+            # Copy .env into the new migrations directory
+            cp "${cfg.dataDir}/.env" "$target_dir/"
 
-              # Run Diesel migrations
-              diesel migration run
+            # Explicitly set permissions
+            chown -R '${cfg.user}':'${cfg.group}' "$target_dir"
 
-              # Return to the original directory
-              cd -
+            # Run Diesel migrations from the migrations subdirectory
+            cd "$target_dir/migrations"
+            diesel migration run
 
-              # Remove the temporary migrations directory
-              rm -rf "${cfg.dataDir}/migrations"
+            # Cleanup (if desired)
+            cd "${cfg.dataDir}"
+            rm -rf "$target_dir"
 
-              # Save the new migrations list
-              echo "$new_migrations" > "$migrations_file"
+            # Save the new migrations list
+            echo "$new_migrations" > "$migrations_file"
           else
               echo "Migrations are up to date. No action needed."
           fi
