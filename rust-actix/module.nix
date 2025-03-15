@@ -308,8 +308,8 @@ flake: {
     ## Tests (nixos-rebuilds fails if any test fails)
     assertions = [
       {
-        assertion = cfg.token != null;
-        message = "services.${manifest.name}.bot.token must be set!";
+        assertion = cfg.database.passwordFile != null;
+        message = "services.${manifest.name}.database.passwordFile must be set!";
       }
     ];
   };
@@ -318,7 +318,7 @@ in {
   options = with lib; {
     services.${manifest.name} = {
       enable = mkEnableOption ''
-        ${manifest.name} Telegram bot template from Xinux community.
+        ${manifest.name}, actix + diesel server on rust.
       '';
 
       proxy-reverse = {

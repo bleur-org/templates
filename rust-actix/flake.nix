@@ -42,6 +42,6 @@
     })
     // {
       # NixOS module (deployment)
-      nixosModules.xinux.bot = import ./module.nix self;
+      nixosModules.server = import ./module.nix self;
     };
 }
