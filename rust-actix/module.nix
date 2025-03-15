@@ -180,6 +180,8 @@ flake: {
 
             chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
             chmod -R u+rwX,g+rX,o-rwx '${cfg.dataDir}'
+
+            rm -rf '${cfg.dataDir}/migrations'
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
@@ -211,18 +213,15 @@ flake: {
           if [[ "$new_migrations" != "$saved_migrations" ]]; then
             echo "New migrations detected. Running migrations..."
 
-            # Remove old migration directory if it exists
-            rm -rf "$target_dir"
-
             # Copy entire mgrs as migrations
             cp -r "$migrations_rep" "$target_dir"
-
-            # Copy .env into the new migrations directory
-            cp "${cfg.dataDir}/.env" "$target_dir/"
 
             # Explicitly set permissions
             chown -R '${cfg.user}':'${cfg.group}' "$target_dir"
             chmod -R u+rwX,g+rX,o-rwx "$target_dir"
+
+            # Copy .env into the new migrations directory
+            cp "${cfg.dataDir}/.env" "$target_dir/"
 
             # Run Diesel migrations from the migrations subdirectory
             cd "$target_dir/migrations"
