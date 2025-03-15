@@ -160,7 +160,7 @@ flake: {
       partOf = ["${manifest.name}.target"];
       path = with pkgs; [
         diesel-cli
-        diesel-cli-diesel-cli-ext
+        diesel-cli-ext
       ];
 
       serviceConfig = {
