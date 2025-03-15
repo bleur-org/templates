@@ -220,6 +220,7 @@ flake: {
 
             # Explicitly set permissions
             chown -R '${cfg.user}':'${cfg.group}' "$target_dir"
+            chmod -R u+rwX,g+rX,o-rwx "$target_dir"
 
             # Run Diesel migrations from the migrations subdirectory
             cd "$target_dir/migrations"
@@ -227,6 +228,7 @@ flake: {
 
             # Cleanup (if desired)
             cd "${cfg.dataDir}"
+            chmod -R u+rwX "$target_dir"
             rm -rf "$target_dir"
 
             # Save the new migrations list
