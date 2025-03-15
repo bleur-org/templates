@@ -22,7 +22,7 @@ flake: {
   local-database = cfg.database.host == "127.0.0.1";
 
   # The digesting configuration of server
-  config = toml.generate "config.toml" {
+  toml-config = toml.generate "config.toml" {
     threads = 1;
     port = 8000;
     url = "127.0.0.1";
@@ -126,7 +126,7 @@ flake: {
             umask u=rwx,g=rx,o=
 
             # Write configuration file for server
-            cp -f ${config} ${cfg.dataDir}/config.toml
+            cp -f ${toml-config} ${cfg.dataDir}/config.toml
 
             # Write .env file for diesel migration
             echo DATABASE_URL=postgres://${cfg.database.user}:#databaseUrl#@${cfg.database.host}:${cfg.database.port}/${cfg.database.name} > ${cfg.dataDir}/.env
