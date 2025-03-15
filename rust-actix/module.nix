@@ -356,7 +356,7 @@ in {
 
         port = mkOption {
           type = types.port;
-          default = pg.settings.port;
+          default = config.services.postgresql.settings.port;
           defaultText = "5432";
           description = "Database host port";
         };
