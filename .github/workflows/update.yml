@@ -58,7 +58,7 @@ jobs:
           if [[ -n $(git status --porcelain) ]]; then
             git add .
             git commit -m "Updated repo with latest template"
-            git push
+            git push https://"$GITHUB_TOKEN"@github.com/xinux-org/${{ matrix.repo.link }}.git
           else
             echo "No changes detected. Skipping push."
           fi
