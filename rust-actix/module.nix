@@ -271,7 +271,7 @@ flake: {
         NoNewPrivileges = true;
         PrivateDevices = true;
         PrivateTmp = true;
-        PrivateUsers = true;
+        PrivateUsers = false;
         ProtectClock = true;
         ProtectControlGroups = true;
         ProtectHome = true;
