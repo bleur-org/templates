@@ -258,7 +258,7 @@ flake: {
         StateDirectory = cfg.user;
         StateDirectoryMode = "0750";
         # Access write directories
-        ReadWritePaths = [cfg.dataDir];
+        ReadWritePaths = [cfg.dataDir "/run/postgresql"];
         CapabilityBoundingSet = [
           "AF_NETLINK"
           "AF_INET"
