@@ -19,22 +19,23 @@ flake: {
   toml = pkgs.formats.toml {};
 
   # Find out whether shall we manage database locally
-  local-database = cfg.database.host == "127.0.0.1";
+  local-database = (
+    (cfg.database.host == "127.0.0.1") || (cfg.database.host == "localhost")
+  );
 
   # The digesting configuration of server
-  toml-config = toml.generate "config.toml" ({
+  toml-config = let
+    database_url =
+      if cfg.database.socketAuth
+      then "postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}"
+      else "#databaseUrl#";
+  in
+    toml.generate "config.toml" {
       threads = 1;
       port = 8000;
       url = "127.0.0.1";
-    }
-    // lib.optionalAttrs (local-database && cfg.database.socketAuth) {
-      database_url = "postgres://${cfg.database.user}@${cfg.database.socket}/${cfg.database.name}";
-    }
-    // lib.optionalAttrs (
-      ((!local-database) && (!cfg.database.socketAuth)) || (local-database && (!cfg.database.socketAuth))
-    ) {
-      database_url = "#databaseUrl#";
-    });
+      inherit database_url;
+    };
 
   # Caddy proxy reversing
   caddy = mkIf (cfg.enable && cfg.proxy-reverse.enable && cfg.proxy == "caddy") {
@@ -133,14 +134,17 @@ flake: {
             # Write configuration file for server
             cp -f ${toml-config} ${cfg.dataDir}/config.toml
 
-            if [[ ${lib.boolToString cfg.database.socketAuth} == true ]]; then
-              echo "DATABASE_URL=postgres://${cfg.database.user}@${cfg.database.socket}/${cfg.database.name}" > ${cfg.dataDir}/.env
-              sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@${cfg.database.socket}/${cfg.database.name}|g" "${cfg.dataDir}/config.toml"
-            else
-              replace-secret '#databaseUrl#' '${cfg.database.passwordFile}' '${cfg.dataDir}/.env'
-              source ${cfg.dataDir}/.env
+            ${lib.optionalString cfg.database.socketAuth ''
+              echo "DATABASE_URL=postgres://${cfg.database.user}@/${cfg.database.name}?socket=${cfg.database.socket}" > "${cfg.dataDir}/.env"
+              sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@/${cfg.database.name}?socket=${cfg.database.socket}|g" "${cfg.dataDir}/config.toml"
+            ''}
+
+            ${lib.optionalString (!cfg.database.socketAuth) ''
+              echo "DATABASE_URL=postgres://${cfg.database.user}:#password#@${cfg.database.host}/${cfg.database.name}" > "${cfg.dataDir}/.env"
+              replace-secret '#password#' '${cfg.database.passwordFile}' '${cfg.dataDir}/.env'
+              source "${cfg.dataDir}/.env"
               sed -i "s|#databaseUrl#|$DATABASE_URL|g" "${cfg.dataDir}/config.toml"
-            fi
+            ''}
           '';
       };
     };
@@ -171,6 +175,10 @@ flake: {
 
             chown -R --no-dereference '${cfg.user}':'${cfg.group}' '${cfg.dataDir}'
             chmod -R u+rwX,g+rX,o-rwx '${cfg.dataDir}'
+
+            # In the future maybe, for faster perms
+            # find '${cfg.dataDir}' \! -user '${cfg.user}' -exec chown '${cfg.user}':'${cfg.group}' {} +
+            # find '${cfg.dataDir}' \! -perm /u+rw,g+r,o-rwx -exec chmod u+rwX,g+rX,o-rwx {} +
 
             rm -rf '${cfg.dataDir}/migrations'
           '';
@@ -218,9 +226,8 @@ flake: {
             cd "$target_dir/migrations"
             diesel migration run
 
-            # Cleanup (if desired)
+            # Come back to cwd
             cd "${cfg.dataDir}"
-            rm -rf "$target_dir"
 
             # Save the new migrations list
             echo "$new_migrations" > "$migrations_file"
@@ -247,6 +254,7 @@ flake: {
         Group = cfg.group;
         Restart = "always";
         ExecStart = "${lib.getBin cfg.package}/bin/server server run ${cfg.dataDir}/config.toml";
+        ExecReload = "${pkgs.coreutils}/bin/kill -s HUP $MAINPID";
         StateDirectory = cfg.user;
         StateDirectoryMode = "0750";
         # Access write directories
@@ -307,6 +315,10 @@ flake: {
         assertion = cfg.database.passwordFile != null;
         message = "services.${manifest.name}.database.passwordFile must be set!";
       }
+      {
+        assertion = !(cfg.proxy-reverse.enable && (cfg.proxy-reverse.domain == null || cfg.proxy-reverse.domain == ""));
+        message = "You must specify a valid domain when proxy-reverse is enabled!";
+      }
     ];
   };
 in {
@@ -355,7 +367,10 @@ in {
 
         socketAuth = mkOption {
           type = types.bool;
-          default = true;
+          default =
+            if local-database
+            then true
+            else false;
           description = "Use Unix socket authentication for PostgreSQL instead of password authentication.";
         };
 
