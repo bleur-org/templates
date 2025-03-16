@@ -135,8 +135,8 @@ flake: {
             cp -f ${toml-config} ${cfg.dataDir}/config.toml
 
             ${lib.optionalString cfg.database.socketAuth ''
-              echo "DATABASE_URL=postgres://${cfg.database.user}@/${cfg.database.name}?socket=${cfg.database.socket}" > "${cfg.dataDir}/.env"
-              sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@/${cfg.database.name}?socket=${cfg.database.socket}|g" "${cfg.dataDir}/config.toml"
+              echo "DATABASE_URL=postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}" > "${cfg.dataDir}/.env"
+              sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}|g" "${cfg.dataDir}/config.toml"
             ''}
 
             ${lib.optionalString (!cfg.database.socketAuth) ''
