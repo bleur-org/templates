@@ -31,9 +31,9 @@ flake: {
       else "#databaseUrl#";
   in
     toml.generate "config.toml" {
-      threads = 1;
-      port = 8000;
-      url = "127.0.0.1";
+      threads = cfg.threads;
+      port = cfg.port;
+      url = cfg.address;
       inherit database_url;
     };
 
@@ -329,6 +329,24 @@ in {
         ${manifest.name}, actix + diesel server on rust.
       '';
 
+      address = mkOption {
+        type = types.str;
+        default = "127.0.0.1";
+        description = "Port to use for passing over proxy";
+      };
+
+      port = mkOption {
+        type = types.int;
+        default = 39393;
+        description = "Port to use for passing over proxy";
+      };
+
+      threads = mkOption {
+        type = types.int;
+        default = 1;
+        description = "How many cores to use while pooling";
+      };
+
       proxy-reverse = {
         enable = mkEnableOption ''
           Enable proxy reversing via nginx/caddy.
@@ -350,12 +368,6 @@ in {
           default = "caddy";
           description = "Proxy reverse software for hosting webhook";
         };
-      };
-
-      port = mkOption {
-        type = types.int;
-        default = 39393;
-        description = "Port to use for passing over proxy";
       };
 
       database = {
