@@ -122,30 +122,27 @@ flake: {
           '';
         in "+${pkgs.writeShellScript "${manifest.name}-pre-start-full-privileges" preStartFullPrivileges}";
 
-        ExecStart = let
-          inherit (lib) optionalString;
-        in
-          pkgs.writeShellScript "${manifest.name}-config" ''
-            set -o errexit -o pipefail -o nounset
-            shopt -s inherit_errexit
+        ExecStart = pkgs.writeShellScript "${manifest.name}-config" ''
+          set -o errexit -o pipefail -o nounset
+          shopt -s inherit_errexit
 
-            umask u=rwx,g=rx,o=
+          umask u=rwx,g=rx,o=
 
-            # Write configuration file for server
-            cp -f ${toml-config} ${cfg.dataDir}/config.toml
+          # Write configuration file for server
+          cp -f ${toml-config} ${cfg.dataDir}/config.toml
 
-            ${lib.optionalString cfg.database.socketAuth ''
-              echo "DATABASE_URL=postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}" > "${cfg.dataDir}/.env"
-              sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}|g" "${cfg.dataDir}/config.toml"
-            ''}
+          ${lib.optionalString cfg.database.socketAuth ''
+            echo "DATABASE_URL=postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}" > "${cfg.dataDir}/.env"
+            sed -i "s|#databaseUrl#|postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}|g" "${cfg.dataDir}/config.toml"
+          ''}
 
-            ${lib.optionalString (!cfg.database.socketAuth) ''
-              echo "DATABASE_URL=postgres://${cfg.database.user}:#password#@${cfg.database.host}/${cfg.database.name}" > "${cfg.dataDir}/.env"
-              replace-secret '#password#' '${cfg.database.passwordFile}' '${cfg.dataDir}/.env'
-              source "${cfg.dataDir}/.env"
-              sed -i "s|#databaseUrl#|$DATABASE_URL|g" "${cfg.dataDir}/config.toml"
-            ''}
-          '';
+          ${lib.optionalString (!cfg.database.socketAuth) ''
+            echo "DATABASE_URL=postgres://${cfg.database.user}:#password#@${cfg.database.host}/${cfg.database.name}" > "${cfg.dataDir}/.env"
+            replace-secret '#password#' '${cfg.database.passwordFile}' '${cfg.dataDir}/.env'
+            source "${cfg.dataDir}/.env"
+            sed -i "s|#databaseUrl#|$DATABASE_URL|g" "${cfg.dataDir}/config.toml"
+          ''}
+        '';
       };
     };
 
@@ -286,6 +283,7 @@ flake: {
           "AF_NETLINK"
           "AF_INET"
           "AF_INET6"
+          "AF_UNIX"
         ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
