@@ -4,7 +4,7 @@ flake: {
   pkgs,
   ...
 }: let
-  cfg = config.services.${manifest.name}.bot;
+  cfg = config.services."${manifest.name}-bot";
   bot = flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   # Manifest via Cargo.toml
@@ -132,7 +132,7 @@ flake: {
   };
 in {
   options = with lib; {
-    services.${manifest.name}.bot = {
+    services."${manifest.name}-bot" = {
       enable = mkEnableOption ''
         ${manifest.name} Telegram bot template from Xinux community.
       '';
@@ -188,7 +188,7 @@ in {
 
       dataDir = mkOption {
         type = types.str;
-        default = "/var/lib/${manifest.name}/bot";
+        default = "/var/lib/${manifest.name}";
         description = lib.mdDoc ''
           The path where ${manifest.name} Telegram Bot keeps its config, data, and logs.
         '';

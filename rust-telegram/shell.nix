@@ -66,73 +66,86 @@ in
       pkgs.llvmPackages.llvm
     ];
 
+    # Touch only if you know what you're doing
+    # (bash skill issues are not welcomed here)
     shellHook = ''
-      # Load the environment variables from the .env file
+      # Check for .env file
       if [ ! -f .env ]; then
       read -r -p "Please enter your telegram bot token: " TELOXIDE_TOKEN;
         echo "export TELOXIDE_TOKEN=$TELOXIDE_TOKEN" > .env;
-      else
-        source .env;
+        echo "export WATCH_MODE=false" >> .env;
       fi
 
-      # Set the environment variable
-      export TELOXIDE_TOKEN=$TELOXIDE_TOKEN;
+      # Load everything from .env
+      source .env;
 
-      start() {
-        # Start watching for changes in the background
-        cargo watch -x "run --bin ${manifest.name} -- env" &
+      # Lesss goooo...
+      if [ $WATCH_MODE == true ]; then
+        echo "Watchmode in background is enabled!"
+        echo "Starting cargo watch session on backround..."
         echo
-        echo
-        echo ===========================================================================
-        echo "Press enter to continue on your terminal"
-        echo "\> Don't close this terminal as bot is running on watch mode and see log"
-        echo "\> Just open your editor from this terminal to make your editor read PATH"
-        echo ===========================================================================
 
-        # Store the PID of the background process to file & env
-        CARGO_WATCH_PID=$!
-        echo "$CARGO_WATCH_PID" > .daemon
+        start() {
+          # Start watching for changes in the background
+          cargo watch -x "run --bin ${manifest.name} -- env" &
+          echo
+          echo
+          echo ===========================================================================
+          echo "Press enter to continue on your terminal"
+          echo "\> Don't close this terminal as bot is running on watch mode and see log"
+          echo "\> Just open your editor from this terminal to make your editor read PATH"
+          echo ===========================================================================
 
-        # Function to clean up the background process on exit
-        cleanup() {
-          kill $CARGO_WATCH_PID || true
-          rm -rf ./.daemon
+          # Store the PID of the background process to file & env
+          CARGO_WATCH_PID=$!
+          echo "$CARGO_WATCH_PID" > .daemon
+
+          # Function to clean up the background process on exit
+          cleanup() {
+            kill $CARGO_WATCH_PID || true
+            rm -rf ./.daemon
+          }
+
+          # Trap EXIT signal to run cleanup function
+          trap cleanup EXIT INT TERM
         }
 
-        # Trap EXIT signal to run cleanup function
-        trap cleanup EXIT INT TERM
-      }
+        # Check if there's already session running
+        if [ -e ".daemon" ]; then
+            echo "There's a session already running..."
+            read -p "would you like to stop running instance? (y/n): " answer
 
-      # Check if there's already session running
-      if [ -e ".daemon" ]; then
-          echo "There's a session already running..."
-          read -p "would you like to stop running instance? (y/n): " answer
+            case "$answer" in
+                [Yy]*)
+                  # Read old session file
+                  _pid=$(<.daemon)
 
-          case "$answer" in
-              [Yy]*)
-                # Read old session file
-                _pid=$(<.daemon)
+                  # Kill & remove old session
+                  kill $_pid || true
 
-                # Cleanup daemon
-                rm -rf ./.daemon
+                  # Cleanup daemon
+                  rm -rf ./.daemon
 
-                # Kill & remove old session
-                kill $_pid || true
-                unset _pid
+                  # Cleanup the pid variable
+                  unset _pid
 
-                # Start the damn bot
-                start
-                ;;
-              [Nn]*)
-                echo "Aight, no problem bro. I get you..."
-                ;;
-              *)
-                echo "Invalid input, ignoring running instance"
-                ;;
-          esac
+                  # Start the damn bot
+                  start
+                  ;;
+                [Nn]*)
+                  echo "Aight, no problem bro. I got you..."
+                  ;;
+                *)
+                  echo "Invalid input, ignoring running instance and not running anything"
+                  ;;
+            esac
+        else
+          # Start the damn bot
+          start
+        fi
       else
-        # Start the damn bot
-        start
+        echo "You disabled the watch mode on background."
+        echo "Feel free to enable it back again at .env file!"
       fi
     '';
   }

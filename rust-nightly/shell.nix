@@ -1,3 +1,5 @@
+# Either have nixpkgs and fenix in your channels
+# Or build it using flakes, flake way is more recommended!
 {
   pkgs ? import <nixpkgs> {},
   fenix ? import <fenix> {},

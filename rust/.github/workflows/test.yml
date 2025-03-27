@@ -19,7 +19,7 @@ jobs:
       - name: Check up flake configuration
         run: nix flake check --all-systems --show-trace
 
-  test-image:
+  test-project:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,8 +32,8 @@ jobs:
       - name: Cache Nix store
         uses: DeterminateSystems/magic-nix-cache-action@main
 
-      - name: Test project
+      - name: Build project with Nix
         run: nix build
 
-      - name: Test project
+      - name: Run cargo tests
         run: nix develop --command -- cargo test

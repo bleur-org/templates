@@ -5,6 +5,7 @@
     description = "Typical Rust project template using fenix";
     welcomeText = ''
       # Simple Rust Nix template by Xinux community
+
       ## Intended usage
       The intended usage of this flake is to write a project on Rust which compiles to an executable project
 
@@ -24,8 +25,9 @@
     description = "Nightly Rust project template using fenix";
     welcomeText = ''
       # Nightly Rust Nix template by Xinux community
+
       ## Intended usage
-      The intended usage of this flake is to write a project on nightly version of Rust which compiles to an executable project
+      The intended usage of this flake is to write a project on nightly version of Rust toolchain which compiles to an executable project
 
       ## Important
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
@@ -43,6 +45,7 @@
     description = "C shared/static library with libc on Rust template";
     welcomeText = ''
       # C shared/static library with libc on Rust template by Xinux community
+
       ## Intended usage
       The intended usage of this flake is to write a C static/shared library with libc on Rust
 

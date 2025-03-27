@@ -1,3 +1,5 @@
+# Either have nixpkgs and fenix in your channels
+# Or build it using flakes, flake way is more recommended!
 {
   pkgs ? import <nixpkgs> {},
   fenix ? import <fenix> {},
@@ -11,7 +13,7 @@
 
     # Don't worry, if you need sha256 of your toolchain,
     # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-vMlz0zHduoXtrlu0Kj1jEp71tYFXyymACW8L4jzrzNA=";
+    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
   };
 in
   pkgs.stdenv.mkDerivation {

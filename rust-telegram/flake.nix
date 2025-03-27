@@ -40,6 +40,6 @@
     })
     // {
       # Overlay module
-      nixosModules.xinux.bot = import ./module.nix self;
+      nixosModules.temp-bot = import ./module.nix self;
     };
 }

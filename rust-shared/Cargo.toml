@@ -12,7 +12,7 @@ crate-type = ["rlib", "cdylib"]
 
 # Dependencies that will included with final binary
 [dependencies]
-libc = "0.2.169"
+libc = "0.2"
 
 # Development dependencies which aren't used in release binary
 [dev-dependencies]

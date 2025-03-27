@@ -13,11 +13,9 @@
 
 ## About
 
-This is a collection of Xinux'es Nix bootstrapped templates which can be used to bootstrap your own project for certain technology. The templates
-have everything set up ready for you, so you can focus on developing the application instead of playing around configuring everything to get it
-working.
+This is a collection of Xinux'es Nix bootstrapped templates which can be used to bootstrap your own project for certain stack. The templates have everything set up ready for you, so you can focus on developing the application instead of playing around configuring everything to get it working.
 
-> Every repository has its own detailed readme.md for more information to get started once you're done bootstrapping.
+> Every repository has its own detailed readme.md for more information to get started once you're done with bootstrapping.
 
 ## Projects
 
@@ -26,28 +24,27 @@ working.
 - Rust C static/shared library (via #rust-shared)
 - Rust Telegram Bot (via #rust-telegram)
 - Rust Actix (via #rust-actix)
-- WIP: Rust Embedded (via #rust-embedded)
 
 ## Bootstrapping
 
-In order to bootstrap your own project using our tempaltes, you need to `cd` somewhere and on terminal:
+In order to bootstrap your own project using our templates, you need to `cd` somewhere and in terminal:
 
-```shell
+```bash
 # Replace `example` with any supported template above in projects section
 nix flake init --template github:xinux-org/templates#example
 ```
 
-the command above bootstrap project in current directory, or you can indicate location where it should be boostrapped:
+the command above will bootstrap project in current directory, or you can indicate location where it should be boostrapped:
 
-```shell
-# instead of examples, any chosen project's via #...
+```bash
+# instead of examples, any chosen project via #...
 nix flake new --template github:xinux-org/templates#example ./my-cool-project
 ```
 
 ## Thanks
 
 - [Official Nix Temapltes](https://github.com/NixOS/templates) - For showing how to create personal template collections.
-- [Personal Hatsune Miku Playlist](https://www.youtube.com/watch?v=UavAXELySiY&list=PL8ICxEebtazfwaK8jTnyyXqVqfT5vWsj0&pp=gAQB) - For cheering me up while I was writing all these.
+- [Personal Hatsune Miku Playlist](https://music.apple.com/gb/playlist/vocaloid-songs/pl.u-GgA5YE5io7P71kE) - For cheering me up while I was writing all these.
 
 ## License
 
