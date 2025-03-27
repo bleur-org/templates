@@ -11,7 +11,7 @@
 
     # Don't worry, if you need sha256 of your toolchain,
     # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-AJ6LX/Q/Er9kS15bn9iflkUwcgYqRQxiOIL2ToVAXaU=";
+    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
   };
 
   # Manifest via Cargo.toml
