@@ -90,7 +90,7 @@ In your configuration, add your project repository to `inputs`.
 }
 ```
 
-Ok, now we have your project in repository list and now, we need to make use of options provided by modules of your project. In order to do that, we need to activate our module by importing our module. In your configuration.nix, find where use imported things and then add your project like that:
+Ok, now we have your project in repository list and now, we need to make use of options provided by modules of your project. In order to do that, we need to activate our module by importing our module. In your configuration.nix, find where you imported things and then add your project like that:
 
 ```nix
 # Most of the time it's at the top part of nix configurations
@@ -117,7 +117,7 @@ Alright! Since we imported the module of our project and options are now availab
 Options are available, modules are activated and everything is ready to deploy, but now, we need to explain NixOS how
 to deploy our project by writing some Nix configs. I already wrote some options and configurations which will be available
 by default after project bootstrap, you are free to modify, add and remove whatever inside `module.nix` to your
-liking. If need list of available default options, refer to available default options section below. In this guide, I'll
+liking. If you need list of available default options or explanations for every option, refer to [available default options] section below. In this guide, I'll
 be showing you an example set up you may use to get started very fast, you'll find out the rest option by yourself if you
 need something else. In your `configuration.nix` or wherever of your configuration:
 
@@ -125,10 +125,10 @@ need something else. In your `configuration.nix` or wherever of your configurati
 {
   # WARNING! `tempbot-bot` shown below changes
   # depending on package name in your Cargo.toml
-  # Basically generation template looks like that:
+  # Basically it's generated like that:
   # => "{package.name}-bot"
-  # Replace package.name with package name in your
-  # Cargo.toml
+  # Replace package.name in your Cargo.toml with
+  # {package.name}
   services.tempbot-bot = {
     # Enable systemd service
     enable = true;
@@ -256,3 +256,4 @@ shown in `got` and place that in both `default.nix` and `shell.nix` at:
 ```
 
 [Xinux Community]: https://github.com/xinux-org
+[available default options]: #available-default-options
