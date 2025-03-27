@@ -186,11 +186,11 @@ Telegram bot token to pass to telegram bot, it should be a file that can be plac
 
 #### `webhook.enable` (optional) -> bool
 
-Enable automatic web proxy configuration for either caddy or nginx. If the value is false, telegram bot will be deployed in `polling` mode. This is for lazy people who don't want have or want complex web server configurations.
+Enable automatic web proxy configuration for either caddy or nginx. If the value is false, telegram bot will be deployed in `polling` mode. This is for people who have or want complex web server configurations.
 
 #### `webhook.proxy` (optional) -> `caddy` or `nginx` as value
 
-Choose which web server software should be integrate with.
+Choose which web server software should be integrated with.
 
 #### `webhook.domain` (optional) -> string
 
@@ -206,7 +206,7 @@ The user that will run the telegram bot. It's defaulted to "{package.name}-bot".
 
 #### `group` (optional) -> string
 
-Name of a group to which the user that's going to run the telegram bot should be added to. It's defaulted to the name of user.
+Name of a group to which the user that's going to run the telegram bot should be added to. It's defaulted to the name of the user.
 
 #### `dataDir` (optional) -> path
 
