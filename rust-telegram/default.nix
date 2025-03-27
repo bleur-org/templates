@@ -84,14 +84,14 @@ in
 
       maintainers = [
         {
-          name = "Example";
-          email = "example@xinux.uz";
-          handle = "example";
-          github = "example";
-          githubId = 00000000;
+          name = "Sokhibjon Orzikulov";
+          email = "sakhib@orzklv.uz";
+          handle = "orzklv";
+          github = "orzklv";
+          githubId = 54666588;
           keys = [
             {
-              fingerprint = "0000 0000 0000 0000 0000  0000 0000 0000 0000 0000";
+              fingerprint = "00D2 7BC6 8707 0683 FBB9  137C 3C35 D3AF 0DA1 D6A8";
             }
           ];
         }

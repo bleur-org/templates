@@ -4,11 +4,13 @@ default-members = ["crates/cli"]
 members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
 
 [workspace.package]
+# Don't remove `name` regardless of warnings
+# Lots of nix things depend on this value alone
 name = "tempserver"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
-description = "Just a Rust template via nix flakes"
+license = "MIT OR Apache-2.0"
+description = "Just a Rust + Actix + Diesel template via nix flakes"
 homepage = "https://github.com/xinux-org/templates"
 repository = "https://github.com/xinux-org/templates"
 authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]

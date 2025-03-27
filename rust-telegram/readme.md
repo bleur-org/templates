@@ -103,9 +103,7 @@ Ok, now we have your project in repository list and now, we need to make use of 
     # Imagine here your existing imports
 
     # Now import your project module like this
-    inputs.tempbot.nixosModules.tempbot-bot
-    # Change or get name of your module from flake.nix
-    # at nixosModules.
+    inputs.tempbot.nixosModules.bot
   ];
 };
 ```

@@ -24,18 +24,12 @@ flake: {
   );
 
   # The digesting configuration of server
-  toml-config = let
-    database_url =
-      if cfg.database.socketAuth
-      then "postgres://${cfg.database.user}@/${cfg.database.name}?host=${cfg.database.socket}"
-      else "#databaseUrl#";
-  in
-    toml.generate "config.toml" {
-      threads = cfg.threads;
-      port = cfg.port;
-      url = cfg.address;
-      inherit database_url;
-    };
+  toml-config = toml.generate "config.toml" {
+    port = cfg.port;
+    url = cfg.address;
+    threads = cfg.threads;
+    database_url = "#databaseUrl#";
+  };
 
   # Caddy proxy reversing
   caddy = mkIf (cfg.enable && cfg.proxy-reverse.enable && cfg.proxy == "caddy") {
@@ -223,9 +217,6 @@ flake: {
             cd "$target_dir/migrations"
             diesel migration run
 
-            # Come back to cwd
-            cd "${cfg.dataDir}"
-
             # Save the new migrations list
             echo "$new_migrations" > "$migrations_file"
           else
@@ -303,21 +294,25 @@ flake: {
   # Various checks and tests of options
   asserts = lib.mkIf cfg.enable {
     ## Warning (nixos-rebuild doesn't fail if any warning shows up)
-    warnings = [
-      (lib.mkIf (cfg.proxy-reverse.enable && cfg.proxy-reverse.domain == null) "services.${manifest.name}.proxy-reverse.domain must be set in order to properly generate certificate!")
-    ];
+    warnings = [];
+    # ++ lib.optional
+    # (cfg.proxy-reverse.enable && (cfg.proxy-reverse.domain == null || cfg.proxy-reverse.domain == ""))
+    # "services.${manifest.name}.proxy-reverse.domain must be set in order to properly generate certificate!";
 
     ## Tests (nixos-rebuilds fails if any test fails)
-    assertions = [
+    assertions =
+      [
+        {
+          assertion = (!cfg.database.socketAuth) -> cfg.database.passwordFile != null;
+          message = "services.${manifest.name}.database.passwordFile must be set when using remote database!";
+        }
+      ]
+      ++ lib.optional
+      (cfg.proxy-reverse.enable)
       {
-        assertion = cfg.database.passwordFile != null;
-        message = "services.${manifest.name}.database.passwordFile must be set!";
-      }
-      {
-        assertion = !(cfg.proxy-reverse.enable && (cfg.proxy-reverse.domain == null || cfg.proxy-reverse.domain == ""));
+        assertion = cfg.proxy-reverse.domain != null && cfg.proxy-reverse.domain != "";
         message = "You must specify a valid domain when proxy-reverse is enabled!";
-      }
-    ];
+      };
   };
 in {
   # Available user options
@@ -364,7 +359,7 @@ in {
               "caddy"
             ]);
           default = "caddy";
-          description = "Proxy reverse software for hosting webhook";
+          description = "Web server software for proxy reversing";
         };
       };
 
@@ -381,7 +376,7 @@ in {
             if local-database
             then true
             else false;
-          description = "Use Unix socket authentication for PostgreSQL instead of password authentication.";
+          description = "Use Unix socket authentication for PostgreSQL instead of password authentication when local database wanted.";
         };
 
         socket = mkOption {
@@ -397,13 +392,13 @@ in {
           type = types.port;
           default = config.services.postgresql.settings.port;
           defaultText = "5432";
-          description = "Database host port";
+          description = "Database host port.";
         };
 
         name = mkOption {
           type = types.str;
           default = manifest.name;
-          description = "Database name";
+          description = "Database name.";
         };
 
         user = mkOption {
@@ -447,7 +442,7 @@ in {
         type = types.package;
         default = fpkg;
         description = ''
-          Compiled ${manifest.name} actix server to use with the service.
+          Compiled ${manifest.name} actix server package to use with the service.
         '';
       };
     };

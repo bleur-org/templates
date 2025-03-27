@@ -1,7 +1,6 @@
 {
   pkgs ? import <nixpkgs> {},
   fenix ? import <fenix> {},
-  name ? "tempserver",
 }: let
   # Helpful nix function
   getLibFolder = pkg: "${pkg}/lib";
@@ -19,7 +18,7 @@
   manifest = (pkgs.lib.importTOML ./Cargo.toml).workspace.package;
 in
   pkgs.stdenv.mkDerivation {
-    name = "${name}-dev";
+    name = "${manifest.name}-dev";
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
@@ -39,7 +38,7 @@ in
       deadnix
       alejandra
 
-      # Rust
+      # Rust
       toolchain
       cargo-watch
 

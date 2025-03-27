@@ -1,7 +1,6 @@
 {
   pkgs ? import <nixpkgs> {},
   fenix ? import <fenix> {},
-  name ? "tempserver",
 }: let
   # Helpful nix function
   lib = pkgs.lib;
@@ -23,7 +22,7 @@ in
     # Package related things automatically
     # obtained from Cargo.toml, so you don't
     # have to do everything manually
-    pname = name;
+    pname = manifest.name;
     version = manifest.version;
 
     # Your govnocodes
@@ -74,7 +73,7 @@ in
     RUST_BACKTRACE = 1;
 
     # Compiler LD variables
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}  ";
+    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)} -L${(getLibFolder pkgs.postgresql)}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
       pkgs.gcc
       pkgs.libiconv
@@ -90,14 +89,14 @@ in
       mainProgram = "server";
       maintainers = [
         {
-          name = "Example";
-          email = "example@xinux.uz";
-          handle = "example";
-          github = "example";
-          githubId = 00000000;
+          name = "Sokhibjon Orzikulov";
+          email = "sakhib@orzklv.uz";
+          handle = "orzklv";
+          github = "orzklv";
+          githubId = 54666588;
           keys = [
             {
-              fingerprint = "0000 0000 0000 0000 0000  0000 0000 0000 0000 0000";
+              fingerprint = "00D2 7BC6 8707 0683 FBB9  137C 3C35 D3AF 0DA1 D6A8";
             }
           ];
         }

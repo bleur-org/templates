@@ -27,18 +27,15 @@
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-
-      # Project name
-      name = "tempserver";
     in {
       # Nix script formatter
       formatter = pkgs.alejandra;
 
       # Development environment
-      devShells.default = import ./shell.nix {inherit pkgs fenix name;};
+      devShells.default = import ./shell.nix {inherit pkgs fenix;};
 
       # Output package
-      packages.default = pkgs.callPackage ./. {inherit pkgs fenix name;};
+      packages.default = pkgs.callPackage ./. {inherit pkgs fenix;};
     })
     // {
       # NixOS module (deployment)
