@@ -8,7 +8,7 @@
 .env
 
 # Production config file
-config.toml
+config.toml*
 
 # Shell temporary files
 .nix-shell
