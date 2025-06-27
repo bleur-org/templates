@@ -3,7 +3,7 @@
 
   inputs = {
     # Stable for keeping thins clean
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # Fresh and new for testing
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -32,9 +32,9 @@
       formatter = pkgs.alejandra;
 
       # Development environment
-      devShells.default = import ./shell.nix {inherit pkgs fenix;};
+      devShells.default = import ./shell.nix {inherit pkgs;};
 
       # Output package
-      packages.default = pkgs.callPackage ./. {inherit pkgs fenix;};
+      packages.default = pkgs.callPackage ./. {inherit pkgs;};
     });
 }

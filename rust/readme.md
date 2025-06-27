@@ -1,15 +1,9 @@
 # Rust Nix Template
 
-This is a starter pack for Nix friendly Rust project ecosystem provided to you by [Xinux Community] members.
-The project uses fenix to fetch Rust toolchain from rustup catalogue and unfortunately, it fetches and patches
-once (untill you clean cache) the whole rustup toolchain and THEN build the program or run.
+This is a starter pack for Nix friendly Rust project ecosystem provided to you by [Bleur Stack] developers.
+The project uses rust toolchain derived from nixpkgs to fetch necessary tools and then compile your binary.
 
 > Please, after bootstrapping, rename / change all `example` or `template` keywords in template files.
-
-## Rust Toolchain
-
-Rustup toolchain is utilized and managed by Nix package manager via `rust-toolchain.toml` file which can be found
-at the root path of your project. Feel free to modify toolchain file to customize toolchain behaviour.
 
 ## Development
 
@@ -72,28 +66,4 @@ There's been cases when I wanted to reproduce totally different behaviors in dev
 production build. This occurs quite a lot lately for some reason and because of that, I tend to keep
 both shell.nix and default.nix to don't mix things up.
 
-### Error when building or entering development environment
-
-If you see something like that in the end:
-
-```
-error: hash mismatch in fixed-output derivation '/nix/store/fsrachja0ig5gijrkbpal1b031lzalf0-channel-rust-stable.toml.drv':
-  specified: sha256-vMlz0zHduoXtrlu0Kj1jEp71tYFXyymACW8L4jzrzNA=
-     got:    sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=
-```
-
-Just know that something in that version of rustup changed or sha is outdated, so, just copy whatever
-shown in `got` and place that in both `default.nix` and `shell.nix` at:
-
-```
-  # Rust Toolchain via fenix
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
-    file = ./rust-toolchain.toml;
-
-    # Bla bla bla bla bla, bla bla bla.
-    #                     REPLACE THIS LONG THING!
-    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
-  };
-```
-
-[Xinux Community]: https://github.com/xinux-org
+[Bleur Stack]: https://github.com/bleur-org

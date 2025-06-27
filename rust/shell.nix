@@ -1,23 +1,24 @@
 # Either have nixpkgs and fenix in your channels
 # Or build it using flakes, flake way is more recommended!
 {
-  pkgs ? import <nixpkgs> {},
-  fenix ? import <fenix> {},
+  pkgs ? let
+    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+    nixpkgs = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+      sha256 = lock.narHash;
+    };
+  in
+    import nixpkgs {overlays = [];},
+  ...
 }: let
   # Helpful nix function
   getLibFolder = pkg: "${pkg}/lib";
 
-  # Rust Toolchain via fenix
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
-    file = ./rust-toolchain.toml;
-
-    # Don't worry, if you need sha256 of your toolchain,
-    # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
-  };
+  # Manifest
+  manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
 in
   pkgs.stdenv.mkDerivation {
-    name = "template-dev";
+    name = "${manifest.name}-dev";
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
@@ -38,15 +39,19 @@ in
       alejandra
 
       # Rust
-      toolchain
+      rustc
+      cargo
+      rustfmt
+      clippy
+      rust-analyzer
       cargo-watch
 
       # Other compile time dependencies
       # here
     ];
 
-    # Runtime dependencies which will be shipped
-    # with nix package
+    # Runtime dependencies which will be in present
+    # after activation
     buildInputs = with pkgs; [
       # openssl
       # libressl
@@ -54,6 +59,7 @@ in
 
     # Set Environment Variables
     RUST_BACKTRACE = "full";
+    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
 
     # Compiler LD variables
     # > Make sure packages have /lib or /include path'es
@@ -65,6 +71,6 @@ in
     ];
 
     shellHook = ''
-      # Extra steps
+      # Extra steps to do while activating development shell
     '';
   }

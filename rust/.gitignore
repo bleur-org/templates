@@ -3,3 +3,6 @@
 
 # Cargo builds
 /target
+
+# Direnv
+/.direnv
