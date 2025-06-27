@@ -1,6 +1,6 @@
 # Nightly Rust Nix Template
 
-This is a starter pack for Nix friendly Rust project with nightly ecosystem provided to you by [Xinux Community]
+This is a starter pack for Nix friendly Rust project with nightly ecosystem provided to you by [Bleur Stack]
 members. The project uses fenix to fetch nightly rust toolchain from rustup catalogue and unfortunately, it fetches
 and patches once (untill you clean cache) the whole rustup toolchain and THEN build the program or run.
 
@@ -102,4 +102,4 @@ This happens when you use very, very, very latest nightly toolchain. Just go bac
 re-enter development environment or build, it should probably work. I resolved that probled like that in my
 embedded rust project.
 
-[Xinux Community]: https://github.com/xinux-org
+[Bleur Stack]: https://github.com/bleur-org

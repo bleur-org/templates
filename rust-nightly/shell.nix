@@ -17,9 +17,12 @@
     # just run `nix build` and copy paste correct sha256.
     sha256 = "sha256-0Hcko7V5MUtH1RqrOyKQLg0ITjJjtyRPl2P+cJ1p1cY==";
   };
+
+  # Manifest
+  manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
 in
   pkgs.stdenv.mkDerivation {
-    name = "template-nightly-dev";
+    name = "${manifest.name}-dev";
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [

@@ -83,9 +83,6 @@ in
       description = manifest.description;
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-
-      maintainers = [
-        lib.maintainers.orzklv
-      ];
+      maintainers = [ lib.maintainers.orzklv ];
     };
   }

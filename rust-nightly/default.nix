@@ -82,20 +82,6 @@ in
       description = manifest.description;
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-
-      maintainers = [
-        {
-          name = "Sokhibjon Orzikulov";
-          email = "sakhib@orzklv.uz";
-          handle = "orzklv";
-          github = "orzklv";
-          githubId = 54666588;
-          keys = [
-            {
-              fingerprint = "00D2 7BC6 8707 0683 FBB9  137C 3C35 D3AF 0DA1 D6A8";
-            }
-          ];
-        }
-      ];
+      maintainers = [ lib.maintainers.orzklv ];
     };
   }

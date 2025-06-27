@@ -1,5 +1,5 @@
 {
-  description = "A Rust project bootstrapped with github:xinux-org/templates";
+  description = "A beginning of an awesome project bootstrapped with github:bleur-org/templates";
 
   inputs = {
     # Stable for keeping thins clean
@@ -10,19 +10,12 @@
 
     # The flake-utils library
     flake-utils.url = "github:numtide/flake-utils";
-
-    # Rust toolchain shit
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
     self,
     nixpkgs,
     flake-utils,
-    fenix,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
