@@ -1,5 +1,5 @@
 <p align="center">
-    <img src=".github/assets/header.png" alt="Xinux'es {Templates}">
+    <img src=".github/assets/header.png" alt="Bleur's {Templates}">
 </p>
 
 <p align="center">
@@ -7,13 +7,12 @@
 </p>
 
 <p align="center">
-    <img align="center" src="https://img.shields.io/github/languages/top/xinux-org/templates?style=flat&logo=nixos&logoColor=5277C3&labelColor=ffffff&color=ffffff" alt="Top Used Language">
-    <a href="https://t.me/xinux"><img align="center" src="https://img.shields.io/badge/Chat-grey?style=flat&logo=telegram&logoColor=5277C3&labelColor=ffffff&color=ffffff" alt="Telegram Community"></a>
+    <img align="center" src="https://img.shields.io/github/languages/top/bleur-org/templates?style=flat&logo=rust&logoColor=000000&labelColor=ffffff&color=ffffff" alt="Top Used Language">
 </p>
 
 ## About
 
-This is a collection of Xinux'es Nix bootstrapped templates which can be used to bootstrap your own project for certain stack. The templates have everything set up ready for you, so you can focus on developing the application instead of playing around configuring everything to get it working.
+This is Bleur stack, a collection of Nix bootstrapped templates which can be used to bootstrap your own project for certain stack. The templates have everything set up ready for you, so you can focus on developing the application instead of playing around configuring everything to get it working.
 
 > Every repository has its own detailed readme.md for more information to get started once you're done with bootstrapping.
 
@@ -31,14 +30,14 @@ In order to bootstrap your own project using our templates, you need to `cd` som
 
 ```bash
 # Replace `example` with any supported template above in projects section
-nix flake init --template github:xinux-org/templates#example
+nix flake init --template github:bleur-org/templates#example
 ```
 
 the command above will bootstrap project in current directory, or you can indicate location where it should be boostrapped:
 
 ```bash
 # instead of examples, any chosen project via #...
-nix flake new --template github:xinux-org/templates#example ./my-cool-project
+nix flake new --template github:bleur-org/templates#example ./my-cool-project
 ```
 
 ## Thanks
@@ -51,5 +50,5 @@ nix flake new --template github:xinux-org/templates#example ./my-cool-project
 This project is licensed under the MIT License - see the [LICENSE](license) file for details.
 
 <p align="center">
-    <img src=".github/assets/footer.png" alt="Xinux'es {Templates}">
+    <img src=".github/assets/footer.png" alt="Bleur's {Templates}">
 </p>

@@ -4,7 +4,7 @@
     path = ./rust;
     description = "Typical Rust project template using fenix";
     welcomeText = ''
-      # Simple Rust Nix template by Xinux community
+      # Bleur stack simple Rust & Nix template
 
       ## Intended usage
       The intended usage of this flake is to write a project on Rust which compiles to an executable project
@@ -24,7 +24,7 @@
     path = ./rust-nightly;
     description = "Nightly Rust project template using fenix";
     welcomeText = ''
-      # Nightly Rust Nix template by Xinux community
+      # Bleur stack nightly Rust & Nix template
 
       ## Intended usage
       The intended usage of this flake is to write a project on nightly version of Rust toolchain which compiles to an executable project
@@ -44,7 +44,7 @@
     path = ./rust-shared;
     description = "C shared/static library with libc on Rust template";
     welcomeText = ''
-      # C shared/static library with libc on Rust template by Xinux community
+      # Bleur stack C shared/static library with libc on Rust & Nix template
 
       ## Intended usage
       The intended usage of this flake is to write a C static/shared library with libc on Rust
@@ -65,7 +65,7 @@
     path = ./rust-telegram;
     description = "Telegram bot on Rust with NixOS modules template";
     welcomeText = ''
-      # Telegram bot on Rust with NixOS modules template by Xinux community
+      # Bleur stack telegram bot on Rust & Nix with NixOS modules template
       ## Intended usage
       The intended usage of this flake is to write a Telegram bot on Rust and deploy it on NixOS server
 
@@ -85,7 +85,7 @@
     path = ./rust-actix;
     description = "Actix & Postgresql server on Rust template";
     welcomeText = ''
-      # Actix & Postgresql server on Rust template with NixOS modules by Xinux community
+      # Bleur stack actix & postgresql server on Rust & Nix template with NixOS modules
       ## Intended usage
       The intended usage of this flake is to write a backend server application on Rust/Actix and deploy it on NixOS server
 

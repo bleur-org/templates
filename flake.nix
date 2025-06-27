@@ -1,5 +1,5 @@
 {
-  description = "Templates for various development projects";
+  description = "Templates for various development projects by Bleur";
 
   inputs = {
     # Too old to work with most libraries
