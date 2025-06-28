@@ -143,7 +143,7 @@ need something else. In your `configuration.nix` or wherever of your configurati
     database = {
       # Path to a file consisting only password for your database
       # Sops and secret manager friendly like:
-      # config.sops.secrets."xinux/demo-server".path
+      # config.sops.secrets."myserver/demo-server".path
       passwordFile = "/srv/tempserver-dbpass";
     };
   };

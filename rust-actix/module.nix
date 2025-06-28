@@ -348,7 +348,7 @@ in {
         domain = mkOption {
           type = with types; nullOr str;
           default = null;
-          example = "xinux.uz";
+          example = "bleur.net";
           description = "Domain to use while adding configurations to web proxy server";
         };
 

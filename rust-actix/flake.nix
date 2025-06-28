@@ -1,5 +1,5 @@
 {
-  description = "A Rust project bootstrapped with github:xinux-org/templates";
+  description = "A beginning of an awesome project bootstrapped with github:bleur-org/templates";
 
   inputs = {
     # Stable for keeping thins clean
