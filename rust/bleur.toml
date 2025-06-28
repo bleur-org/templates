@@ -3,36 +3,36 @@ name = "rust-telegram"
 
 [[variables]]
 placeholder = "#name#"
-type = "string"
+types = "string"
 default = "project"
 source = "Cargo.toml"
 
 [[variables]]
 placeholder = "#version#"
-type = "string"
+types = "string"
 default = "0.1.0"
 source = "Cargo.toml"
 
 [[variables]]
 placeholder = "#website#"
-type = "string"
+types = "string"
 default = "https://bleur.net"
 source = "Cargo.toml"
 
 [[variables]]
 placeholder = "#repository#"
-type = "string"
+types = "string"
 default = "https://github.com/bleur-org/templates"
 source = "Cargo.toml"
 
 [[variables]]
 placeholder = "#description#"
-type = "string"
+types = "string"
 default = "My very awesome rust project"
 source = "Cargo.toml"
 
 [[variables]]
 placeholder = "#author#"
-type = "string"
+types = "string"
 default = "Bleur Developers"
 source = "Cargo.toml"
