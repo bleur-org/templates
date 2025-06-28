@@ -1,6 +1,13 @@
 {
-  pkgs ? import <nixpkgs> {},
-  fenix ? import <fenix> {},
+  pkgs ? let
+    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+    nixpkgs = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+      sha256 = lock.narHash;
+    };
+  in
+    import nixpkgs {overlays = [];},
+  ...
 }: let
   # Helpful nix function
   lib = pkgs.lib;
@@ -8,15 +15,6 @@
 
   # Manifest via Cargo.toml
   manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
-
-  # Rust Toolchain via fenix
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
-    file = ./rust-toolchain.toml;
-
-    # Don't worry, if you need sha256 of your toolchain,
-    # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
-  };
 in
   pkgs.rustPlatform.buildRustPackage {
     # Package related things automatically
@@ -51,7 +49,9 @@ in
       llvmPackages.clang
 
       # Rust
-      toolchain
+      rustc
+      cargo
+      clippy
 
       # Other compile time dependencies
       openssl
@@ -67,6 +67,7 @@ in
 
     # Set Environment Variables
     RUST_BACKTRACE = 1;
+    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
 
     # Compiler LD variables
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
@@ -79,22 +80,9 @@ in
     meta = with lib; {
       homepage = manifest.homepage;
       description = manifest.description;
+      # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-
-      maintainers = [
-        {
-          name = "Sokhibjon Orzikulov";
-          email = "sakhib@orzklv.uz";
-          handle = "orzklv";
-          github = "orzklv";
-          githubId = 54666588;
-          keys = [
-            {
-              fingerprint = "00D2 7BC6 8707 0683 FBB9  137C 3C35 D3AF 0DA1 D6A8";
-            }
-          ];
-        }
-      ];
+      maintainers = [lib.maintainers.orzklv];
     };
   }

@@ -1,12 +1,12 @@
 [package]
-name = "templib"
-version = "0.1.0"
+name = "#name#"
+version = "#version#"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-homepage = "https://github.com/xinux-org/templates"
-repository = "https://github.com/xinux-org/templates"
-description = "Just a shared/static library on Rust template via nix flakes"
-authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]
+homepage = "#website#"
+repository = "#repository#"
+description = "#description#"
+authors = ["#author#"]
 
 [lib]
 name = "templib"

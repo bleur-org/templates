@@ -37,7 +37,7 @@ use tempbot::{Cli, Commands};
 async fn main() -> Result<(), Box<dyn Error>> {
     // Starter packs
     pretty_env_logger::init();
-    log::info!("Starting Bot: {}", "xinuxmgr");
+    log::info!("Starting Bot: {}", env!("CARGO_PKG_NAME"););
 
     // Global instances
     let mut config = Config::default();

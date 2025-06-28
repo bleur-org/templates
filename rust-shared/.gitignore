@@ -4,6 +4,9 @@
 # Cargo builds
 /target
 
+# Direnv
+/.direnv
+
 # Outputs
 tests/try*
 !tests/try.c

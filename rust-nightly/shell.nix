@@ -1,8 +1,14 @@
 # Either have nixpkgs and fenix in your channels
 # Or build it using flakes, flake way is more recommended!
 {
-  pkgs ? import <nixpkgs> {},
-  fenix ? import <fenix> {},
+  pkgs ? let
+    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+    nixpkgs = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+      sha256 = lock.narHash;
+    };
+  in
+    import nixpkgs {overlays = [(import "${fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz"}/overlay.nix")];},
 }: let
   # Helpful nix function
   getLibFolder = pkg: "${pkg}/lib";
@@ -10,7 +16,7 @@
   # Rust Toolchain via fenix
   # Fenix will download all nightly toolchain itself
   # You just need to change toolchain.toml for more
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
+  toolchain = pkgs.fenix.fromToolchainFile {
     file = ./rust-toolchain.toml;
 
     # Don't worry, if you need sha256 of your toolchain,

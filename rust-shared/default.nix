@@ -1,8 +1,15 @@
 # Either have nixpkgs and fenix in your channels
 # Or build it using flakes, flake way is more recommended!
 {
-  pkgs ? import <nixpkgs> {},
-  fenix ? import <fenix> {},
+  pkgs ? let
+    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+    nixpkgs = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+      sha256 = lock.narHash;
+    };
+  in
+    import nixpkgs {overlays = [(import "${fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz"}/overlay.nix")];},
+  ...
 }: let
   # Helpful nix function
   lib = pkgs.lib;
@@ -12,7 +19,7 @@
   manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
 
   # Rust Toolchain via fenix
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
+  toolchain = pkgs.fenix.fromToolchainFile {
     file = ./rust-toolchain.toml;
 
     # Don't worry, if you need sha256 of your toolchain,
@@ -88,22 +95,9 @@ in
     meta = with lib; {
       homepage = manifest.homepage;
       description = manifest.description;
+      # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-
-      maintainers = [
-        {
-          name = "Sokhibjon Orzikulov";
-          email = "sakhib@orzklv.uz";
-          handle = "orzklv";
-          github = "orzklv";
-          githubId = 54666588;
-          keys = [
-            {
-              fingerprint = "00D2 7BC6 8707 0683 FBB9  137C 3C35 D3AF 0DA1 D6A8";
-            }
-          ];
-        }
-      ];
+      maintainers = [ lib.maintainers.orklzv ];
     };
   }

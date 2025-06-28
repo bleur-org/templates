@@ -81,8 +81,9 @@ in
     meta = with lib; {
       homepage = manifest.homepage;
       description = manifest.description;
+      # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-      maintainers = [ lib.maintainers.orzklv ];
+      maintainers = [lib.maintainers.orzklv];
     };
   }

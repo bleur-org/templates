@@ -8,10 +8,10 @@ pub mod functions;
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 
-/// Telegram bot manager for Xinux community
+/// Telegram bot made with Bleur Stack
 #[derive(Debug, Parser)]
 #[command(name = "bot")]
-#[command(about = "Telegram bot example from Xinux community", long_about = None)]
+#[command(about = "Telegram bot made with Bleur Stack", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Commands,

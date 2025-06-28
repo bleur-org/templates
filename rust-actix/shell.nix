@@ -1,18 +1,16 @@
 {
-  pkgs ? import <nixpkgs> {},
-  fenix ? import <fenix> {},
+  pkgs ? let
+    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+    nixpkgs = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+      sha256 = lock.narHash;
+    };
+  in
+    import nixpkgs {overlays = [];},
+  ...
 }: let
   # Helpful nix function
   getLibFolder = pkg: "${pkg}/lib";
-
-  # Rust Toolchain via fenix
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
-    file = ./rust-toolchain.toml;
-
-    # Don't worry, if you need sha256 of your toolchain,
-    # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-X/4ZBHO3iW0fOenQ3foEvscgAPJYl2abspaBThDOukI=";
-  };
 
   # Manifest via Cargo.toml
   manifest = (pkgs.lib.importTOML ./Cargo.toml).workspace.package;
@@ -39,7 +37,11 @@ in
       alejandra
 
       # Rust
-      toolchain
+      rustc
+      cargo
+      rustfmt
+      clippy
+      rust-analyzer
       cargo-watch
 
       # Databases & ORM
@@ -60,6 +62,7 @@ in
 
     # Set Environment Variables
     RUST_BACKTRACE = "full";
+    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
 
     # Compiler LD variables
     # > Make sure packages have /lib or /include path'es

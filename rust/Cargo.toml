@@ -1,12 +1,12 @@
 [package]
 name = "#name#"
-version = "0.1.0"
+version = "#version#"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-homepage = "https://#website#"
-repository = "https://#repo#"
+homepage = "#website#"
+repository = "#repository#"
 description = "#description#"
-authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]
+authors = ["#author#"]
 
 # Dependencies that will included with final binary
 [dependencies]

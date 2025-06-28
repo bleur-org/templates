@@ -1,0 +1,17 @@
+[templates.rust]
+path = "./rust"
+description = "Typical Rust project template using fenix"
+welcome = """
+# Bleur stack simple Rust & Nix template
+
+## Intended usage
+The intended usage of this flake is to write a project on Rust which compiles to an executable project
+
+## Important
+Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+## More info
+- [Fenix for Nix](https://github.com/nix-community/fenix)
+- [Rust language](https://rust-lang.org)
+- [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
+"""

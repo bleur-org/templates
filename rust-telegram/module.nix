@@ -49,7 +49,7 @@ flake: {
 
   service = lib.mkIf cfg.enable {
     users.users.${cfg.user} = {
-      description = "${manifest.name} Telegram Bot user";
+      description = "${manifest.name} user";
       isSystemUser = true;
       group = cfg.group;
     };
@@ -57,21 +57,21 @@ flake: {
     users.groups.${cfg.group} = {};
 
     systemd.services."${manifest.name}-bot" = {
-      description = "${manifest.name} Telegram Bot made from a template by Xinux";
-      documentation = ["https://github.com/xinux-org/templates/tree/main/rust-telegram"];
+      description = "${manifest.description}";
+      documentation = ["${manifest.repository}"];
 
       after = ["network-online.target"];
       wants = ["network-online.target"];
       wantedBy = ["multi-user.target"];
 
       serviceConfig = {
+        # Core
         User = cfg.user;
         Group = cfg.group;
         Restart = "always";
         ExecStart = "${lib.getBin cfg.package}/bin/${manifest.name} ${genArgs {cfg = cfg;}}";
         StateDirectory = cfg.user;
         StateDirectoryMode = "0750";
-        # EnvironmentFile = cfg.secret;
 
         # Hardening
         CapabilityBoundingSet = [
@@ -83,7 +83,7 @@ flake: {
         DevicePolicy = "strict";
         IPAddressAllow = "localhost";
         LockPersonality = true;
-        # MemoryDenyWriteExecute = true;
+        # MemoryDenyWriteExecute = true; # Full sandboxing
         NoNewPrivileges = true;
         PrivateDevices = true;
         PrivateTmp = true;
@@ -134,7 +134,7 @@ in {
   options = with lib; {
     services."${manifest.name}-bot" = {
       enable = mkEnableOption ''
-        ${manifest.name} Telegram bot template from Xinux community.
+        ${manifest.name} telegram bot made with Bleur Stack.
       '';
 
       webhook = {
@@ -145,7 +145,7 @@ in {
         domain = mkOption {
           type = with types; nullOr str;
           default = null;
-          example = "xinux.uz";
+          example = "bleur.net";
           description = "Domain to use while adding configurations to web proxy server";
         };
 
@@ -190,7 +190,7 @@ in {
         type = types.str;
         default = "/var/lib/${manifest.name}";
         description = lib.mdDoc ''
-          The path where ${manifest.name} Telegram Bot keeps its config, data, and logs.
+          The path where ${manifest.name} telegram bot keeps its config, data, and logs.
         '';
       };
 
@@ -198,7 +198,7 @@ in {
         type = types.package;
         default = bot;
         description = ''
-          The ${manifest.name} Telegram Bot package to use with the service.
+          The ${manifest.name} telegram bot package to use with the service.
         '';
       };
     };

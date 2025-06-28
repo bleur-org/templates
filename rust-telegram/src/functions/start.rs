@@ -8,7 +8,7 @@ use teloxide::{
 static TEXT: &str = r#"
 <b>Welcome to your bot!</b>
 
-You're trying out Rust Telegram bot template made by Xinux community which has Nix deployment modules to get you started faster!
+You're trying out a telegram bot made with Bleur Stack which is written on rust and has Nix deployment modules to get you started faster!
 "#;
 
 pub async fn command(bot: &Bot, msg: &Message) -> ResponseResult<()> {
@@ -25,7 +25,7 @@ pub fn keyboard() -> InlineKeyboardMarkup {
     keyboard
         .url(
             "Maybe read more?",
-            "https://github.com/xinux-org/templates/tree/main/rust-telegram",
+            "https://github.com/bleur-org/templates/tree/main/rust-telegram",
         )
         .unwrap()
 }

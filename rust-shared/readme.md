@@ -1,7 +1,7 @@
 # Rust Nix Template
 
 This is a starter pack for Nix friendly Rust ecosystem project to write a C static or shared library provided
-to you by [Xinux Community] members. The project uses fenix to fetch Rust toolchain from rustup catalogue and
+to you by [Bleur Stack] developers. The project uses fenix to fetch Rust toolchain from rustup catalogue and
 unfortunately, it fetches and patches once (untill you clean cache) the whole rustup toolchain and THEN build
 the program or run.
 
@@ -72,8 +72,8 @@ ls -la ./result/lib/
 ls -la ./result/include/
 ```
 
-> [!NOTE]  
-> Writing tests in rust is good, but as cargo can't check eligibility of your header file, make sure to write a C program that will build and run with your library to ensure correct behaviour manually. Don't believe as it will work ✨magically✨ !
+> [!NOTE]
+> Writing tests in rust is good, but as cargo can't check eligibility of your header file, make sure to write a C program that will build and run with your library to ensure correct behaviour manually. Don't believe as it will work ✨magically✨!
 
 ## FAQ
 
@@ -107,4 +107,4 @@ shown in `got` and place that in both `default.nix` and `shell.nix` at:
   };
 ```
 
-[Xinux Community]: https://github.com/xinux-org
+[Bleur Stack]: https://github.com/bleur-org

@@ -1,15 +1,10 @@
 # Telegram Rust Nix Template
 
-This is a starter pack for Nix friendly Telegram bot project on Rust ecosystem provided to you by [Xinux Community]
-members. The project uses fenix to fetch Rust toolchain from rustup catalogue and unfortunately, it fetches and patches
+This is a starter pack for Nix friendly Telegram bot project on Rust ecosystem provided to you by [Bleur Stack]
+developers. The project uses fenix to fetch Rust toolchain from rustup catalogue and unfortunately, it fetches and patches
 once (untill you clean cache) the whole rustup toolchain and THEN build the program or run.
 
 > Please, after bootstrapping, rename / change all `example` or `template` keywords in template files.
-
-## Rust Toolchain
-
-Rustup toolchain is utilized and managed by Nix package manager via `rust-toolchain.toml` file which can be found
-at the root path of your project. Feel free to modify toolchain file to customize toolchain behaviour.
 
 ## Development
 
@@ -156,7 +151,7 @@ need something else. In your `configuration.nix` or wherever of your configurati
 }
 ```
 
-This is very basic examples, you can tune other things like user who's going to run this systemd service, change group of user and many more. You can add your own modifications and add more options by yourself.
+This is very basic and minimal example, you can tune other things like user who's going to run this systemd service, change group of user and many more. You can add your own modifications and add more options by yourself.
 
 ### Available default options
 
@@ -229,29 +224,5 @@ There's been cases when I wanted to reproduce totally different behaviors in dev
 production build. This occurs quite a lot lately for some reason and because of that, I tend to keep
 both shell.nix and default.nix to don't mix things up.
 
-### Error when building or entering development environment
-
-If you see something like that in the end:
-
-```
-error: hash mismatch in fixed-output derivation '/nix/store/fsrachja0ig5gijrkbpal1b031lzalf0-channel-rust-stable.toml.drv':
-  specified: sha256-vMlz0zHduoXtrlu0Kj1jEp71tYFXyymACW8L4jzrzNA=
-     got:    sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=
-```
-
-Just know that something in that version of rustup changed or sha is outdated, so, just copy whatever
-shown in `got` and place that in both `default.nix` and `shell.nix` at:
-
-```
-  # Rust Toolchain via fenix
-  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
-    file = ./rust-toolchain.toml;
-
-    # Bla bla bla bla bla, bla bla bla.
-    #                     REPLACE THIS LONG THING!
-    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
-  };
-```
-
-[Xinux Community]: https://github.com/xinux-org
+[Bleur Stack]: https://github.com/bleur-org
 [available default options]: #available-default-options

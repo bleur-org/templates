@@ -26,15 +26,18 @@
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [fenix.overlays.default];
+      };
     in {
       # Nix script formatter
       formatter = pkgs.alejandra;
 
       # Development environment
-      devShells.default = import ./shell.nix {inherit pkgs fenix;};
+      devShells.default = import ./shell.nix {inherit pkgs;};
 
       # Output package
-      packages.default = pkgs.callPackage ./. {inherit pkgs fenix;};
+      packages.default = pkgs.callPackage ./. {inherit pkgs;};
     });
 }
