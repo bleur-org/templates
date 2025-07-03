@@ -101,8 +101,8 @@
     '';
   };
 
-  # Actix & Postgresql server on Rust template
-  rust-actix = {
+  # Relm4 stack based GTK rust app template
+  rust-gtk = {
     path = ./rust-gtk;
     description = "Rust GTK GUI application";
     welcomeText = ''
