@@ -1,8 +1,12 @@
 [package]
 name = "gtk-rust-template"
 version = "0.1.0"
-authors = ["Bilal Elmoussaoui <bil.elmoussaoui@gmail.com>"]
 edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "#description#"
+homepage = "#website#"
+repository = "#repository#"
+authors = ["#author#"]
 publish = false
 
 [profile.release]

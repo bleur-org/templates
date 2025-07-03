@@ -23,12 +23,12 @@ impl SimpleComponent for AboutDialog {
             // Insert your Issues page
             // .issue_url("https://gitlab.gnome.org/World/Rust/gtk-rust-template/-/issues")
             // Insert your application name here
-            .application_name("Relm4-template")
+            .application_name("Relm4 Template")
             .version(VERSION)
             .translator_credits("translator-credits")
-            .copyright("© 2024 Bilal Elmoussaoui")
-            .developers(vec!["Bilal Elmoussaoui"])
-            .designers(vec!["Bilal Elmoussaoui"])
+            .copyright("© 2025 Bleur Developers")
+            .developers(vec!["Bleur Developers"])
+            .designers(vec!["Bleur Developers"])
             .build()
     }
 

@@ -23,6 +23,7 @@ This is Bleur stack, a collection of Nix bootstrapped templates which can be use
 - Rust C static/shared library (via #rust-shared)
 - Rust Telegram Bot (via #rust-telegram)
 - Rust Actix (via #rust-actix)
+- Rust GTK (via #rust-gtk)
 
 ## Bootstrapping
 

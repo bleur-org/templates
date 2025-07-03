@@ -100,4 +100,24 @@
       - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
+
+  # Actix & Postgresql server on Rust template
+  rust-actix = {
+    path = ./rust-gtk;
+    description = "Rust GTK GUI application";
+    welcomeText = ''
+      # Bleur stack Gnome GTK based Relm4 stack application on Rust & Nix template
+      ## Intended usage
+      The intended usage of this flake is to write a gui application via Relm4 stack leveraging Gnome's GTK on Rust and distribute via nixpkgs
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [GTK](https://www.gtk.org/)
+      - [Relm4](https://relm4.org/)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
+    '';
+  };
 }
