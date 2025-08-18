@@ -1,0 +1,28 @@
+[book]
+authors      = ["Baxrom Raxmatov"]
+language     = "uz"
+multilingual = false
+src          = "src"
+title        = "programming-from-the-ground-up"
+
+[output.html]
+# cname                = "std.uzbek.net.uz"
+default-theme        = "light"
+edit-url-template    = "https://github.com/uzbek-net/programming-from-the-ground-up/edit/main/{path}"
+git-repository-url   = "https://github.com/uzbek-net/programming-from-the-ground-up/tree/main/"
+mathjax-support      = true
+preferred-dark-theme = "ayu"
+smart-punctuation    = true
+
+[output.html.playground]
+editable     = true
+line-numbers = true
+
+[output.html.search]
+boost-hierarchy     = 2
+boost-paragraph     = 1
+boost-title         = 2
+expand              = true
+heading-split-level = 2
+limit-results       = 20
+use-boolean-and     = true

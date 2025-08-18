@@ -1,0 +1,8 @@
+include = [
+  "*.toml",
+  # "some_directory/**/*.toml"
+]
+
+[formatting]
+align_entries = true
+reorder_keys = true
