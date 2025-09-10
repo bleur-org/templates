@@ -120,4 +120,22 @@
       - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
+
+  # Rust, MdBook & Nix Template
+  rust-book = {
+    path = ./rust-book;
+    description = "Rust, MdBook & Nix Template";
+    welcomeText = ''
+      # Bleur stack Rust, MdBook & Nix Template
+      ## Intended usage
+      The intended usage of this flake is to write Book
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [mdBook Documentation](https://rust-lang.github.io/mdBook/)
+      - [Example](https://github.com/uzbek-net/programming-from-the-ground-up)
+    '';
+  };
 }
