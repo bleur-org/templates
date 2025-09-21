@@ -25,10 +25,10 @@
       formatter = pkgs.alejandra;
 
       # Development environment
-      devShells.default = import ./shell.nix {inherit pkgs fenix;};
+      devShells.default = import ./shell.nix {inherit pkgs;};
 
       # Output package
-      packages.default = pkgs.callPackage ./. {inherit pkgs fenix;};
+      packages.default = pkgs.callPackage ./. {inherit pkgs;};
     })
     // {
       # NixOS module (deployment)

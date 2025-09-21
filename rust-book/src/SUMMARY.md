@@ -1,6 +1,7 @@
-# Uzbek Localization
+# #title#
 
-[Muqaddima](./muqaddima.md)
+[Table of Contents](./TOC.md)
 
-[Kirish]
-- [Chapter 1](./bob-00-00.md)
+[Intro]
+
+- [Chapter 1](./CHP-01-01.md)

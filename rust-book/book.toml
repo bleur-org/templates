@@ -1,17 +1,17 @@
 [book]
-authors      = ["Baxrom Raxmatov"]
+title        = "#title#"
+authors      = ["#author#"]
+src          = "src"
 language     = "uz"
 multilingual = false
-src          = "src"
-title        = "programming-from-the-ground-up"
 
 [output.html]
-# cname                = "std.uzbek.net.uz"
-default-theme        = "light"
-edit-url-template    = "https://github.com/uzbek-net/programming-from-the-ground-up/edit/main/{path}"
-git-repository-url   = "https://github.com/uzbek-net/programming-from-the-ground-up/tree/main/"
-mathjax-support      = true
 preferred-dark-theme = "ayu"
+default-theme        = "light"
+cname                = "#website#"
+edit-url-template    = "#github#/edit/main/{path}"
+git-repository-url   = "#github#/tree/main/"
+mathjax-support      = true
 smart-punctuation    = true
 
 [output.html.playground]

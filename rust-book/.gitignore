@@ -28,7 +28,6 @@
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -273,3 +272,6 @@ $RECYCLE.BIN/
 
 # Compiled book from mdbook
 book
+
+# Nix output
+result

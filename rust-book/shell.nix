@@ -8,27 +8,27 @@
   in
     import nixpkgs {overlays = [];},
   ...
-}:
-pkgs.stdenv.mkDerivation {
-  name = "nix";
+}: let
+  # Manifest via Cargo.toml
+  manifest = (pkgs.lib.importTOML ./book.toml).book;
+in
+  pkgs.stdenv.mkDerivation {
+    name = "${manifest.title}-shell";
 
-  nativeBuildInputs = with pkgs; [
-    # Utilities
-    git
-    just
-    mdbook
+    nativeBuildInputs = with pkgs; [
+      # Utilities
+      git
+      mdbook
 
-    # Toml
-    taplo
-    taplo-cli
-    taplo-lsp
+      # Toml
+      taplo
+      taplo-cli
+      taplo-lsp
 
-    # Nix
-    nixd
-    statix
-    deadnix
-    alejandra
-  ];
-
-  NIX_CONFIG = "extra-experimental-features = nix-command flakes";
-}
+      # Nix
+      nixd
+      statix
+      deadnix
+      alejandra
+    ];
+  }

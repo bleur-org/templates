@@ -1,6 +1,5 @@
 include = [
   "*.toml",
-  # "some_directory/**/*.toml"
 ]
 
 [formatting]

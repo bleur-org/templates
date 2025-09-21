@@ -1,11 +1,11 @@
 {
-  description = "Rust book template written by Uzbek L10N (@uzbek-net)";
+  description = "A beginning of an awesome project bootstrapped with github:bleur-org/templates";
 
   # inputs are other flakes you use within your own flake, dependencies
   # for your flake, etc.
   inputs = {
     # Stable Nixpkgs
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # Unstable Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -36,6 +36,9 @@
 
         # Development shells
         devShells.default = import ./shell.nix {inherit pkgs;};
+
+        # Output package
+        packages.default = pkgs.callPackage ./. {inherit pkgs;};
       }
     );
 }
