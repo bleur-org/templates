@@ -20,16 +20,6 @@ in
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
-      # GCC toolchain
-      gcc
-      gnumake
-      pkg-config
-
-      # LLVM toolchain
-      cmake
-      llvmPackages.llvm
-      llvmPackages.clang
-
       # Hail the Nix
       nixd
       statix
@@ -64,9 +54,7 @@ in
     # > Make sure packages have /lib or /include path'es
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.gcc
       pkgs.libiconv
-      pkgs.llvmPackages.llvm
     ];
 
     # Touch only if you know what you're doing

@@ -49,16 +49,6 @@ in
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
-      # GCC toolchain
-      gcc
-      gnumake
-      pkg-config
-
-      # LLVM toolchain
-      cmake
-      llvmPackages.llvm
-      llvmPackages.clang
-
       # Rust
       toolchain
 
@@ -87,9 +77,7 @@ in
     # Compiler LD variables
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.gcc
       pkgs.libiconv
-      pkgs.llvmPackages.llvm
     ];
 
     meta = with lib; {
@@ -98,6 +86,6 @@ in
       # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
-      maintainers = [ lib.maintainers.orklzv ];
+      maintainers = [lib.maintainers.orklzv];
     };
   }

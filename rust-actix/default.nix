@@ -38,21 +38,6 @@ in
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
-      # GCC toolchain
-      gcc
-      gnumake
-      pkg-config
-
-      # LLVM toolchain
-      cmake
-      llvmPackages.llvm
-      llvmPackages.clang
-
-      # Rust
-      rustc
-      cargo
-      clippy
-
       # Other compile time dependencies
       postgresql
     ];
@@ -76,10 +61,8 @@ in
     # Compiler LD variables
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)} -L${(getLibFolder pkgs.postgresql)}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.gcc
       pkgs.libiconv
       pkgs.postgresql
-      pkgs.llvmPackages.llvm
     ];
 
     meta = with lib; {

@@ -40,21 +40,6 @@ in
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
-      # GCC toolchain
-      gcc
-      gnumake
-      pkg-config
-
-      # LLVM toolchain
-      cmake
-      llvmPackages.llvm
-      llvmPackages.clang
-
-      # Rust
-      rustc
-      cargo
-      clippy
-
       # Other compile time dependencies
       # here
     ];
@@ -73,9 +58,7 @@ in
     # Compiler LD variables
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.gcc
       pkgs.libiconv
-      pkgs.llvmPackages.llvm
     ];
 
     meta = with lib; {
