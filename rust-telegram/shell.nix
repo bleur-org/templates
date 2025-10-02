@@ -37,6 +37,7 @@ in
       # Other compile time dependencies
       openssl
       # libressl
+      pkg-config
     ];
 
     # Runtime dependencies which will be shipped
