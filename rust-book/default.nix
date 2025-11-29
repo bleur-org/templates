@@ -14,8 +14,6 @@
 
   # Manifest via Cargo.toml
   manifest = (pkgs.lib.importTOML ./book.toml).book;
-
-  output = (pkgs.lib.importTOML ./book.toml).outpur.html;
 in
   pkgs.stdenv.mkDerivation {
     pname = manifest.title;

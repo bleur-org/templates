@@ -11,26 +11,21 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/home.nix'.
 
-    # Flake utils for eachSystem
-    flake-utils.url = "github:numtide/flake-utils";
+    # Flake parts for eachSystem
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   # In this context, outputs are mostly about getting home-manager what it
   # needs since it will be the one using the flake
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-    ...
-  } @ inputs: let
-    # Self instance pointer
-    outputs = self;
-  in
-    # Attributes for each system
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
+  outputs = {flake-parts, ...} @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} (top @ {...}: {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem = {pkgs, ...}: {
         # Nix formatter
         formatter = pkgs.alejandra;
 
@@ -39,6 +34,6 @@
 
         # Output package
         packages.default = pkgs.callPackage ./. {inherit pkgs;};
-      }
-    );
+      };
+    });
 }
