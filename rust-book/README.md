@@ -22,7 +22,7 @@ feat: add hat wobble
 - `test`: (adding missing tests, refactoring tests; no production code change)
 - `chore`: (updating grunt tasks etc; no production code change)
 
-# Development 
+# Development
 
 ## NixOS
 ```bash
@@ -57,5 +57,3 @@ Push your project to github repo. Open repo setting and go to Pages section and 
 Then in Code tab click settings icon and tick true "Use your GitHub Pages website". It will set deployed url website
 
 ![github-pages](/rust-book/.github/assets/pages-url.png)
-
-

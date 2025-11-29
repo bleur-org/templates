@@ -13,7 +13,6 @@
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
       ## More info
-      - [Fenix for Nix](https://github.com/nix-community/fenix)
       - [Rust language](https://rust-lang.org)
       - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
@@ -74,7 +73,6 @@
 
       ## More info
       - [Teloxide](https://github.com/teloxide/teloxide/)
-      - [Fenix for Nix](https://github.com/nix-community/fenix)
       - [Rust language](https://rust-lang.org)
       - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
@@ -95,7 +93,6 @@
       ## More info
       - [Actix.rs](https://actix.rs)
       - [Diesel.rs](https://diesel.rs)
-      - [Fenix for Nix](https://github.com/nix-community/fenix)
       - [Rust language](https://rust-lang.org)
       - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
@@ -128,7 +125,7 @@
     welcomeText = ''
       # Bleur stack Rust, MdBook & Nix Template
       ## Intended usage
-      The intended usage of this flake is to write Book
+      The intended usage of this flake is to write book like documentation which can be used in many ways.
 
       ## Important
       Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
@@ -136,6 +133,27 @@
       ## More info
       - [mdBook Documentation](https://rust-lang.github.io/mdBook/)
       - [Example](https://github.com/uzbek-net/programming-from-the-ground-up)
+    '';
+  };
+
+  # Actix & Postgresql server on Rust template
+  rust-actix-smol = {
+    path = ./rust-actix-smol;
+    description = "Actix & Postgresql server on Rust with Tokio swapped to Smol async runtime template";
+    welcomeText = ''
+      # Bleur stack actix via smol & postgresql server on Rust & Nix template with NixOS modules
+      ## Intended usage
+      The intended usage of this flake is to write a backend server application on Rust/Actix with Smol async runtime and deploy it on NixOS server
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [Actix.rs](https://actix.rs)
+      - [Smol.rs](https://github.com/smol-rs/smol)
+      - [Diesel.rs](https://diesel.rs)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
 }

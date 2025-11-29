@@ -1,5 +1,8 @@
 #![allow(unused_must_use)]
 
+use async_compat::CompatExt;
+use blocking::Unblock;
+
 use std::process::exit;
 
 use clap::Parser;

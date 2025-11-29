@@ -2,7 +2,7 @@
 title        = "#title#"
 authors      = ["#author#"]
 src          = "src"
-language     = "uz"
+language     = "en"
 multilingual = false
 
 [output.html]

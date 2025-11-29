@@ -24,6 +24,8 @@ This is Bleur stack, a collection of Nix bootstrapped templates which can be use
 - Rust Telegram Bot (via #rust-telegram)
 - Rust Actix (via #rust-actix)
 - Rust GTK (via #rust-gtk)
+- Rust Book (via #rust-book)
+- Rust Actix with Async Runtime (via #rust-actix-smol)
 
 ## Bootstrapping
 
