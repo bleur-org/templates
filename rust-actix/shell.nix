@@ -62,9 +62,12 @@ in
       pkgs.postgresql
     ];
 
+    # Comment or undo whatever you need
     shellHook = ''
+      # Starts postgres on nix-shell level
       source ./.github/scripts/init-db.sh
-      source ./.github/scripts/init-service.sh
+      # Starts the server on watch mode
+      # source ./.github/scripts/init-service.sh
     '';
 
     ####################################################################

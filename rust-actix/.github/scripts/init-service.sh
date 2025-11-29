@@ -28,9 +28,9 @@ trap \
 ######################################################
 # Binding everything to cargo-watch
 ######################################################
-# cargo watch -x "run --bin "cli" &
+cargo watch -x "run --bin "cli" &
 
 ######################################################
 # Store the PID of the background process
 ######################################################
-# CARGO_WATCH_PID=$!
+CARGO_WATCH_PID=$!
