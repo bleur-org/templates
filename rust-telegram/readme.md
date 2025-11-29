@@ -1,8 +1,7 @@
 # Telegram Rust Nix Template
 
 This is a starter pack for Nix friendly Telegram bot project on Rust ecosystem provided to you by [Bleur Stack]
-developers. The project uses fenix to fetch Rust toolchain from rustup catalogue and unfortunately, it fetches and patches
-once (untill you clean cache) the whole rustup toolchain and THEN build the program or run.
+developers.
 
 > Please, after bootstrapping, rename / change all `example` or `template` keywords in template files.
 
