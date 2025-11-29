@@ -6,8 +6,8 @@ members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
 [workspace.package]
 # Don't remove `name` regardless of warnings
 # Lots of nix things depend on this value alone
-name = "#name#"
-version = "#version#"
+name = "temp" #name#
+version = "0.0.1" #version#
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "#description#"
