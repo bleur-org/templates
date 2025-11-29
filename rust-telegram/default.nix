@@ -38,11 +38,6 @@ in
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
-      # Rust
-      rustc
-      cargo
-      clippy
-
       # Other compile time dependencies
       openssl
       # libressl
