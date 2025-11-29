@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+default-members = ["crates/cli"]
+members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
+
+[workspace.package]
+# Don't remove `name` regardless of warnings
+# Lots of nix things depend on this value alone
+name = "#name#"
+version = "#version#"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "#description#"
+homepage = "#website#"
+repository = "#repository#"
+authors = ["#author#"]
+
+# Shared dependencies across crates
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1.38.0", features = ["macros", "rt-multi-thread"] }
+actix-web = "4"
+dotenvy = "0.15.7"
+toml = { version = "0.8.20", features = ["display"] }
+
+# Optimize release binary as much as possible
+[profile.release]
+codegen-units = 1
+incremental = true
+lto = true
+strip = true
+opt-level = "z"

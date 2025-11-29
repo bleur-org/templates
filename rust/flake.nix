@@ -8,26 +8,27 @@
     # Fresh and new for testing
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
-    # The flake-utils library
-    flake-utils.url = "github:numtide/flake-utils";
+    # The flake-parts library
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-    ...
-  } @ inputs:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      # Nix script formatter
-      formatter = pkgs.alejandra;
+  outputs = {flake-parts, ...} @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} (top @ {...}: {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem = {pkgs, ...}: {
+        # Nix script formatter
+        formatter = pkgs.alejandra;
 
-      # Development environment
-      devShells.default = import ./shell.nix {inherit pkgs;};
+        # Development environment
+        devShells.default = import ./shell.nix {inherit pkgs;};
 
-      # Output package
-      packages.default = pkgs.callPackage ./. {inherit pkgs;};
+        # Output package
+        packages.default = pkgs.callPackage ./. {inherit pkgs;};
+      };
     });
 }
