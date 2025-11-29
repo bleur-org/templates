@@ -1,12 +1,7 @@
 # Rust, Actix & Diesel Nix Template
 
-This is a starter pack for Nix friendly web server written on Actix and Diesel via Rust ecosystem provided to you
-by [Bleur Stack] developers. The project uses fenix to fetch Rust toolchain from rustup catalogue and unfortunately,
-it fetches and patches once (untill you clean cache) the whole rustup toolchain and THEN build the program or run.
-
 This is a starter pack for Nix friendly Rust Actix server with database on Rust ecosystem provided to you by [Bleur Stack]
-members. The project uses fenix to fetch Rust toolchain from rustup catalogue and unfortunately, it fetches and patches
-once (untill you clean cache) the whole rustup toolchain and THEN build the program or run.
+members.
 
 > Please, after bootstrapping, rename / change all `example` or `template` keywords in template files.
 
