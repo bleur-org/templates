@@ -46,13 +46,13 @@ zip_path = current_dir / "relm4-template.zip"
 template_path = current_dir / "relm4-template-0.1.2"
 online = len(sys.argv) >= 2 and sys.argv[1] == "--online"
 
-CURRENT_APP_ID = "com.belmoussaoui.GtkRustTemplate"
+CURRENT_APP_ID = "net.bleur.GtkRustTemplate"
 CURRENT_PROJECT_NAME = "gtk-rust-template"
 CURRENT_PROJECT_NAME_ALT = "gtk_rust_template"
 CURRENT_NAME = "GTK Rust Template"
 CURRENT_AUTHOR = "Bilal Elmoussaoui"
 CURRENT_EMAIL = "bil.elmoussaoui@gmail.com"
-CURRENT_APP_PATH = "/com/belmoussaoui/GtkRustTemplate/"
+CURRENT_APP_PATH = "/net/bleur/GtkRustTemplate/"
 
 
 if project_dir.is_dir():
@@ -108,10 +108,10 @@ for item in items_to_copy:
 
 
 files_with_content_to_rename = [
-    Path("build-aux") / "com.belmoussaoui.GtkRustTemplate.Devel.json",
-    Path("data") / "com.belmoussaoui.GtkRustTemplate.desktop.in.in",
-    Path("data") / "com.belmoussaoui.GtkRustTemplate.gschema.xml.in",
-    Path("data") / "com.belmoussaoui.GtkRustTemplate.metainfo.xml.in.in",
+    Path("build-aux") / "net.bleur.GtkRustTemplate.Devel.json",
+    Path("data") / "net.bleur.GtkRustTemplate.desktop.in.in",
+    Path("data") / "net.bleur.GtkRustTemplate.gschema.xml.in",
+    Path("data") / "net.bleur.GtkRustTemplate.metainfo.xml.in.in",
     Path("data") / "resources" / "resources.gresource.xml",
     Path("po") / "POTFILES.in",
     Path("src") / "app.rs",
@@ -141,13 +141,13 @@ for file in files_with_content_to_rename:
         handle.write(content)
 
 files_to_rename = [
-    Path("build-aux") / "com.belmoussaoui.GtkRustTemplate.Devel.json",
-    Path("data") / "icons" / "com.belmoussaoui.GtkRustTemplate-symbolic.svg",
-    Path("data") / "icons" / "com.belmoussaoui.GtkRustTemplate.svg",
-    Path("data") / "icons" / "com.belmoussaoui.GtkRustTemplate.Devel.svg",
-    Path("data") / "com.belmoussaoui.GtkRustTemplate.desktop.in.in",
-    Path("data") / "com.belmoussaoui.GtkRustTemplate.gschema.xml.in",
-    Path("data") / "com.belmoussaoui.GtkRustTemplate.metainfo.xml.in.in",
+    Path("build-aux") / "net.bleur.GtkRustTemplate.Devel.json",
+    Path("data") / "icons" / "net.bleur.GtkRustTemplate-symbolic.svg",
+    Path("data") / "icons" / "net.bleur.GtkRustTemplate.svg",
+    Path("data") / "icons" / "net.bleur.GtkRustTemplate.Devel.svg",
+    Path("data") / "net.bleur.GtkRustTemplate.desktop.in.in",
+    Path("data") / "net.bleur.GtkRustTemplate.gschema.xml.in",
+    Path("data") / "net.bleur.GtkRustTemplate.metainfo.xml.in.in",
 ]
 
 

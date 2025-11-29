@@ -1,12 +1,12 @@
-# GTK + Rust + Relm4 + Meson + Flatpak = <3
+# Rust, Relm4, GTK & Nix Template
 
-> This is a fork of [gtk-rust-template](https://gitlab.gnome.org/World/Rust/gtk-rust-template) that adapts the code for Relm4 while trying to change as little as possible.
-
-A boilerplate template to get started with GTK, Rust, Meson, Flatpak made for GNOME. It can be adapted for other desktop environments like elementary.
+This is a starter pack for Nix friendly GTK application with Relm4 via Rust ecosystem provided to you
+by [Bleur Stack] developers.
 
 <div align="center">
 
 ![Main window](data/resources/screenshots/screenshot1.png "Main window")
+
 </div>
 
 ## What does it contains?
@@ -28,35 +28,41 @@ A boilerplate template to get started with GTK, Rust, Meson, Flatpak made for GN
 
 ## How to init a project ?
 
-The template ships a simple python script to init a project easily. It asks you a few questions and replaces & renames all the necessary files.
+> Remove python bootstrap in favor of cli bleur tool.
 
-The script requires having `git` installed on your system.
+The template ships a simple python script to init a project easily. It asks you a few questions and replaces & renames all the necessary files.
 
 If you clone this repository, you can run it with:
 
 ```shell
-python3 create-project.py
-```
-
-If you don't want to clone the repository, you can run it with:
-
-```shell
-python3 -c "$(wget -q -O - https://raw.githubusercontent.com/Relm4/relm4-template/main/create-project.py)" --online
-```
-
-```shell
-➜ python3 create-project.py
+➜ python create-project.py
 Welcome to GTK Rust Template
 Name: Contrast
 Project Name: contrast
 Application ID (e.g. org.domain.MyAwesomeApp, see: https://developer.gnome.org/ChooseApplicationID/): org.gnome.design.Contrast
-Author: Bilal Elmoussaoui
-Email: bil.elmoussaoui@gmail.com
+Author: Bleur Developers
+Email: support@bleur.net
 ```
 
 A new directory named `contrast` containing the generated project
 
 ## Building the project
+
+There are basically 2 ways of building this project.
+
+### Nix
+
+All you need is nix package manager and the rest is already done for you:
+
+```bash
+# Build in nix environment
+nix build
+
+# Executable binary is available at:
+./result/bin/app-name
+```
+
+### Flatpak
 
 Make sure you have `flatpak` and `flatpak-builder` installed. Then run the commands below. Replace `<application_id>` with the value you entered during project creation. Please note that these commands are just for demonstration purposes. Normally this would be handled by your IDE, such as GNOME Builder or VS Code with the Flatpak extension.
 
@@ -66,6 +72,26 @@ flatpak-builder --user flatpak_app build-aux/<application_id>.Devel.json
 ```
 
 ## Running the project
+
+The same goes for running the project.
+
+### Nix
+
+If you've ran the nix build command, you already have pre-compiled binary available to run at:
+
+```bash
+# Executable binary is available at:
+./result/bin/app-name
+```
+
+Also, you can directly run `nix run` without having to run build command first which will instantly open the application for you:
+
+```bash
+# Nix will automatically open executable
+nix run
+```
+
+### Flatpak
 
 Once the project is build, run the command below. Replace `<application_id>` and `<project_name>` with the values you entered during project creation. Please note that these commands are just for demonstration purposes. Normally this would be handled by your IDE, such as GNOME Builder or VS Code with the Flatpak extension.
 
@@ -95,15 +121,12 @@ It also allows you to sync the `po/<project_name>.pot` when you rerun `xgettext`
 
 When adding a po file also make sure to add the language code to `po/LINGUAS`.
 
-## Community
+## FAQ
 
-Join the GNOME and gtk-rs community!
+### Why not use default.nix for devShell?
 
-- [Matrix chat](https://matrix.to/#/#rust:gnome.org): chat with other developers using gtk-rs
-- [Discourse forum](https://discourse.gnome.org/tag/rust): topics tagged with `rust` on the GNOME forum.
-- [GNOME circle](https://circle.gnome.org/): take inspiration from applications and libraries already extending the GNOME ecosystem.
+There's been cases when I wanted to reproduce totally different behaviors in development environment and
+production build. This occurs quite a lot lately for some reason and because of that, I tend to keep
+both shell.nix and default.nix to don't mix things up.
 
-## Credits
-
-- [Podcasts](https://gitlab.gnome.org/World/podcasts)
-- [Shortwave](https://gitlab.gnome.org/World/Shortwave)
+[Bleur Stack]: https://github.com/bleur-org

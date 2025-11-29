@@ -55,6 +55,9 @@ in
       desktop-file-utils
       gobject-introspection
       rustPlatform.bindgenHook
+
+      # Bootstrap
+      python3
     ];
 
     # Set Environment Variables

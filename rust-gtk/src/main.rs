@@ -39,7 +39,7 @@ fn main() {
     gtk::Window::set_default_icon_name(APP_ID);
 
     let app = main_application();
-    app.set_resource_base_path(Some("/com/belmoussaoui/GtkRustTemplate/"));
+    app.set_resource_base_path(Some("/net/bleur/GtkRustTemplate/"));
 
     let mut actions = RelmActionGroup::<AppActionGroup>::new();
 
@@ -58,7 +58,7 @@ fn main() {
 
     let data = res
         .lookup_data(
-            "/com/belmoussaoui/GtkRustTemplate/style.css",
+            "/net/bleur/GtkRustTemplate/style.css",
             gio::ResourceLookupFlags::NONE,
         )
         .unwrap();
