@@ -98,10 +98,10 @@
     '';
   };
 
-  # Relm4 stack based GTK rust app template
-  rust-relm4 = {
-    path = ./rust-relm4;
-    description = "Rust Relm4 GTK application";
+  # Minimal Relm4 stack based GTK rust app template
+  rust-relm4-minimal = {
+    path = ./rust-relm4-minimal;
+    description = "Minima Rust Relm4 GTK application";
     welcomeText = ''
       # Bleur stack Gnome GTK based Relm4 stack application on Rust & Nix template
       ## Intended usage
