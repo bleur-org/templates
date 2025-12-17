@@ -19,7 +19,8 @@ run_command(
 )
 
 cargo_options = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
-cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
+# cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
+cargo_options += [ '--locked' ]
 
 if get_option('profile') == 'default'
   cargo_options += [ '--release' ]
@@ -42,11 +43,19 @@ cargo_build = custom_target(
   install_dir: bindir,
   depends: resources,
   command: [
-    'env',
-    cargo_env,
-    cargo, 'build',
-    cargo_options,
-    '&&',
-    'cp', 'src' / rust_target / meson.project_name(), '@OUTPUT@',
+  # 'env',
+      # cargo_env,
+      cargo, 'build',
+      ['--release', '--manifest-path', meson.project_source_root() / 'Cargo.toml'],
+      # cargo_options,
+      # '&&',
+      # 'ls', '-lah',
+      # '&&',
+      # 'env',
+      # '&&',
+      # 'exit',  '1',
+      '&&',
+      # 'cp', 'target' / rust_target / meson.project_name(), '@OUTPUT@',
+      'cp', '/build/source/target/' / rust_target / meson.project_name(), '@OUTPUT@',
   ]
 )
