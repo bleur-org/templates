@@ -98,6 +98,27 @@
     '';
   };
 
+  # Relm4 stack based GTK rust app template with Crane
+  rust-relm4 = {
+    path = ./rust-relm4;
+    description = "Minima Rust Relm4 GTK application";
+    welcomeText = ''
+      # Bleur stack Gnome GTK based Relm4 stack application on Rust & Nix template
+      ## Intended usage
+      The intended usage of this flake is to write a gui application via Relm4 stack leveraging Gnome's GTK on Rust and distribute via nixpkgs
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [GTK](https://www.gtk.org/)
+      - [Relm4](https://relm4.org/)
+      - [Rust language](https://rust-lang.org)
+      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
+      - [Crane](https://crane.dev/getting-started.html)
+    '';
+  };
+
   # Minimal Relm4 stack based GTK rust app template
   rust-relm4-minimal = {
     path = ./rust-relm4-minimal;
