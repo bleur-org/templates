@@ -7,6 +7,7 @@
     };
   in
     import nixpkgs {overlays = [];},
+  crane,
   ...
 }: let
   # Helpful nix function
@@ -15,76 +16,79 @@
 
   # Manifest via Cargo.toml
   manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
+
+  craneLib = crane.mkLib pkgs;
+
+  commonBuildInputs = with pkgs; [
+    gtk4
+    libadwaita
+    desktop-file-utils
+    glib
+    openssl
+    rustPlatform.bindgenHook
+  ];
+
+  commonNativeBuildInputs = with pkgs; [
+    appstream-glib
+    desktop-file-utils
+    gettext
+    git
+    meson
+    ninja
+    pkg-config
+    polkit
+    wrapGAppsHook4
+    openssl
+  ];
+
+  cargoArtifacts = craneLib.buildDepsOnly {
+    src = craneLib.cleanCargoSource ./.;
+    strictDeps = true;
+
+    nativeBuildInputs = commonNativeBuildInputs;
+    buildInputs = commonBuildInputs;
+  };
 in
-  pkgs.stdenv.mkDerivation {
-    # Package related things automatically
-    # obtained from Cargo.toml, so you don't
-    # have to do everything manually
+  craneLib.buildPackage {
+    # pkgs.stdenv.mkDerivation {
     pname = manifest.name;
     version = manifest.version;
+    strictDeps = true;
 
-    # Your govnocodes
     src = pkgs.lib.cleanSource ./.;
+    # src = craneLib.cleanCargoSource ./.;
 
     cargoDeps = pkgs.rustPlatform.importCargoLock {
       lockFile = ./Cargo.lock;
-      # Use this if you have dependencies from git instead
-      # of crates.io in your Cargo.toml
-      # outputHashes = {
-      #   # Sha256 of the git repository, doesn't matter if it's monorepo
-      #   "example-0.1.0" = "sha256-80EwvwMPY+rYyti8DMG4hGEpz/8Pya5TGjsbOBF0P0c=";
-      # };
     };
 
-    # Compile time dependencies
-    nativeBuildInputs = with pkgs; [
-      appstream-glib
-      cargo
-      rust-analyzer
-      clippy
-      desktop-file-utils
-      gettext
-      git
-      meson
-      ninja
-      pkg-config
-      polkit
-      rustc
-      rustPlatform.cargoSetupHook
-      wrapGAppsHook4
-    ];
+    inherit cargoArtifacts;
 
-    # Runtime dependencies which will be shipped
-    # with nix package
-    buildInputs = with pkgs; [
-      desktop-file-utils
-      gdk-pixbuf
-      glib
-      gnome-desktop
-      adwaita-icon-theme
-      gtk4
-      libadwaita
-      libgweather
-      openssl
-      parted
-      rustPlatform.bindgenHook
-      vte-gtk4
-    ];
+    nativeBuildInputs = commonNativeBuildInputs;
+    buildInputs = commonBuildInputs;
 
-    # Compiler LD variables
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.gcc
-      pkgs.libiconv
-      pkgs.llvmPackages.llvm
-    ];
+    configurePhase = ''
+      mesonConfigurePhase
+      runHook postConfigure
+    '';
 
-    meta = with lib; {
-      homepage = manifest.homepage;
-      description = manifest.description;
-      # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
-      license = with lib.licenses; [asl20 mit];
-      platforms = with platforms; linux ++ darwin;
-      maintainers = [lib.maintainers.orzklv];
-    };
+    buildPhase = ''
+      runHook preBuild
+      ninjaBuildPhase
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+      mesonInstallPhase
+
+      # ninjaInstallPhase
+
+      runHook postInstall
+    '';
+
+    # buildPhaseCargoCommand = "cargo build --release";
+    # installPhaseCommand = "";
+    doNotPostBuildInstallCargoBinaries = true;
+    checkPhase = false;
   }

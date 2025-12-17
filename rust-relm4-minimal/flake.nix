@@ -8,8 +8,6 @@
     # Fresh and new for testing
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
-    crane.url = "github:ipetkov/crane";
-
     # The flake-utils library
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -18,7 +16,6 @@
     self,
     nixpkgs,
     flake-utils,
-    crane,
     ...
   }:
   # @ inputs
@@ -32,10 +29,6 @@
       devShells.default = import ./shell.nix {inherit pkgs;};
 
       # Output package
-      packages.default = pkgs.callPackage ./. {inherit pkgs crane;};
+      packages.default = pkgs.callPackage ./. {inherit pkgs;};
     });
-    # // {
-    #   # NixOS module (deployment)
-    #   nixosModules.bot = import ./module.nix self;
-    # };
 }
