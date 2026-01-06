@@ -10,23 +10,37 @@ case $choice in
     source ./.github/scripts/init-db.sh
     ;;
   2)
-    # Check for actual Docker socket, otherwise use Podman
-    if [ -S /var/run/docker.sock ] && docker info &> /dev/null 2>&1; then
-      docker-compose up -d
-    else
-      export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
-      systemctl --user is-active --quiet podman.socket || systemctl --user start podman.socket
+    echo "Are you using Docker or Podman?"
+    echo "1) Docker"
+    echo "2) Podman"
+    read -p "Enter choice [1-2]: " container_choice
 
-      if command -v podman-compose &> /dev/null; then
-        podman-compose up -d
-      else
+    case $container_choice in
+      1)
         docker-compose up -d
-      fi
-    fi
+        ;;
+      2)
+        export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
+        systemctl --user is-active --quiet podman.socket \
+          || systemctl --user start podman.socket
 
-    [ $? -eq 0 ] && echo "PostgreSQL started: postgres://temp:temp@localhost:5432/temp"
+        if command -v podman-compose >/dev/null; then
+          podman-compose up -d
+        else
+          docker-compose up -d
+        fi
+        ;;
+      *)
+        echo "Invalid choice. Skipping."
+        ;;
+    esac
+
+    echo "PostgreSQL started: postgres://temp:temp@localhost:5432/temp"
     ;;
   3)
     echo "Skipping database setup."
+    ;;
+  *)
+    echo "Invalid choice. Skipping database setup."
     ;;
 esac
