@@ -1,5 +1,7 @@
 # C, GTK & Nix Template
 
+> This template specifically is work in progress and any contributions are welcomed!
+
 This is a starter pack for Nix friendly GTK application with via C ecosystem provided to you
 by [Bleur Stack] developers.
 
