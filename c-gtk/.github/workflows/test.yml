@@ -1,0 +1,31 @@
+name: "Test CI"
+
+on: [push, pull_request]
+
+jobs:
+  flake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Check for flake configurations
+        run: nix flake check --all-systems --show-trace
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Build the project with llvm package
+        run: nix build .
+
+      - name: Runt the llvm hosted binary
+        run: nix run .
