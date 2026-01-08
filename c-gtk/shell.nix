@@ -18,6 +18,8 @@
   # Shareables + includables
   programs = with pkgs; [
     gtk4
+    glib
+    libadwaita
     # glibc
     # sysprof
   ];

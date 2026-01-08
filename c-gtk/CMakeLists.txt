@@ -18,13 +18,8 @@ file(
 # Output executable binary
 add_executable(cgtk ${SOURCES})
 
-# Pkg-config for GTK
-find_package(PkgConfig REQUIRED)
-set(PKG_CONFIG_EXECUTABLE $ENV{PKG_CONFIG_EXECUTABLE})
-
-# GTK oriented properties
-pkg_check_modules(GTK4 REQUIRED IMPORTED_TARGET gtk4)
-target_link_libraries(cgtk PRIVATE PkgConfig::GTK4)
+# Include gtk configurations
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/gtk.cmake")
 
 # Adding debug prints
 set(CMAKE_BUILD_TYPE Debug)
