@@ -177,4 +177,13 @@
       - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
     '';
   };
+
+  # C/GTK4 made with cmake
+  c-gtk = {
+    path = ./c-gtk;
+    description = "C/GTK4 made with cmake";
+    welcomeText = ''
+      WIP
+    '';
+  };
 }

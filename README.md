@@ -18,6 +18,8 @@ This is Bleur stack, a collection of Nix bootstrapped templates which can be use
 
 ## Projects
 
+### Rust based
+
 - Rust (via #rust)
 - Rust Nightly (via #rust-nightly)
 - Rust C static/shared library (via #rust-shared)
@@ -26,6 +28,10 @@ This is Bleur stack, a collection of Nix bootstrapped templates which can be use
 - Rust GTK (via #rust-gtk)
 - Rust Book (via #rust-book)
 - Rust Actix with Smol-rs instead of Tokio (via #rust-actix-smol)
+
+### C based
+
+- C/GTK4 made with cmake (via #c-gtk)
 
 ## Bootstrapping
 
