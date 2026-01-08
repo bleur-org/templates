@@ -157,33 +157,21 @@
     '';
   };
 
-  # Actix & Postgresql server on Rust template
-  rust-actix-smol = {
-    path = ./rust-actix-smol;
-    description = "Actix & Postgresql server on Rust with Tokio swapped to Smol async runtime template";
-    welcomeText = ''
-      # Bleur stack actix via smol & postgresql server on Rust & Nix template with NixOS modules
-      ## Intended usage
-      The intended usage of this flake is to write a backend server application on Rust/Actix with Smol async runtime and deploy it on NixOS server
-
-      ## Important
-      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
-
-      ## More info
-      - [Actix.rs](https://actix.rs)
-      - [Smol.rs](https://github.com/smol-rs/smol)
-      - [Diesel.rs](https://diesel.rs)
-      - [Rust language](https://rust-lang.org)
-      - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
-    '';
-  };
-
   # C/GTK4 made with cmake
   c-gtk = {
     path = ./c-gtk;
     description = "C/GTK4 made with cmake";
     welcomeText = ''
-      WIP
+      # Bleur stack Gnome GTK based application on C & Nix template
+      ## Intended usage
+      The intended usage of this flake is to write a gui application leveraging Gnome's GTK on C and distribute via nixpkgs easily with read-to-go nix package
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [GTK](https://www.gtk.org/)
+      - [LLVM NixOS Wiki](https://wiki.nixos.org/wiki/LLVM)
     '';
   };
 }
