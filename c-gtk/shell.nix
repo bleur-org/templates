@@ -49,12 +49,6 @@ in
       ])
       ++ programs;
 
-    cmakeFlags = [
-      "-DENABLE_TESTING=OFF"
-      "-DENABLE_INSTALL=ON"
-      "-DPKG_CONFIG_EXECUTABLE=${lib.getExe pkgs.pkg-config}"
-    ];
-
     # Necessary Environment Variables
     INCLUDE = lib.makeIncludePath programs;
     NIX_LDFLAGS = with pkgs; "-L${getLibrary gtk4}";

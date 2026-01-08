@@ -18,8 +18,8 @@
   # Shareables + includables
   programs = with pkgs; [
     gtk4
-    glibc
-    sysprof
+    # glibc
+    # sysprof
   ];
 in
   pkgs.llvmPackages.stdenv.mkDerivation rec {
@@ -41,13 +41,13 @@ in
     cmakeFlags = [
       "-DENABLE_TESTING=OFF"
       "-DENABLE_INSTALL=ON"
-      "-DPKG_CONFIG_EXECUTABLE=${lib.getExe pkgs.pkg-config}"
     ];
 
     # Necessary Environment Variables
     INCLUDE = lib.makeIncludePath programs;
     NIX_LDFLAGS = with pkgs; "-L${getLibrary gtk4}";
     LD_LIBRARY_PATH = lib.makeLibraryPath programs;
+    PKG_CONFIG_EXECUTABLE = lib.getExe pkgs.pkg-config;
 
     meta = with lib; {
       homepage = "https://github.com/bleur-org/templates";
