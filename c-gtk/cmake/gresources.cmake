@@ -35,11 +35,3 @@ add_custom_command(
     MAIN_DEPENDENCY ${GRESOURCE_XML}
     DEPENDS ${GRESOURCE_DEPENDENCIES}
 )
-
-add_custom_target(
-    dummy-resource
-    DEPENDS ${GRESOURCE_C}
-)
-
-add_executable(${PROJECT_NAME} dummy.c)
-add_dependencies(${PROJECT_NAME} dummy-resource)

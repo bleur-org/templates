@@ -21,6 +21,9 @@ add_executable(cgtk ${SOURCES})
 # Include gtk configurations
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/gtk.cmake")
 
+# Include data/resources
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/data.cmake")
+
 # Adding debug prints
 set(CMAKE_BUILD_TYPE Debug)
 
