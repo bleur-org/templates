@@ -11,34 +11,43 @@
 }: let
   # For extension
   inherit (pkgs) lib;
+
+  # Helpful nix function
+  getLibrary = pkg: "${pkg}/lib";
+
+  # Shareables + includables
+  programs = with pkgs; [
+    gtk4
+    glibc
+    sysprof
+  ];
 in
   pkgs.llvmPackages.stdenv.mkDerivation rec {
-    pname = "example";
+    pname = "cgtk";
     version = "0.0.1";
 
     src = ./.;
 
-    nativeBuildInputs = with pkgs; [
-      # LLVM toolchain
-      cmake
-      llvmPackages.llvm
-      llvmPackages.clang-tools
-
-      # GTK toolchain
-      gtk4
-    ];
+    nativeBuildInputs =
+      (with pkgs; [
+        # LLVM toolchain
+        cmake
+        llvmPackages.llvm
+        llvmPackages.clang-tools
+        pkg-config
+      ])
+      ++ programs;
 
     cmakeFlags = [
       "-DENABLE_TESTING=OFF"
       "-DENABLE_INSTALL=ON"
+      "-DPKG_CONFIG_EXECUTABLE=${lib.getExe pkgs.pkg-config}"
     ];
 
     # Necessary Environment Variables
-    # NIX_LIBSABINE_HEADER = "${libsabine}/include";
-    # NIX_LDFLAGS = "-L${getLibrary libsabine}";
-    # LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-    #   libsabine
-    # ];
+    INCLUDE = lib.makeIncludePath programs;
+    NIX_LDFLAGS = with pkgs; "-L${getLibrary gtk4}";
+    LD_LIBRARY_PATH = lib.makeLibraryPath programs;
 
     meta = with lib; {
       homepage = "https://github.com/bleur-org/templates";

@@ -14,70 +14,58 @@
 
   # Helpful nix function
   getLibrary = pkg: "${pkg}/lib";
+
+  # Shareables + includables
+  programs = with pkgs; [
+    gtk4
+    # glibc
+    # sysprof
+  ];
 in
-  pkgs.stdenv.mkDerivation {
-    name = "example-shell";
+  pkgs.llvmPackages.stdenv.mkDerivation rec {
+    pname = "cgtk";
+    version = "0.0.1";
 
-    nativeBuildInputs = with pkgs; [
-      # LLVM & Clang toolchain
-      cmake
-      cmake-format
-      llvmPackages.llvm
-      llvmPackages.clang-tools
+    src = ./.;
 
-      # Hail the Nix
-      nixd
-      statix
-      deadnix
-      alejandra
+    nativeBuildInputs =
+      (with pkgs; [
+        # LLVM toolchain
+        cmake
+        cmake-format
+        llvmPackages.llvm
+        llvmPackages.clang-tools
+        pkg-config
 
-      # Launch scripts
-      just
-      just-lsp
+        # Hail the Nix
+        nixd
+        statix
+        deadnix
+        alejandra
+
+        # Launch scripts
+        just
+        just-lsp
+      ])
+      ++ programs;
+
+    cmakeFlags = [
+      "-DENABLE_TESTING=OFF"
+      "-DENABLE_INSTALL=ON"
+      "-DPKG_CONFIG_EXECUTABLE=${lib.getExe pkgs.pkg-config}"
     ];
 
     # Necessary Environment Variables
-    # NIX_LIBSABINE_HEADER="${libsabine}/include";
+    INCLUDE = lib.makeIncludePath programs;
     NIX_LDFLAGS = with pkgs; "-L${getLibrary gtk4}";
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath (with pkgs; [
-      gtk4
-    ]);
+    LD_LIBRARY_PATH = lib.makeLibraryPath programs;
+    PKG_CONFIG_EXECUTABLE = lib.getExe pkgs.pkg-config;
 
     # Some dev env bootstrap scripts # yellow = 3; blue = 4
     shellHook = ''
       echo "$(tput rev)$(tput setaf 4)You're in LLVM nix shell environment...$(tput sgr0)"
 
       source ${./.github/scripts/log.sh}
-
-      bootstrap () {
-        local _cwp="$(pwd)"
-        local _build="$(pwd)/build"
-
-        log "warn" "let's see if build folder is fine..."
-
-        if [ -d "$_build" ]; then
-          log "trace" "seems like everything lookin' fine here..."
-
-          return
-        fi
-
-        if [ ! -d "$_build" ]; then
-          log "warn" "boostrapping build directory..."
-          mkdir -p $_build
-
-          # Enter build folder
-          cd $_build
-
-          # Bootstrap cmake
-          cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-
-          # Return back
-          cd $_cwp
-        fi
-
-        return
-      }
-
-      bootstrap
+      source ${./.github/scripts/bootstrap.sh}
     '';
   }
