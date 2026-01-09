@@ -1,38 +1,44 @@
 [project]
-name = "rust-telegram"
+name = "rust"
 
 [[variables]]
 placeholder = "#name#"
 types = "string"
 default = "project"
 source = "Cargo.toml"
+message = "What would you like to name this project?"
 
 [[variables]]
 placeholder = "#version#"
 types = "string"
 default = "0.1.0"
 source = "Cargo.toml"
+message = "What would be initial version?"
 
 [[variables]]
 placeholder = "#website#"
 types = "string"
 default = "https://bleur.net"
 source = "Cargo.toml"
+message = "Is there any website hosted for this project?"
 
 [[variables]]
 placeholder = "#repository#"
 types = "string"
 default = "https://github.com/bleur-org/templates"
 source = "Cargo.toml"
+message = "What's the link to the repo?"
 
 [[variables]]
 placeholder = "#description#"
 types = "string"
 default = "My very awesome rust project"
 source = "Cargo.toml"
+message = "What's this project about generally?"
 
 [[variables]]
 placeholder = "#author#"
 types = "string"
 default = "Bleur Developers"
 source = "Cargo.toml"
+message = "Who's going to be author?"
