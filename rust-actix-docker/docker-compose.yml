@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: dev_postgres
-    restart: "yes"
+    restart: unless-stopped
 
     environment:
       # Default credentials - change these as you wish
@@ -40,6 +40,42 @@ services:
 
     networks:
       - dev_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dev_app
+    restart: unless-stopped
+
+    ports:
+      - "8001:8001" # Change first number if port is already in use
+
+    environment:
+      # Application will use these via config.toml
+      RUST_LOG: info
+      DATABASE_URL: postgres://temp:temp@postgres:5432/temp
+
+    volumes:
+      # Mount config file (create config.toml in project root)
+      - ./config.toml:/app/config.toml:ro
+
+      # Optional: mount source for development (requires rebuilding)
+      # - ./crates:/app/crates:ro
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - dev_network
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8001/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
 
 networks:
   dev_network:
