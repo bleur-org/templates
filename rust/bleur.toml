@@ -58,6 +58,6 @@ placeholder = "#author#"
 source = "Cargo.toml"
 value = "@author@"
 
-[[move]]
+[[replace]]
 from = "from.txt"
 to = "@name@.toml"
