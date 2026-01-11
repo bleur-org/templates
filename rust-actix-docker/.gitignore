@@ -3,6 +3,7 @@
 
 # Cargo builds
 /target
+/src
 
 # Environmental variables
 .env
