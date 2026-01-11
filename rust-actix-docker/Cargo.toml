@@ -6,14 +6,14 @@ members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
 [workspace.package]
 # Don't remove `name` regardless of warnings
 # Lots of nix things depend on this value alone
-name = "#name#"
-version = "#version#"
+name = "temp"
+version = "0.0.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-description = "#description#"
-homepage = "#website#"
-repository = "#repository#"
-authors = ["#author#"]
+description = "salyam"
+homepage = "xfeusw.salyami"
+repository = "nigga"
+authors = ["nigga00"]
 
 # Shared dependencies across crates
 [workspace.dependencies]

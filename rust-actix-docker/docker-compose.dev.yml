@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: prod_postgres
+    container_name: dev_postgres
     restart: unless-stopped
 
     environment:
@@ -38,33 +38,27 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: prod_app
-    restart: unless-stopped
-
+      dockerfile: Dockerfile.dev
+    container_name: dev_app
     ports:
-      - "8001:8001"
-
-    environment:
-      RUST_LOG: info
-      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
-
+      - "8002:8001"
     volumes:
-      - ./config.toml:/app/config.toml:ro
-
+      - .:/workspace:delegated,cached
+      - cargo-cache:/usr/local/cargo/registry
+    environment:
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
+      RUST_LOG: debug
+    command: >
+      sh -c "
+        if [ ! -f /workspace/config.toml ]; then
+          echo 'Generating default config.toml...'
+          cargo run --bin server -- config generate /workspace/config.toml
+        fi
+        cargo watch -x 'run --bin server -- server run /workspace/config.toml'
+      "
     depends_on:
       postgres:
         condition: service_healthy
-
-    networks:
-      - dev_network
-
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8001/"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
 
 networks:
   dev_network:

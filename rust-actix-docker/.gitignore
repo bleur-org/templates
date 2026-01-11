@@ -21,3 +21,6 @@ logfile
 
 # docker
 /docker-data
+
+# migrations
+/migrations

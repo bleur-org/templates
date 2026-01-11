@@ -1,87 +1,81 @@
-# You can set Podman here
-DOCKER_COMPOSE := "docker-compose"
+set dotenv-load := true
 
-set dotenv-filename := ".env"
-set dotenv-load
-set export
+dc      := "podman-compose"
+prod    := dc + " -f docker-compose.yml"
+dev     := dc + " -f docker-compose.dev.yml"
 
-[doc('Start default server cli with default config')]
-start:
-  cargo run server run ./config.toml
+default: dev
 
-[doc('Start specific package in the project')]
-run crate:
-  cargo run --bin {{crate}}
+# High Level Commands
+dev: dev-up dev-migrate
+prod: prod-up prod-migrate
 
-[doc('Lint your rust codebase with clippy')]
-lint:
-  cargo clippy
+# Production Commands
+prod-up:
+  {{prod}} up -d
 
-[doc('Format your codebase with rust formatter')]
-format:
-  cargo fmt
+prod-down:
+  {{prod}} down
 
-[doc('Generate default config.toml file')]
-config-generate:
-  cargo run config generate ./config.toml
+prod-logs:
+  {{prod}} logs -f
 
-[doc('Generate config.toml using Docker (no local Rust needed)')]
-config-generate-docker:
-  {{DOCKER_COMPOSE}} run --rm app server config generate /app/config.toml
-  docker cp dev_app:/app/config.toml ./config.toml
+prod-restart:
+  {{prod}} restart
 
-[working-directory('./crates/database')]
-[confirm("Are you sure you want to do migration?")]
-[doc('Perform migration with working database')]
-migrate:
-  diesel migration run
+prod-build:
+  {{prod}} build
 
-[doc('Start all Docker services (postgres + app)')]
-docker-up:
-  {{DOCKER_COMPOSE}} up -d
+prod-db-up:
+  {{prod}} up -d postgres
 
-[doc('Stop all Docker services')]
-docker-down:
-  {{DOCKER_COMPOSE}} down
+prod-shell:
+  podman exec -it app bash
 
-[doc('View logs from all Docker services')]
-docker-logs:
-  {{DOCKER_COMPOSE}} logs -f
+prod-db-shell:
+  {{prod}} exec postgres psql -U "$DB_USERNAME" -d "$DB_NAME"
 
-[doc('View logs from specific service')]
-docker-logs-service service:
-  {{DOCKER_COMPOSE}} logs -f {{service}}
+prod-migrate:
+  {{prod}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME app diesel migration run
 
-[doc('Restart all Docker services')]
-docker-restart:
-  {{DOCKER_COMPOSE}} restart
+prod-migrate-fresh:
+  {{prod}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:5432/$DB_NAME app diesel migration redo
 
-[doc('Build Docker images')]
-docker-build:
-  {{DOCKER_COMPOSE}} build
+# Development Commands
+dev-up:
+  {{dev}} up -d
 
-[doc('Start only postgres database')]
-db-up:
-  {{DOCKER_COMPOSE}} up -d postgres
+dev-down:
+  {{dev}} down
 
-[doc('Stop only postgres database')]
-db-down:
-  {{DOCKER_COMPOSE}} stop postgres
+dev-logs:
+  {{dev}} logs -f
 
-[doc('Access postgres shell')]
-db-shell:
-  {{DOCKER_COMPOSE}} exec postgres psql -U temp -d temp
+dev-restart:
+  {{dev}} restart
 
-[confirm("Are you sure you want to delete all data & records?!")]
-[doc('Clean up all mess created by development environment')]
-clean: docker-down
-  rm -rf docker-data
-  rm -rf .env
-  rm -rf target
-  rm -rf result
+dev-build:
+  {{dev}} build
 
-[confirm("Are you sure you want to reset Docker volumes?")]
-[doc('Full Docker cleanup including volumes')]
-docker-reset:
-  {{DOCKER_COMPOSE}} down -v
-  rm -rf docker-data
+dev-shell:
+  podman exec -it dev_app bash
+
+dev-config-generate:
+  cargo run --bin server -- config generate /workspace/config.toml --database "$DATABASE_URL"
+
+dev-db-shell:
+  {{dev}} exec postgres psql -U "$DB_USERNAME" -d "$DB_NAME"
+
+dev-migrate:
+  {{dev}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME \
+          app diesel migration run --migration-dir /workspace/crates/database/migrations
+
+dev-migrate-fresh:
+  {{dev}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME \
+          app diesel migration redo --migration-dir /workspace/crates/database/migrations
+
+# Maintanance
+clean:
+  rm -rf target docker-data .env result migrations
+  {{dev}} down -v --remove-orphans
+  {{prod}} down -v --remove-orphans
