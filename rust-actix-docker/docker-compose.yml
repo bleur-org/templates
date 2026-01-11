@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: dev_postgres
-    restart: "no"
+    restart: "yes"
 
     environment:
       # Default credentials - change these as you wish

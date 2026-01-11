@@ -1,5 +1,5 @@
-NIX_SHELL_DIR := source_dir() + "/.nix-shell"
-PGDATA := NIX_SHELL_DIR + "/db"
+# You can set Podman here
+DOCKER_COMPOSE := "docker-compose"
 
 set dotenv-filename := ".env"
 set dotenv-load
@@ -27,30 +27,52 @@ format:
 migrate:
   diesel migration run
 
+[doc('Start all Docker services (postgres + app)')]
+docker-up:
+  {{DOCKER_COMPOSE}} up -d
+
+[doc('Stop all Docker services')]
+docker-down:
+  {{DOCKER_COMPOSE}} down
+
+[doc('View logs from all Docker services')]
+docker-logs:
+  {{DOCKER_COMPOSE}} logs -f
+
+[doc('View logs from specific service')]
+docker-logs-service service:
+  {{DOCKER_COMPOSE}} logs -f {{service}}
+
+[doc('Restart all Docker services')]
+docker-restart:
+  {{DOCKER_COMPOSE}} restart
+
+[doc('Build Docker images')]
+docker-build:
+  {{DOCKER_COMPOSE}} build
+
+[doc('Start only postgres database')]
+db-up:
+  {{DOCKER_COMPOSE}} up -d postgres
+
+[doc('Stop only postgres database')]
+db-down:
+  {{DOCKER_COMPOSE}} stop postgres
+
+[doc('Access postgres shell')]
+db-shell:
+  {{DOCKER_COMPOSE}} exec postgres psql -U temp -d temp
+
 [confirm("Are you sure you want to delete all data & records?!")]
 [doc('Clean up all mess created by development environment')]
-clean: db-stop
-  rm -rf .nix-shell
+clean: docker-down
+  rm -rf docker-data
   rm -rf .env
   rm -rf target
   rm -rf result
 
-[doc('Kill working postgres instance')]
-db-stop:
-  pkill postgres
-
-[doc('Start postgresql instance with data')]
-db-start:
-  pg_ctl                                                  \
-    -D "$PWD/.nix-shell/db"                               \
-    -l $PGDATA/postgres.log                               \
-    -o "-c unix_socket_directories='$PGDATA'"             \
-    -o "-c listen_addresses='*'"                          \
-    -o "-c log_destination='stderr'"                      \
-    -o "-c logging_collector=on"                          \
-    -o "-c log_directory='log'"                           \
-    -o "-c log_filename='postgresql-%Y-%m-%d_%H%M%S.log'" \
-    -o "-c log_min_messages=info"                         \
-    -o "-c log_min_error_statement=info"                  \
-    -o "-c log_connections=on"                            \
-    start
+[confirm("Are you sure you want to reset Docker volumes?")]
+[doc('Full Docker cleanup including volumes')]
+docker-reset:
+  {{DOCKER_COMPOSE}} down -v
+  rm -rf docker-data
