@@ -25,6 +25,11 @@ format:
 config-generate:
   cargo run config generate ./config.toml
 
+[doc('Generate config.toml using Docker (no local Rust needed)')]
+config-generate-docker:
+  {{DOCKER_COMPOSE}} run --rm app server config generate /app/config.toml
+  docker cp dev_app:/app/config.toml ./config.toml
+
 [working-directory('./crates/database')]
 [confirm("Are you sure you want to do migration?")]
 [doc('Perform migration with working database')]
