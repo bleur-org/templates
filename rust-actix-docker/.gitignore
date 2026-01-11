@@ -9,6 +9,7 @@
 
 # Production config file
 config.toml*
+diesel.toml
 
 # Shell temporary files
 .nix-shell
