@@ -14,19 +14,18 @@ default = "0.1.0"
 message = "What would be initial version?"
 
 [[variable]]
-placeholder = "website"
+variable = "website"
 default = "https://bleur.net"
 message = "Is there any website hosted for this project?"
 
 [[variable]]
-placeholder = "#repository#"
+variable = "repository"
 default = "https://github.com/bleur-org/templates"
 message = "What's the link to the repo?"
 
 [[variable]]
-placeholder = "#description#"
+variable = "description"
 default = "My very awesome rust project"
-source = "Cargo.toml"
 message = "What's this project about generally?"
 
 [[variable]]
