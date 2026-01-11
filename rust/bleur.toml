@@ -57,3 +57,8 @@ value = "@website@"
 placeholder = "#author#"
 source = "Cargo.toml"
 value = "@author@"
+
+[[change]]
+placeholder = "#some#"
+source = "Cargo.toml"
+value = "@some@"
