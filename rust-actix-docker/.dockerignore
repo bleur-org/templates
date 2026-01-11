@@ -1,0 +1,53 @@
+# Rust build artifacts
+target/
+**/*.rs.bk
+*.pdb
+
+# Development database
+docker-data/
+.nix-shell/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!readme.md
+docs/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Nix
+*.nix
+result
+result-*
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Just
+.just/
+
+# Misc
+*.bak
+*.tmp

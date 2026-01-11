@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dev_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_INITDB_ARGS: "-A md5"
+
+    ports:
+      - "${DB_PORT}:5432"
+
+    volumes:
+      - ./docker-data/postgres:/var/lib/postgresql/data
+
+    command: >
+      postgres
+      -c listen_addresses='*'
+      -c log_destination='stderr'
+      -c logging_collector=off
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_statement='all'
+      -c log_duration=on
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+    networks:
+      - dev_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: dev_app
+    ports:
+      - "8002:8001"
+    volumes:
+      - .:/workspace:delegated,cached
+      - cargo-cache:/usr/local/cargo/registry
+    environment:
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
+      RUST_LOG: debug
+    command: >
+      sh -c "
+        if [ ! -f /workspace/config.toml ]; then
+          echo 'Generating default config.toml...'
+          cargo run --bin server -- config generate /workspace/config.toml
+        fi
+        cargo watch -x 'run --bin server -- server run /workspace/config.toml'
+      "
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+networks:
+  dev_network:
+    driver: bridge
+
+volumes:
+  cargo-cache:
+  cargo-git:
+  target-cache:
+  postgres_data:
