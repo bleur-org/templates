@@ -1,0 +1,23 @@
+# Nix builds
+/result
+
+# Cargo builds
+/target
+
+# Environmental variables
+.env
+
+# Production config file
+config.toml*
+
+# Shell temporary files
+.nix-shell
+
+# Postgresql logfiles
+logfile
+
+# Direnv
+.direnv
+
+# docker
+/docker-data

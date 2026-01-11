@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dev_postgres
+    restart: "no"
+
+    environment:
+      # Default credentials - change these as you wish
+      POSTGRES_USER: temp
+      POSTGRES_PASSWORD: temp
+      POSTGRES_DB: temp
+
+      POSTGRES_INITDB_ARGS: "-A md5"
+
+    ports:
+      - "5432:5432" # Change first number if port is already in use (e.g., "5433:5432")
+
+    volumes:
+      # Store data in project directory - gets cleaned up when you want
+      - ./docker-data/postgres:/var/lib/postgresql/data
+
+      # Custom PostgreSQL configuration (optional)
+      # - ./postgresql.conf:/etc/postgresql/postgresql.conf
+
+    command: >
+      postgres
+      -c listen_addresses='*'
+      -c log_destination='stderr'
+      -c logging_collector=off
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_statement='all'
+      -c log_duration=on
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temp -d temp"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+    networks:
+      - dev_network
+
+networks:
+  dev_network:
+    driver: bridge
+
+# Volume definitions (optional, if you want named volumes instead)
+# volumes:
+#   postgres_data:
