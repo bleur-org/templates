@@ -13,10 +13,13 @@
 }: let
   # Helpful nix function
   lib = pkgs.lib;
-  getLibFolder = pkg: "${pkg}/lib";
+  # getLibFolder = pkg: "${pkg}/lib"; # uncomment for LDs
+
+  # Contents of Cargo.toml
+  toml = pkgs.lib.importTOML ./Cargo.toml;
 
   # Manifest via Cargo.toml
-  manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
+  manifest = toml.package;
 
   # Rust Toolchain via fenix
   toolchain = pkgs.fenix.fromToolchainFile {
@@ -54,6 +57,8 @@ in
 
       # Other compile time dependencies
       # here
+      # pkg-config
+      # openssl
     ];
 
     # Runtime dependencies which will be shipped
@@ -68,24 +73,24 @@ in
 
       # Make sure, your header file has the
       # same name as the name in your Cargo.toml
-      cp ./${manifest.name}.h $out/include/
+      cp ./${toml.lib.name}.h $out/include/
     '';
 
     # Set Environment Variables
     RUST_BACKTRACE = 1;
 
-    # Compiler LD variables
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.libiconv
-    ];
+    # => Use this only if you know what you're doing, else remove!
+    # NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
+    # LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+    #   pkgs.libiconv
+    # ];
 
     meta = with lib; {
       homepage = manifest.homepage;
       description = manifest.description;
       # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
-      license = with lib.licenses; [asl20 mit];
+      license = with licenses; [mit];
       platforms = with platforms; linux ++ darwin;
-      maintainers = [lib.maintainers.orklzv];
+      maintainers = with maintainers; [orklzv];
     };
   }

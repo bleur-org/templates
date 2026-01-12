@@ -1,4 +1,4 @@
-# Either have nixpkgs and fenix in your channels
+# Either have nixpkgs in your channels
 # Or build it using flakes, flake way is more recommended!
 {
   pkgs ? let
@@ -13,7 +13,7 @@
 }: let
   # Helpful nix function
   lib = pkgs.lib;
-  getLibFolder = pkg: "${pkg}/lib";
+  # getLibFolder = pkg: "${pkg}/lib"; # uncomment for LDs
 
   # Manifest via Cargo.toml
   manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
@@ -42,6 +42,8 @@ in
     nativeBuildInputs = with pkgs; [
       # Other compile time dependencies
       # here
+      # pkg-config
+      # openssl
     ];
 
     # Runtime dependencies which will be shipped
@@ -55,18 +57,18 @@ in
     RUST_BACKTRACE = 1;
     RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
 
-    # Compiler LD variables
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.libiconv
-    ];
+    # => Use this only if you know what you're doing, else remove!
+    # NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
+    # LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+    #   pkgs.libiconv
+    # ];
 
     meta = with lib; {
       homepage = manifest.homepage;
       description = manifest.description;
       # https://github.com/NixOS/nixpkgs/blob/master/lib/licenses.nix
-      license = with lib.licenses; [asl20 mit];
+      license = with licenses; [mit];
       platforms = with platforms; linux ++ darwin;
-      maintainers = [lib.maintainers.orzklv];
+      maintainers = with maintainers; [orzklv];
     };
   }

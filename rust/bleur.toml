@@ -33,6 +33,8 @@ variable = "author"
 default = "Bleur Developers"
 message = "Who's going to be author?"
 
+# File changes
+
 [[change]]
 placeholder = "#name#"
 source = "Cargo.toml"
@@ -57,7 +59,3 @@ value = "@website@"
 placeholder = "#author#"
 source = "Cargo.toml"
 value = "@author@"
-
-[[replace]]
-from = "from.txt"
-to = "@name@.toml"

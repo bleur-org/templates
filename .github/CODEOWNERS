@@ -1,0 +1,9 @@
+# The main objective of this file is to keep a list of
+# maintainers to keep track which templates is maintained
+# by who and who'm should maintainers of the project
+# should ping or assign to issues/PRs.
+
+# All rust templates and some of others ones are maintained
+# by Uzinfocom Open Source developers.
+rust* @uzinfocom-org @bleur-org
+c-gtk @uzinfocom-org @bleur-org

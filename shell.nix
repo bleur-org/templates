@@ -9,14 +9,19 @@
     import nixpkgs {overlays = [];},
   ...
 }:
-pkgs.stdenv.mkDerivation {
-  name = "templates";
+pkgs.mkShell {
+  name = "templates-shell";
 
-  nativeBuildInputs = with pkgs; [
+  packages = with pkgs; [
+    # Nix
     nixd
     statix
     deadnix
     alejandra
+
+    # TOML
+    just-lsp
+    taplo-lsp
   ];
 
   NIX_CONFIG = "extra-experimental-features = nix-command flakes";

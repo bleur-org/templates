@@ -32,3 +32,22 @@ Please, after bootstrapping your own project, don't forget to read readme.md for
 - [Rust language](https://rust-lang.org)
 - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
 """
+
+[templates.rust-shared]
+path = "./rust-shared"
+description = "C shared/static library with libc on Rust template"
+welcome = """
+# Bleur stack C shared/static library with libc on Rust & Nix template
+
+## Intended usage
+The intended usage of this flake is to write a C static/shared library with libc on Rust
+
+## Important
+Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+## More info
+- [Libc-rs](https://docs.rs/libc/latest/libc/)
+- [Fenix for Nix](https://github.com/nix-community/fenix)
+- [Rust language](https://rust-lang.org)
+- [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
+"""

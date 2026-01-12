@@ -1,4 +1,4 @@
-#include "../templib.h"
+#include "../#name#lib.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

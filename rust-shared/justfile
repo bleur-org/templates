@@ -9,5 +9,5 @@ lint:
 
 try:
   cargo build --release
-  gcc -Wall -g -O0 tests/try.c -I. -Ltarget/release/ -ltemplib -o ./tests/try
+  gcc -Wall -g -O0 tests/try.c -I. -Ltarget/release/ -l#name#lib -o ./tests/try
   LD_LIBRARY_PATH=target/release ./tests/try

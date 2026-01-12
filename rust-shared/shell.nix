@@ -43,6 +43,7 @@ in
       # Other compile time dependencies
       # here
       just
+      just-lsp
     ];
 
     # Runtime dependencies which will be shipped

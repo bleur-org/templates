@@ -1,12 +1,12 @@
 [project]
-name = "rust-nightly"
+name = "rust-shared"
 
 ## Variables
 
 [[variable]]
 variable = "name"
 default = "project"
-message = "What would you like to name this project?"
+message = "What would you like to name this project? (without \"lib\" at the end)"
 
 [[variable]]
 variable = "version"
@@ -59,3 +59,17 @@ value = "@website@"
 placeholder = "#author#"
 source = "Cargo.toml"
 value = "@author@"
+
+[[change]]
+placeholder = "#name#"
+source = "try.c"
+value = "@name@"
+
+[[change]]
+placeholder = "#name#"
+source = "justfile"
+value = "@name@"
+
+[[move]]
+from = "templib.h"
+to = "@name@lib.h"

@@ -9,7 +9,7 @@ description = "#description#"
 authors = ["#author#"]
 
 [lib]
-name = "templib"
+name = "#name#lib"
 crate-type = ["rlib", "cdylib"]
 
 # Dependencies that will included with final binary

@@ -1,2 +1,0 @@
-[example]
-configuration = "to be moved"
