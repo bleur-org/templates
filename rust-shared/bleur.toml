@@ -61,6 +61,16 @@ source = "Cargo.toml"
 value = "@author@"
 
 [[change]]
+placeholder = "#repository#"
+source = "Cargo.toml"
+value = "@repository@"
+
+[[change]]
+placeholder = "#description#"
+source = "Cargo.toml"
+value = "@description@"
+
+[[change]]
 placeholder = "#name#"
 source = "try.c"
 value = "@name@"
@@ -69,6 +79,8 @@ value = "@name@"
 placeholder = "#name#"
 source = "justfile"
 value = "@name@"
+
+# Moving files
 
 [[move]]
 from = "templib.h"
