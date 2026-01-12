@@ -1,67 +1,29 @@
 # Either have nixpkgs and fenix in your channels
 # Or build it using flakes, flake way is more recommended!
-{
-  pkgs ? let
-    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
-    nixpkgs = fetchTarball {
-      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
-      sha256 = lock.narHash;
-    };
-  in
-    import nixpkgs {overlays = [(import "${fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz"}/overlay.nix")];},
-}: let
-  # Helpful nix function
-  getLibFolder = pkg: "${pkg}/lib";
+flake: {pkgs, ...}: let
+  # Hostplatform system
+  system = pkgs.hostPlatform.system;
 
-  # Rust Toolchain via fenix
-  toolchain = pkgs.fenix.fromToolchainFile {
-    file = ./rust-toolchain.toml;
-
-    # Don't worry, if you need sha256 of your toolchain,
-    # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
-  };
-
-  # Manifest
-  manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
+  # Production package
+  base = flake.packages.${system}.default;
 in
-  pkgs.stdenv.mkDerivation {
-    name = "${manifest.name}-dev";
+  pkgs.mkShell {
+    inputsFrom = [base];
 
-    # Compile time dependencies
-    nativeBuildInputs = with pkgs; [
-      # Hail the Nix
+    packages = with pkgs; [
       nixd
       statix
       deadnix
       alejandra
 
-      # Rust
-      toolchain
       cargo-watch
 
-      # Other compile time dependencies
-      # here
       just
       just-lsp
     ];
 
-    # Runtime dependencies which will be shipped
-    # with nix package
-    buildInputs = with pkgs; [
-      # openssl
-      # libressl
-    ];
-
     # Set Environment Variables
     RUST_BACKTRACE = "full";
-
-    # Compiler LD variables
-    # > Make sure packages have /lib or /include path'es
-    NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.libiconv
-    ];
 
     shellHook = ''
       # Extra steps

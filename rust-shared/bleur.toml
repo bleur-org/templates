@@ -77,6 +77,6 @@ value = "@name@"
 
 # Moving files
 
-[[move]]
+[[replace]]
 from = "templib.h"
 to = "@name@lib.h"

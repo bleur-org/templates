@@ -52,7 +52,7 @@ in
 
     # Compile time dependencies
     nativeBuildInputs = with pkgs; [
-      # Rust
+      # Rust
       toolchain
 
       # Other compile time dependencies
