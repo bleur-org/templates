@@ -20,8 +20,8 @@ pkgs.mkShell {
     alejandra
 
     # TOML
+    taplo
     just-lsp
-    taplo-lsp
   ];
 
   NIX_CONFIG = "extra-experimental-features = nix-command flakes";

@@ -22,8 +22,6 @@ in
 
       # Toml
       taplo
-      taplo-cli
-      taplo-lsp
 
       # Nix
       nixd
