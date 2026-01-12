@@ -27,7 +27,7 @@
 
     # Don't worry, if you need sha256 of your toolchain,
     # just run `nix build` and copy paste correct sha256.
-    sha256 = "sha256-Hn2uaQzRLidAWpfmRwSRdImifGUCAb9HeAqTYFXWeQk=";
+    sha256 = "sha256-sqSWJDUxc+zaz1nBWMAJKTAGBuGWP25GCftIOlCEAtA=";
   };
 in
   pkgs.rustPlatform.buildRustPackage {
