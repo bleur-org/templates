@@ -50,7 +50,7 @@ nix flake new --template github:bleur-org/templates#example ./my-cool-project
 
 ## Thanks
 
-- [Official Nix Temapltes](https://github.com/NixOS/templates) - For showing how to create personal template collections.
+- [Official Nix Templates](https://github.com/NixOS/templates) - For showing how to create personal template collections.
 - [Personal Hatsune Miku Playlist](https://music.apple.com/gb/playlist/vocaloid-songs/pl.u-GgA5YE5io7P71kE) - For cheering me up while I was writing all these.
 
 ## License
