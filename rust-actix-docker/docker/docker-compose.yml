@@ -17,27 +17,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
-    networks: [dev_network]
-
-  migrate:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-      target: migrate
-    environment:
-      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
-    depends_on:
-      postgres:
-        condition: service_healthy
-    restart: "no"
-    networks: [dev_network]
-    read_only: true
-    tmpfs:
-      - /tmp
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
+    networks: [prod_network]
 
   app:
     build:
@@ -52,9 +32,9 @@ services:
       DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
       RUST_LOG: info
     depends_on:
-      migrate:
-        condition: service_completed_successfully
-    networks: [dev_network]
+      postgres:
+        condition: service_healthy
+    networks: [prod_network]
     read_only: true
     tmpfs:
       - /tmp
@@ -66,7 +46,7 @@ services:
       - ../config.toml:/app/config.toml:ro
 
 networks:
-  dev_network:
+  prod_network:
     driver: bridge
 
 volumes:

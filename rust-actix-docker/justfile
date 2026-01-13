@@ -47,16 +47,18 @@ db env="dev":
   if [ "{{ env }}" = "prod" ]; then podman exec -it prod_postgres psql -U "$DB_USERNAME" -d "$DB_NAME"; else podman exec -it dev_postgres psql -U "$DB_USERNAME" -d "$DB_NAME"; fi
 
 migrate env="dev":
+  @echo "Running migrations for {{ env }}..."
   if [ "{{ env }}" = "prod" ]; then \
-    {{ prod_cmd }} run --rm -e DATABASE_URL={{ db_url }} migrate; \
+    podman exec prod_app diesel migration run --migration-dir /app/migrations --database-url {{ db_url }}; \
   else \
     {{ dev_cmd }} run --rm -e DATABASE_URL={{ db_url }} app \
       diesel migration run --migration-dir /workspace/crates/database/migrations; \
   fi
 
 migrate-fresh env="dev":
+  @echo "Redoing last migration for {{ env }}..."
   if [ "{{ env }}" = "prod" ]; then \
-    {{ prod_cmd }} run --rm -e DATABASE_URL={{ db_url }} migrate migration redo; \
+    podman exec prod_app diesel migration redo --migration-dir /app/migrations --database-url {{ db_url }}; \
   else \
     {{ dev_cmd }} run --rm -e DATABASE_URL={{ db_url }} app \
       diesel migration redo --migration-dir /workspace/crates/database/migrations; \

@@ -13,18 +13,7 @@ RUN cargo build --release --bin server && \
 FROM builder AS diesel_builder
 RUN cargo install diesel_cli --no-default-features --features postgres
 
-# Migrate image
-FROM debian:bookworm-slim AS migrate
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq5 ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY --from=diesel_builder /usr/local/cargo/bin/diesel /usr/local/bin/diesel
-COPY --from=builder /build/crates/database/migrations ./migrations
-ENTRYPOINT ["diesel"]
-CMD ["migration", "run"]
-
-# APP image
+# APP image with diesel CLI
 FROM debian:bookworm-slim AS app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 ca-certificates curl \
@@ -32,6 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 COPY --from=builder /build/target/release/server /usr/local/bin/server
 COPY --from=builder /build/config.toml /app/config.toml
+COPY --from=diesel_builder /usr/local/cargo/bin/diesel /usr/local/bin/diesel
+COPY --from=builder /build/crates/database/migrations /app/migrations
 RUN useradd -m -u 10001 appuser && chown -R appuser:appuser /app
 USER appuser
 EXPOSE 8001
