@@ -11,7 +11,7 @@ services:
     ports:
       - "${DB_PORT}:5432"
     volumes:
-      - ../docker-data/postgres:/var/lib/postgresql/data
+      - dev_pgdata:/var/lib/postgresql/data
     command: >
       postgres
       -c listen_addresses='*'
@@ -33,7 +33,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile.dev
     container_name: dev_app
-    restart: unless-stopped
+    restart: "no"
     ports:
       - "8002:8001"
     volumes:
@@ -44,16 +44,13 @@ services:
     environment:
       DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
       RUST_LOG: debug
-    command: >
-      sh -lc '
-        set -e
-        cd /workspace
-        if [ ! -f /workspace/config.toml ]; then
-          echo "Generating default config.toml..."
-          cargo run --bin server -- config generate /workspace/config.toml --database "$DATABASE_URL"
-        fi
-        cargo watch -x "run --bin server -- server run /workspace/config.toml"
-      '
+    command:
+      - sh
+      - -c
+      - |
+          set -e
+          cd /workspace
+          cargo watch -x "run --bin server -- server run /workspace/config.toml"
     depends_on:
       postgres:
         condition: service_healthy
@@ -67,3 +64,4 @@ volumes:
   cargo-cache:
   cargo-git:
   target-cache:
+  dev_pgdata:
