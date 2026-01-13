@@ -42,7 +42,7 @@ services:
       - cargo-git:/usr/local/cargo/git
       - target-cache:/workspace/target
     environment:
-      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
       RUST_LOG: debug
     command: >
       sh -lc '
