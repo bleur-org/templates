@@ -41,30 +41,16 @@ services:
       dockerfile: Dockerfile
     container_name: prod_app
     restart: unless-stopped
-
     ports:
       - "8001:8001"
-
     environment:
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
       RUST_LOG: info
-      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
-
-    volumes:
-      - ./config.toml:/app/config.toml:ro
-
     depends_on:
       postgres:
         condition: service_healthy
-
     networks:
       - dev_network
-
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8001/"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
 
 networks:
   dev_network:

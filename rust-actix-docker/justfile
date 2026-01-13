@@ -1,81 +1,82 @@
 set dotenv-load := true
 
-dc      := "podman-compose"
-prod    := dc + " -f docker-compose.yml"
-dev     := dc + " -f docker-compose.dev.yml"
+dc := "podman-compose"
+prod := dc + " -f docker-compose.yml"
+dev := dc + " -f docker-compose.dev.yml"
 
 default: dev
 
 # High Level Commands
 dev: dev-up dev-migrate
+
 prod: prod-up prod-migrate
 
 # Production Commands
 prod-up:
-  {{prod}} up -d
+    {{ prod }} up -d
 
 prod-down:
-  {{prod}} down
+    {{ prod }} down
 
 prod-logs:
-  {{prod}} logs -f
+    {{ prod }} logs -f
 
 prod-restart:
-  {{prod}} restart
+    {{ prod }} restart
 
 prod-build:
-  {{prod}} build
+    {{ prod }} build
 
 prod-db-up:
-  {{prod}} up -d postgres
+    {{ prod }} up -d postgres
 
 prod-shell:
-  podman exec -it app bash
+    podman exec -it prod_app bash
 
 prod-db-shell:
-  {{prod}} exec postgres psql -U "$DB_USERNAME" -d "$DB_NAME"
+    {{ prod }} exec postgres psql -U "$DB_USERNAME" -d "$DB_NAME"
 
 prod-migrate:
-  {{prod}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME app diesel migration run
+    {{ prod }} exec app diesel migration run --migration-dir /app/migrations
 
 prod-migrate-fresh:
-  {{prod}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:5432/$DB_NAME app diesel migration redo
+    {{ prod }} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:5432/$DB_NAME app diesel migration redo
 
 # Development Commands
 dev-up:
-  {{dev}} up -d
+    {{ dev }} up -d
 
 dev-down:
-  {{dev}} down
+    {{ dev }} down
 
 dev-logs:
-  {{dev}} logs -f
+    {{ dev }} logs -f
 
 dev-restart:
-  {{dev}} restart
+    {{ dev }} restart
 
 dev-build:
-  {{dev}} build
+    {{ dev }} build
 
 dev-shell:
-  podman exec -it dev_app bash
+    podman exec -it dev_app bash
 
 dev-config-generate:
-  cargo run --bin server -- config generate /workspace/config.toml --database "$DATABASE_URL"
+    cargo run --bin server -- config generate /workspace/config.toml --database "$DATABASE_URL"
 
 dev-db-shell:
-  {{dev}} exec postgres psql -U "$DB_USERNAME" -d "$DB_NAME"
+    {{ dev }} exec postgres psql -U "$DB_USERNAME" -d "$DB_NAME"
 
 dev-migrate:
-  {{dev}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME \
-          app diesel migration run --migration-dir /workspace/crates/database/migrations
+    {{ dev }} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME \
+            app diesel migration run --migration-dir /workspace/crates/database/migrations
 
 dev-migrate-fresh:
-  {{dev}} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME \
-          app diesel migration redo --migration-dir /workspace/crates/database/migrations
+    {{ dev }} exec -e DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@postgres:$DB_PORT/$DB_NAME \
+            app diesel migration redo --migration-dir /workspace/crates/database/migrations
 
 # Maintanance
 clean:
-  rm -rf target docker-data .env result migrations
-  {{dev}} down -v --remove-orphans
-  {{prod}} down -v --remove-orphans
+    rm -rf target docker-data result migrations config.toml diesel.toml src/
+    {{ dev }} down -v --remove-orphans
+    {{ prod }} down -v --remove-orphans
