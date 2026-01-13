@@ -41,7 +41,7 @@ ps env="dev":
   just c {{ env }} ps
 
 shell env="dev":
-  if [ "{{ env }}" = "prod" ]; then podman exec -it prod_app sh; else podman exec -it dev_app sh; fi
+  if [ "{{ env }}" = "prod" ]; then podman exec -it prod_app bash; else podman exec -it dev_app bash; fi
 
 db env="dev":
   if [ "{{ env }}" = "prod" ]; then podman exec -it prod_postgres psql -U "$DB_USERNAME" -d "$DB_NAME"; else podman exec -it dev_postgres psql -U "$DB_USERNAME" -d "$DB_NAME"; fi
