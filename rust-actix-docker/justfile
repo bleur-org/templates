@@ -1,8 +1,9 @@
 set dotenv-load := true
 
 dc := "podman-compose"
-prod := dc + " -f docker-compose.yml"
-dev := dc + " -f docker-compose.dev.yml"
+dir := "docker"
+prod := dc + " -f " + dir + "/docker-compose.yml"
+dev := dc + " -f " + dir + "/docker-compose.dev.yml"
 
 default: dev
 

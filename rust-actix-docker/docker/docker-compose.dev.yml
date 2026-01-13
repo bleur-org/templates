@@ -31,7 +31,7 @@ services:
 
   app:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile.dev
     container_name: dev_app
     restart: unless-stopped
