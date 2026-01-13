@@ -62,8 +62,6 @@ services:
       - no-new-privileges:true
     cap_drop:
       - ALL
-    volumes:
-      - ../config.toml:/app/config.toml:ro
 
 networks:
   dev_network:

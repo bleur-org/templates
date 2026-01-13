@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=builder /build/target/release/server /usr/local/bin/server
+COPY --from=builder /build/config.toml /app/config.toml
 RUN useradd -m -u 10001 appuser && chown -R appuser:appuser /app
 USER appuser
 EXPOSE 8001
