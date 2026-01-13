@@ -11,7 +11,7 @@ services:
     ports:
       - "${DB_PORT}:5432"
     volumes:
-      - ./docker-data/postgres:/var/lib/postgresql/data
+      - ../docker-data/postgres:/var/lib/postgresql/data
     command: >
       postgres
       -c listen_addresses='*'
@@ -26,34 +26,38 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
-    networks:
-      - dev_network
+    networks: [dev_network]
 
   app:
     build:
       context: ..
-      dockerfile: Dockerfile.dev
+      dockerfile: docker/Dockerfile.dev
     container_name: dev_app
     restart: unless-stopped
     ports:
       - "8002:8001"
     volumes:
-      - .:/workspace:delegated,cached
+      - ..:/workspace:delegated,cached
       - cargo-cache:/usr/local/cargo/registry
+      - cargo-git:/usr/local/cargo/git
+      - target-cache:/workspace/target
     environment:
       DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
       RUST_LOG: debug
     command: >
-      sh -c "
+      sh -lc '
+        set -e
+        cd /workspace
         if [ ! -f /workspace/config.toml ]; then
-          echo 'Generating default config.toml...'
-          cargo run --bin server -- config generate /workspace/config.toml
+          echo "Generating default config.toml..."
+          cargo run --bin server -- config generate /workspace/config.toml --database "$DATABASE_URL"
         fi
-        cargo watch -x 'run --bin server -- server run /workspace/config.toml'
-      "
+        cargo watch -x "run --bin server -- server run /workspace/config.toml"
+      '
     depends_on:
       postgres:
         condition: service_healthy
+    networks: [dev_network]
 
 networks:
   dev_network:
@@ -63,4 +67,3 @@ volumes:
   cargo-cache:
   cargo-git:
   target-cache:
-  postgres_data:
