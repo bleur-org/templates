@@ -174,4 +174,38 @@
       - [LLVM NixOS Wiki](https://wiki.nixos.org/wiki/LLVM)
     '';
   };
+
+  # React + Vite + TypeScript template with Nix
+  ts-react = {
+    path = ./ts-react;
+    description = "React, Vite, TypeScript & Nix template";
+    welcomeText = ''
+      # Bleur stack React + TypeScript + Vite & Nix template
+
+      ## Intended usage
+      The intended usage of this flake is to build modern frontend applications using
+      React, TypeScript, and Vite, with a fully reproducible Nix-based development
+      environment.
+
+      This template is optimized for fast iteration, strict typing, and predictable
+      builds, while remaining friendly to non-Nix users.
+
+      ## What you get
+      - React with modern function components and hooks
+      - TypeScript with sensible defaults
+      - Vite for fast dev server and builds
+      - Nix devShell with Node.js and tooling pinned
+      - Ready-to-use project structure
+
+      ## Important
+      After bootstrapping your own project, please read readme.md for details on
+      development workflow, builds, and customization.
+
+      ## More info
+      - [React](https://react.dev)
+      - [TypeScript](https://www.typescriptlang.org)
+      - [Vite](https://vitejs.dev)
+      - [NixOS Wiki – Node.js](https://nixos.wiki/wiki/Node.js)
+    '';
+  };
 }
