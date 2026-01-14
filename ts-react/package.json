@@ -1,10 +1,10 @@
 {
   "name": "#name#",
   "private": false,
-  "version": "#version",
-  "homepage": "#website",
+  "version": "#version#",
+  "homepage": "#website#",
   "description": "#description#",
-  "author": "#author",
+  "author": "#author#",
   "type": "module",
   "repository": {
     "type": "git",
