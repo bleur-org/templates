@@ -53,7 +53,7 @@ value = "@homepage@"
 [[change]]
 placeholder = "#repository#"
 source = "package.json"
-value = "@repository@"
+value = "@@repository@@"
 
 [[change]]
 placeholder = "#description#"
