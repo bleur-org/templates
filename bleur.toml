@@ -51,3 +51,22 @@ Please, after bootstrapping your own project, don't forget to read readme.md for
 - [Rust language](https://rust-lang.org)
 - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
 """
+
+[templates.ts-react]
+path = "./ts-react"
+description = "React + TypeScript template with Vite and Nix"
+welcome = """
+# Bleur stack React + TypeScript template
+#
+## Intended usage
+The intended usage of this template is to quickly bootstrap React applications with TypeScript, Vite (Rolldown), and a reproducible Nix development environment.
+
+## Important
+Please, after bootstrapping your own project, don't forget to read README.md for more information on usage and available commands.
+
+## More info
+- [React Documentation](https://react.dev)
+- [Vite Documentation](https://vitejs.dev)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Nix Flakes](https://nixos.wiki/wiki/Flakes)
+"""
