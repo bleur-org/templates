@@ -1,0 +1,66 @@
+[project]
+name = "ts-react"
+
+## Variables
+
+[[variable]]
+variable = "name"
+default = "react-project"
+message = "What would you like to name this project?"
+
+[[variable]]
+variable = "version"
+default = "0.1.0"
+message = "What would be initial version?"
+
+[[variable]]
+variable = "website"
+default = "https://bleur.net"
+message = "Is there any website hosted for this project?"
+
+[[variable]]
+variable = "repository"
+default = "https://github.com/bleur-org/templates"
+message = "What's the link to the repo?"
+
+[[variable]]
+variable = "description"
+default = "My very awesome react project"
+message = "What's this project about generally?"
+
+[[variable]]
+variable = "author"
+default = "Bleur Developers"
+message = "Who's going to be author?"
+
+# File changes
+
+[[change]]
+placeholder = "#name#"
+source = "package.json"
+value = "@name@"
+
+[[change]]
+placeholder = "#version#"
+source = "package.json"
+value = "@version@"
+
+[[change]]
+placeholder = "#website"
+source = "package.json"
+value = "@homepage@"
+
+[[change]]
+placeholder = "#repository#"
+source = "package.json"
+value = "@repository@"
+
+[[change]]
+placeholder = "#description#"
+source = "package.json"
+value = "@description@"
+
+[[change]]
+placeholder = "#author#"
+source = "package.json"
+value = "@author@"
