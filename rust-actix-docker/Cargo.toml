@@ -7,7 +7,7 @@ members = ["crates/cli", "crates/database", "crates/http", "crates/utils"]
 # Don't remove `name` regardless of warnings
 # Lots of nix things depend on this value alone
 name = "#name#"
-version = "#vesion#"
+version = "#version#"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 homepage = "#website#"

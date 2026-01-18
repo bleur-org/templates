@@ -80,6 +80,25 @@ then start building.
 This template favors explicitness over magic.
 """
 
+[templates.rust-actix-docker]
+path = "./rust-actix-docker"
+description = "Rust + Actix template with Diesel and Docker"
+welcome = """
+Welcome to the Rust + Actix + Docker template.
+
+This workspace is for containerized Rust services.
+
+It includes:
+– A Cargo workspace with shared dependencies
+– Actix Web for HTTP
+– Diesel for database access
+– Docker setup for local and production builds
+– Justfile for common commands
+
+Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
+then build and ship.
+"""
+
 [templates.ts-react]
 path = "./ts-react"
 description = "React + TypeScript template with Vite and Nix"
