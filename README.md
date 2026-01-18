@@ -25,12 +25,17 @@ This is Bleur stack, a collection of Nix bootstrapped templates which can be use
 - Rust C static/shared library (via #rust-shared)
 - Rust Telegram Bot (via #rust-telegram)
 - Rust Actix (via #rust-actix)
+- Rust Actix with Docker (via #rust-actix-docker)
 - Rust GTK (via #rust-gtk)
 - Rust Book (via #rust-book)
 
 ### C based
 
 - C/GTK4 made with cmake (via #c-gtk)
+
+### TypeScript based
+
+- TypeScript React with VIte (via #ts-react)
 
 ## Bootstrapping
 
