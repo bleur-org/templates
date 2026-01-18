@@ -56,54 +56,56 @@ Please, after bootstrapping your own project, don't forget to read readme.md for
 path = "./rust-actix"
 description = "Rust + Actix template with Diesel and Nix"
 welcome = """
-Welcome to the Rust + Actix template.
+# Bleur stack actix & postgresql server on Rust & Nix template with NixOS modules
+## Intended usage
+The intended usage of this flake is to write a backend server application on Rust/Actix and deploy it on NixOS server
 
-This is an opinionated workspace for building production-ready services.
+## Important
+Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
-Included:
-– Cargo workspace with clear crate boundaries
-– Actix Web for HTTP
-– Diesel for database access
-– Shared dependencies at the workspace level
-– Nix (flakes) for reproducible development
-– Justfile for common workflows
-
-Structure:
-– crates/cli        → application entry point
-– crates/http       → HTTP layer
-– crates/database   → database logic
-– crates/utils      → shared utilities
+## More info
+- [Actix.rs](https://actix.rs)
+- [Diesel.rs](https://diesel.rs)
+- [Rust language](https://rust-lang.org)
+- [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
 """
 
 [templates.rust-actix-docker]
 path = "./rust-actix-docker"
 description = "Rust + Actix template with Diesel and Docker"
 welcome = """
-Welcome to the Rust + Actix + Docker template.
+# Bleur stack Rust + Actix service with Docker
 
-This workspace is for containerized Rust services.
+## Intended usage
+The intended usage of this template is to build a Rust web service using Actix
+and run it in a containerized environment for local development and production.
 
-It includes:
-– A Cargo workspace with shared dependencies
-– Actix Web for HTTP
-– Diesel for database access
-– Docker setup for local and production builds
-– Justfile for common commands
+## Important
+After bootstrapping your project, make sure to read `readme.md`
+for details on project structure, environment variables, and Docker workflows.
+
+## More info
+- Actix Web: https://actix.rs
+- Diesel: https://diesel.rs
+- Rust language: https://www.rust-lang.org
+- Docker: https://www.docker.com
 """
 
 [templates.rust-telegram]
 path = "./rust-telegram"
 description = "Rust + Nix template for Telegram-bots"
 welcome = """
-Welcome to the Rust + Telegram bot template.
+# Bleur stack telegram bot on Rust & Nix with NixOS modules template
+## Intended usage
+The intended usage of this flake is to write a Telegram bot on Rust and deploy it on NixOS server
 
-This is a minimal setup for building Telegram bots in Rust.
+## Important
+Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
 
-It includes:
-– Teloxide for Telegram Bot API integration
-– Tokio for async execution
-– Structured logging and configuration
-– Nix for reproducible development
+## More info
+- [Teloxide](https://github.com/teloxide/teloxide/)
+- [Rust language](https://rust-lang.org)
+- [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
 """
 
 [templates.ts-react]
