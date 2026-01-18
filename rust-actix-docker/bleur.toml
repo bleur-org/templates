@@ -1,16 +1,16 @@
 [project]
-name = "rust-shared"
+name = "rust-actix-docker"
 
 ## Variables
 
 [[variable]]
 variable = "name"
 default = "project"
-message = "What would you like to name this project? (without \"lib\" at the end)"
+message = "What would you like to name this project?"
 
 [[variable]]
 variable = "version"
-default = "0.1.0"
+defautlt = "0.1.0"
 message = "What would be initial version?"
 
 [[variable]]
@@ -51,6 +51,11 @@ source = "Cargo.toml"
 value = "@website@"
 
 [[change]]
+placeholder = "#website#"
+source = "Cargo.toml"
+value = "@website@"
+
+[[change]]
 placeholder = "#author#"
 source = "Cargo.toml"
 value = "@author@"
@@ -64,25 +69,3 @@ value = "@repository@"
 placeholder = "#description#"
 source = "Cargo.toml"
 value = "@description@"
-
-[[change]]
-placeholder = "#name#"
-source = "tests/try.c"
-value = "@name@"
-
-[[change]]
-placeholder = "#library#"
-source = "templib.h"
-value = "@name@lib"
-apply = "uppercase"
-
-[[change]]
-placeholder = "#name#"
-source = "justfile"
-value = "@name@"
-
-# Moving files
-
-[[replace]]
-from = "templib.h"
-to = "@name@lib.h"
