@@ -52,6 +52,34 @@ Please, after bootstrapping your own project, don't forget to read readme.md for
 - [Rust NixOS Wiki](https://nixos.wiki/wiki/Rust)
 """
 
+[templates.rust-actix]
+path = "./rust-actix"
+description = "Rust + Actix template with Diesel and Nix"
+welcome = """
+Welcome to the Rust + Actix template.
+
+This is an opinionated workspace for building production-ready services.
+
+Included:
+– Cargo workspace with clear crate boundaries
+– Actix Web for HTTP
+– Diesel for database access
+– Shared dependencies at the workspace level
+– Nix (flakes) for reproducible development
+– Justfile for common workflows
+
+Structure:
+– crates/cli        → application entry point
+– crates/http       → HTTP layer
+– crates/database   → database logic
+– crates/utils      → shared utilities
+
+Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
+then start building.
+
+This template favors explicitness over magic.
+"""
+
 [templates.ts-react]
 path = "./ts-react"
 description = "React + TypeScript template with Vite and Nix"
