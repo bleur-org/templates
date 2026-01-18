@@ -12,7 +12,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 homepage = "#website#"
 repository = "#repository#"
-description = "#description"
+description = "#description#"
 authors = ["#author#"]
 
 # Shared dependencies across crates

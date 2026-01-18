@@ -99,6 +99,24 @@ Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
 then build and ship.
 """
 
+[templates.rust-telegram]
+path = "./rust-telegram"
+description = "Rust + Nix template for Telegram-bots"
+welcome = """
+Welcome to the Rust + Telegram bot template.
+
+This is a minimal setup for building Telegram bots in Rust.
+
+It includes:
+– Teloxide for Telegram Bot API integration
+– Tokio for async execution
+– Structured logging and configuration
+– Nix for reproducible development
+
+Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
+set your bot token in the environment, and run.
+"""
+
 [templates.ts-react]
 path = "./ts-react"
 description = "React + TypeScript template with Vite and Nix"
