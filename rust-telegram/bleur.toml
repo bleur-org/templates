@@ -10,7 +10,7 @@ message = "What would you like to name this project?"
 
 [[variable]]
 variable = "version"
-defautlt = "0.1.0"
+default = "0.1.0"
 message = "What would be initial version?"
 
 [[variable]]
