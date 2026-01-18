@@ -1,5 +1,5 @@
-#ifndef TEMPLIB
-#define TEMPLIB
+#ifndef #library#
+#define #library#
 
 // File: somelibname.h
 
@@ -37,4 +37,4 @@ void error_free(Error *o);
 const char *error_msg_get(const Error *o);
 int error_code_get(const Error *o);
 
-#endif
+#endif // #library#

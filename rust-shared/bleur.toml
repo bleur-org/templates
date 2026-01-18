@@ -71,6 +71,12 @@ source = "tests/try.c"
 value = "@name@"
 
 [[change]]
+placeholder = "#library#"
+source = "templib.h"
+value = "@name@lib"
+apply = "uppercase"
+
+[[change]]
 placeholder = "#name#"
 source = "justfile"
 value = "@name@"
