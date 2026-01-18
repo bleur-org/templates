@@ -73,11 +73,6 @@ Structure:
 – crates/http       → HTTP layer
 – crates/database   → database logic
 – crates/utils      → shared utilities
-
-Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
-then start building.
-
-This template favors explicitness over magic.
 """
 
 [templates.rust-actix-docker]
@@ -94,9 +89,6 @@ It includes:
 – Diesel for database access
 – Docker setup for local and production builds
 – Justfile for common commands
-
-Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
-then build and ship.
 """
 
 [templates.rust-telegram]
@@ -112,9 +104,6 @@ It includes:
 – Tokio for async execution
 – Structured logging and configuration
 – Nix for reproducible development
-
-Replace the placeholder values in `Cargo.toml` and `bleur.toml`,
-set your bot token in the environment, and run.
 """
 
 [templates.ts-react]
