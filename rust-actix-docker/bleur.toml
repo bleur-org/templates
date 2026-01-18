@@ -51,11 +51,6 @@ source = "Cargo.toml"
 value = "@website@"
 
 [[change]]
-placeholder = "#website#"
-source = "Cargo.toml"
-value = "@website@"
-
-[[change]]
 placeholder = "#author#"
 source = "Cargo.toml"
 value = "@author@"
