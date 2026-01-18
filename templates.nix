@@ -98,6 +98,27 @@
     '';
   };
 
+  # Actix & Postgresql server on Rust template (Docker)
+  rust-actix-docker = {
+    path = ./rust-actix-docker;
+    description = "Actix & Postgresql server on Rust template with Diesel and Docker";
+    welcomeText = ''
+      # Bleur stack actix & postgresql server on Rust template with Docker
+      ## Intended usage
+      The intended usage of this template is to build a backend server application on Rust/Actix with a PostgreSQL database
+      and run it in Docker for local development and production.
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [Actix.rs](https://actix.rs)
+      - [Diesel.rs](https://diesel.rs)
+      - [Rust language](https://rust-lang.org)
+      - [Docker](https://www.docker.com)
+    '';
+  };
+
   # Relm4 stack based GTK rust app template with Crane
   rust-relm4 = {
     path = ./rust-relm4;
