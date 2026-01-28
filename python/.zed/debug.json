@@ -1,0 +1,11 @@
+[
+  {
+    "label": "Debug python module",
+    "adapter": "Debugpy",
+    "module": "src",
+    "request": "launch",
+    "env": {
+      "DEBUG": "true",
+    },
+  },
+]
