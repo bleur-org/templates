@@ -1,0 +1,33 @@
+files: python/
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.14
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.19.1
+    hooks:
+      - id: mypy
+        args: [--strict, --explicit-package-bases, --ignore-missing-imports]
+        additional_dependencies: # from: https://github.com/pydantic/pydantic/discussions/9446#discussioncomment-10194677
+          - pydantic
+          - pydantic-settings
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.9.27
+    hooks:
+      - id: uv-lock
+      - id: uv-export
+        args: [--no-hashes, --no-header, --no-dev]
