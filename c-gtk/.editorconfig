@@ -1,0 +1,36 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.{c,h}]
+# Modern GNOME/GTK style generally favors 2-space indentation
+indent_style = space
+indent_size = 2
+
+[*.ui]
+# GTK Builder XML files
+indent_style = space
+indent_size = 2
+
+[*.{xml,glade}]
+# Interface definitions
+indent_style = space
+indent_size = 2
+
+[*.{py,sh}]
+# Helper scripts (Python/Shell)
+indent_size = 4
+
+[Makefile**]
+# Makefiles MUST use tabs
+indent_style = tab
+indent_size = 8
+
+[*.md]
+trim_trailing_whitespace = false

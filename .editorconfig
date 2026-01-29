@@ -1,0 +1,32 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.nix]
+indent_size = 2
+
+[*.{rs,py,go}]
+# Languages where the community/linters expect 4 spaces
+indent_size = 4
+
+[*.go]
+# Go: Tabs (Standardized by gofmt)
+indent_style = tab
+
+[Makefile]
+# Makefiles MUST have hard tabs at width 8
+indent_style = tab
+tab_width = 8
+
+[*.md]
+# Markdown trailing spaces have semantic meaning (line breaks)
+trim_trailing_whitespace = false
+
+[*.{json,toml,yml,yaml}]
+indent_size = 2
