@@ -27,46 +27,7 @@
       ];
 
       imports = [
-        inputs.treefmt-nix.flakeModule
-        inputs.git-hooks-nix.flakeModule
+        ./shell.nix
       ];
-
-      perSystem =
-        {
-          config,
-          # self',
-          # inputs',
-          pkgs,
-          # system,
-          ...
-        }:
-        {
-          treefmt = {
-            projectRootFile = "flake.nix";
-            programs = {
-              nixfmt.enable = true;
-              prettier.enable = true;
-            };
-          };
-
-          pre-commit = {
-            check.enable = true;
-            settings.hooks = {
-              treefmt.enable = true;
-              statix.enable = true;
-              deadnix.enable = true;
-            };
-          };
-
-          devShells.default = pkgs.mkShell {
-            name = "generic-dev-shell";
-
-            shellHook = config.pre-commit.installationScript;
-
-            nativeBuildInputs = with pkgs; [
-              just
-            ];
-          };
-        };
     };
 }
