@@ -18,6 +18,10 @@ This is Bleur stack, a collection of Nix bootstrapped templates which can be use
 
 ## Projects
 
+### Basic
+
+- Basic flake for general usage (default)
+
 ### Rust based
 
 - Rust (via #rust)
