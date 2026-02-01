@@ -1,0 +1,19 @@
+{
+    "format_on_save": "on",
+
+    "formatter": {
+        "external": {
+            "command": "nix",
+            "arguments": ["fmt", "--", "--stdin", "{buffer_path}"]
+        }
+    },
+
+    "languages": {
+        "Nix": {
+            "language_servers": ["nixd"]
+        },
+        "Python": {
+            "language_servers": ["basedpyright", "ruff"]
+        }
+    }
+}
