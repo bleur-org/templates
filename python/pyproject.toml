@@ -9,34 +9,28 @@ description = "@description@"
 readme = "readme.md"
 requires-python = ">=3.13.3"
 authors = ["@author@"]
-urls = [
-    "@website@",
-    "@repository@",
-]
+urls = ["@website@", "@repository@"]
 
 ###
 # DEPS
 ###
-dependencies = [
-    "pydantic-settings>=2.12.0",
-    "structlog>=25.5.0",
-]
+dependencies = ["pydantic-settings>=2.12.0", "structlog>=25.5.0"]
 
 [dependency-groups]
 dev = [
-    "commitizen>=4.12.1", # for conventional commits, use cz commit
-    "mypy>=1.19.1",
-    "pre-commit>=4.5.1",
-    "pytest>=9.0.2",
-    "pytest-asyncio>=1.3.0",
-    "pytest-cov>=7.0.0",
-    "ruff>=0.14.14",
+  "commitizen>=4.12.1",    # for conventional commits, use cz commit
+  "mypy>=1.19.1",
+  "pre-commit>=4.5.1",
+  "pytest>=9.0.2",
+  "pytest-asyncio>=1.3.0",
+  "pytest-cov>=7.0.0",
+  "ruff>=0.14.14",
 ]
 docs = [
-    "esbonio>=1.0.0",
-    "sphinx>=9.1.0",
-    "sphinx-book-theme>=1.1.4",
-    "sphinx-copybutton>=0.5.2",
+  "esbonio>=1.0.0",
+  "sphinx>=9.1.0",
+  "sphinx-book-theme>=1.1.4",
+  "sphinx-copybutton>=0.5.2",
 ]
 
 ###
@@ -51,10 +45,10 @@ target-version = "py313"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "T201", # print(...)
-    "D", # docstring related, enable if you want
-    "S101", # assert
-    "COM812" # missing trailing comma
+  "T201",   # print(...)
+  "D",      # docstring related, enable if you want
+  "S101",   # assert
+  "COM812", # missing trailing comma
 ]
 unfixable = []
 fixable = ["ALL"]
