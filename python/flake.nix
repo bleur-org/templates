@@ -5,27 +5,31 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    git-hooks.url = "github:cachix/git-hooks.nix";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-parts,
-    ...
-  } @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} (top @ {...}: {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-      perSystem = {pkgs, ...}: {
-        formatter = pkgs.alejandra;
+  outputs =
+    {
+      flake-parts,
+      ...
+    }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
+      {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ];
 
-        devShells.default = import ./shell.nix {inherit pkgs;};
-
-        # packages.default = pkgs.callPackage ./. {inherit pkgs;};
-      };
-    });
+        imports = [
+          ./shell.nix
+        ];
+      }
+    );
 }
