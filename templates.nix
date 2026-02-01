@@ -1,4 +1,13 @@
 {
+  python = {
+    path = ./python;
+    description = "Python project template with ruff and basedpyright";
+    welcomeText = ''
+      # Getting started
+      - Run `nix develop`
+    '';
+  };
+
   # Stable Rust binary template
   rust = {
     path = ./rust;

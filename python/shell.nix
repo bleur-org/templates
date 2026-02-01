@@ -1,35 +1,80 @@
-{pkgs}: let
-  manifest = (pkgs.lib.importTOML ./pyproject.toml).project;
+{ inputs, ... }:
+{
+  imports = [
+    inputs.treefmt-nix.flakeModule
+    inputs.git-hooks.flakeModule
+  ];
 
-  pythonEnv = pkgs.python314.withPackages (ps:
-    with ps; [
-      pip
-      mypy
-      pytest
-      pytest-asyncio
-      pytest-cov
-      sphinx-book-theme
-      sphinx-copybutton
-    ]);
-in
-  pkgs.stdenv.mkDerivation {
-    name = "${manifest.name}-dev";
+  perSystem =
+    {
+      config,
+      # self',
+      # inputs',
+      pkgs,
+      # system,
+      ...
+    }:
+    {
+      treefmt = {
+        projectRootFile = "flake.nix";
+        programs = {
+          nixfmt.enable = true;
+          prettier.enable = true;
+          statix.enable = true;
+          deadnix.enable = true;
+          yamlfmt.enable = true;
+          taplo.enable = true;
 
-    nativeBuildInputs = with pkgs; [
-      nixd
-      statix
-      deadnix
-      alejandra
+          ruff.enable = true;
+        };
+      };
 
-      pythonEnv
-      uv
-      git
-      ruff
-      commitizen
-      sphinx
-    ];
+      pre-commit = {
+        check.enable = true;
+        settings.hooks = {
+          treefmt.enable = true;
 
-    shellHook = ''
-      source ./.env
-    '';
-  }
+          end-of-file-fixer.enable = true;
+          trim-trailing-whitespace.enable = true;
+          check-added-large-files.enable = true;
+
+          # Specific uv lock check to ensure it's up to date
+          # (Optional: run 'uv lock --check' here)
+        };
+      };
+
+      devShells.default = pkgs.mkShell {
+        shellHook = config.pre-commit.installationScript;
+
+        nativeBuildInputs = with pkgs; [
+          config.treefmt.build.wrapper
+          just
+          nixd
+
+          basedpyright
+          ruff
+
+          # C dynamic libraries for uv to work properly
+          stdenv.cc.cc
+          zlib
+        ];
+
+        packages = with pkgs; [
+          uv
+          python313
+        ];
+
+        env = {
+          UV_PYTHON_PREFERENCE = "only-managed";
+        };
+
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath (
+          with pkgs;
+          [
+            stdenv.cc.cc.lib
+            zlib
+          ]
+        );
+      };
+    };
+}
