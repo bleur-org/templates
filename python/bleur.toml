@@ -1,0 +1,83 @@
+[project]
+name = "python"
+
+## Variables
+
+# NOTE(abduaziz): pyproject.toml specs
+#  https://packaging.python.org/en/latest/specifications/pyproject-toml/#authors-maintainers
+
+[[variable]]
+variable = "name"
+default = "project"
+message = "What would you like to name this project?"
+
+[[variable]]
+variable = "version"
+default = "0.1.0"
+message = "What would be initial version?"
+
+[[variable]]
+variable = "description"
+default = "Awesome project"
+message = "What's this project about?"
+
+# NOTE(abduaziz): does bleur support sequence types ([S1, S2]) ?
+#  pyproject.toml has "authors" which is "TOML type: Array of inline tables with string keys and values"
+#  more: https://packaging.python.org/en/latest/specifications/pyproject-toml/#authors-maintainers
+
+[[variable]]
+variable = "author"
+default = "Bleur Developers"
+message = "Who's going to be author?"
+
+[[variable]]
+variable = "website"
+default = "https://bleur.net"
+message = "Is there any website hosted for this project?"
+
+[[variable]]
+variable = "repository"
+default = "https://github.com/bleur-org/templates"
+message = "What's the link to the repository?"
+
+# File changes
+
+[[change]]
+placeholder = "#name#"
+source = "pyproject.toml" # maybe ["pyproject.toml", "./docs/source/conf.py"] if supports ?
+value = "@name@"
+
+[[change]]
+placeholder = "#name#"
+source = "./docs/source/conf.py"
+value = "@name@"
+
+[[change]]
+placeholder = "#version#"
+source = "pyproject.toml"
+value = "@version@"
+
+[[change]]
+placeholder = "#description#"
+source = "pyproject.toml"
+value = "@description@"
+
+[[change]]
+placeholder = "#author#"
+source = "pyproject.toml"
+value = "@author@"
+
+[[change]]
+placeholder = "#author#"
+source = "./docs/source/conf.py"
+value = "@author@"
+
+[[change]]
+placeholder = "#website#"
+source = "pyproject.toml"
+value = "@website@"
+
+[[change]]
+placeholder = "#repository#"
+source = "pyproject.toml"
+value = "@repository@"

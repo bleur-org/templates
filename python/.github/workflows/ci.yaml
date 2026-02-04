@@ -1,0 +1,52 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Cache uv dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+      - name: Install dependencies with uv
+        run: uv venv -p 3.13 && source .venv/bin/activate && uv sync --all-groups
+      - name: Check formatting with ruff
+        run: |
+          source .venv/bin/activate
+          ruff format . --check
+      - name: Lint with ruff
+        run: |
+          source .venv/bin/activate
+          ruff check .
+      - name: Type check with mypy
+        run: |
+          source .venv/bin/activate
+          mypy --strict --ignore-missing-imports --explicit-package-bases .
+      - name: Run tests with coverage
+        run: |
+          source .venv/bin/activate
+          pytest -s -vv \
+            --cov --cov-branch \
+            --cov-report=xml \
+            --junitxml=junit.xml \
+            -o junit_family=legacy
+
+# NOTE: enable if you want
+# - name: Upload coverage reports to Codecov
+#   uses: codecov/codecov-action@v5
+#   with:
+#     token: ${{ secrets.CODECOV_TOKEN }}
+
+# - name: Upload test results to Codecov
+#   if: ${{ !cancelled() }}
+#   uses: codecov/test-results-action@v1
+#   with:
+#     token: ${{ secrets.CODECOV_TOKEN }}
