@@ -1,4 +1,26 @@
-{
+rec {
+  default = trivial;
+
+  # Trivial template for basic usage
+  trivial = {
+    path = ./trivial;
+    description = "A very basic flake";
+    welcomeText = ''
+      # Bleur stack trivial Nix template
+
+      ## Intended usage
+      The intended usage of this flake is to provide a basic template for flake projects. It comes with flake-parts, git-hooks and treefmt.
+
+      ## Important
+      Please, after bootstrapping your own project, don't forget to read readme.md for more infomration on usage.
+
+      ## More info
+      - [Nix Flakes](https://wiki.nixos.org/wiki/Flakes)
+      - [Flake Parts](https://flake.parts/)
+      - [Nix Git Hooks](https://github.com/cachix/git-hooks.nix)
+      - [treefmt-nix](https://github.com/cachix/git-hooks.nix)
+    '';
+  };
   python = {
     path = ./python;
     description = "Python project template with ruff and basedpyright";
