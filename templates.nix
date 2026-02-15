@@ -261,6 +261,40 @@ rec {
     '';
   };
 
+  # Vue + Vite + TypeScript template with Nix
+  ts-vue = {
+    path = ./ts-vue;
+    description = "Vue, Vite, TypeScript & Nix template";
+    welcomeText = ''
+      # Bleur stack Vue + TypeScript + Vite & Nix template
+
+      ## Intended usage
+      The intended usage of this flake is to build modern frontend applications using
+      Vue 3, TypeScript, and Vite, with a fully reproducible Nix-based development
+      environment.
+
+      This template is optimized for fast iteration, strict typing, and predictable
+      builds, while remaining friendly to non-Nix users.
+
+      ## What you get
+      - Vue 3 with Composition API and &lt;script setup&gt;
+      - TypeScript with sensible defaults
+      - Vite for fast dev server and builds
+      - Nix devShell with Node.js and tooling pinned
+      - Ready-to-use project structure
+
+      ## Important
+      After bootstrapping your own project, please read readme.md for details on
+      development workflow, builds, and customization.
+
+      ## More info
+      - [Vue](https://vuejs.org)
+      - [TypeScript](https://www.typescriptlang.org)
+      - [Vite](https://vitejs.dev)
+      - [NixOS Wiki – Node.js](https://nixos.wiki/wiki/Node.js)
+    '';
+  };
+
   # Flutter mobile & desktop app template with Nix
   flutter = {
     path = ./flutter;
