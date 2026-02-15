@@ -260,4 +260,32 @@ rec {
       - [NixOS Wiki – Node.js](https://nixos.wiki/wiki/Node.js)
     '';
   };
+
+  # Flutter mobile & desktop app template with Nix
+  flutter = {
+    path = ./flutter;
+    description = "Flutter app template with Nix (Linux, Web, Android-ready)";
+    welcomeText = ''
+      # Bleur stack Flutter & Nix template
+
+      ## Intended usage
+      The intended usage of this flake is to build cross-platform Flutter
+      applications with a reproducible Nix-based development environment.
+
+      ## What you get
+      - Flutter SDK with Dart
+      - Linux desktop & Web builds (pkg-config included)
+      - treefmt with alejandra (Nix) and dart-format (Dart)
+      - Ready for Android (add JDK + Android SDK to shell as needed)
+
+      ## Important
+      After bootstrapping your own project, please read readme.md for details on
+      development workflow, platform builds, and Android setup.
+
+      ## More info
+      - [Flutter](https://flutter.dev)
+      - [Dart](https://dart.dev)
+      - [NixOS Wiki – Flutter](https://wiki.nixos.org/wiki/Flutter)
+    '';
+  };
 }
