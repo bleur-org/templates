@@ -1,0 +1,18 @@
+[formatter.nix]
+command = "alejandra"
+includes = ["*.nix"]
+
+[formatter.dart]
+command = "dart"
+options = ["format"]
+includes = ["*.dart"]
+excludes = [
+  ".dart_tool/**",
+  "build/**",
+  ".git/**"
+]
+
+[formatter.yaml]
+command = "yamlfmt"
+includes = ["*.yaml", "*.yml"]
+excludes = ["pubspec.lock"]
